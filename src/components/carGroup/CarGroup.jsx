@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './CarGroup.module.scss';
+import InfoIcon from './InfoIcon';
 
 const CarGroup = () => {
   return (
@@ -7,7 +8,9 @@ const CarGroup = () => {
       <div className={styles.header}>
         <p>Small cars</p>
       </div>
-      <div className={styles.iconsGroup}></div>
+      <div className={styles.iconsGroup}>
+        <InfoIcon icon="users" />
+      </div>
       <div className={styles.carIcon}></div>
       <div className={styles.price}>
         <p>From 150zł/day</p>

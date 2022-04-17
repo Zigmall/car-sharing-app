@@ -18,10 +18,10 @@
     margin-top: 10px;
 }
 .iconsGroup {
-
+    display: inline-block;
 }
 .carIcon {
-
+    
 }
 .price p{
     color: #707070;
@@ -35,4 +35,10 @@
     background-color: #009BFF;
     border-radius: 4px;
     margin-bottom: 10px;
+}
+.iconButton {
+    min-height: 25px;
+    min-width: 25px;
+    color: #707070;
+
 }
