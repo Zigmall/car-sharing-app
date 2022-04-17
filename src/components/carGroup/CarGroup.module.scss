@@ -1,0 +1,38 @@
+
+.wrapper {
+  width: 275px;
+  min-height: 190px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  justify-content: space-between;
+  align-items: center;
+
+}
+.header p{
+    color: #707070;
+    margin-top: 10px;
+    margin: 0;
+    font-size: 22px;
+    display: block;
+    margin-top: 10px;
+}
+.iconsGroup {
+
+}
+.carIcon {
+
+}
+.price p{
+    color: #707070;
+    margin: auto;
+    font-size: 22px;
+    display: block;
+}
+.activeIndicator {
+    width: 250px;
+    height: 10px;
+    background-color: #009BFF;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
