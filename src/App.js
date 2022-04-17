@@ -1,7 +1,9 @@
+import ToolKitComponent from './components/toolKitComponent/ToolKitComponent';
+
 const App = () => {
   return (
     <div className="App">
-      <p>Car sharing app</p>
+      <ToolKitComponent />
     </div>
   );
 };

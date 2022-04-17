@@ -1,0 +1,17 @@
+.wrapper {
+  height: 40px;
+  width: 160px;
+  background-color: #f7f9ff;
+  margin-top: 5px;
+  padding: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.counter p {
+  height: 35px;
+  line-height: 35px;
+  width: 35px;
+  background-color: #f7f9ff;
+  text-align: center;
+}
