@@ -1,12 +1,12 @@
 import CarGroup from './components/carGroup/CarGroup';
-import ToolKitComponent from './components/toolKitComponent/ToolKitComponent';
 
 const App = () => {
   return (
     <div className="App">
       <>
-        <ToolKitComponent />
-        <CarGroup />
+        <CarGroup model="Small" active={false} />
+        <CarGroup model="Suv" active={true} />
+        <CarGroup model="Sport" active={false} />
       </>
     </div>
   );
