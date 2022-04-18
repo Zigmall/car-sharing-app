@@ -1,10 +1,10 @@
-import CarGroupWrapper from './components/carGroup/CarGroupWrapper';
+import ListItem from './components/list/listItem/ListItem';
 
 const App = () => {
   return (
     <div className="App">
       <>
-        <CarGroupWrapper currentIndex={3} />
+        <ListItem />
       </>
     </div>
   );
