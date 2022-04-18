@@ -1,0 +1,65 @@
+p {
+  margin: 0;
+  color: #707070;
+}
+.wrapper {
+  width: 275px;
+  min-height: 190px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  justify-content: space-between;
+  align-items: center;
+}
+.header {
+  color: #707070;
+  margin-top: 10px;
+  margin: 0;
+  font-size: 22px;
+  // display: block;
+  margin-top: 10px;
+}
+.iconsGroup {
+  font-size: 20px;
+  flex-direction: row;
+  display: flex;
+  margin-right: 50px;
+}
+.carIcon {
+  min-height: 50px;
+  min-width: 50px;
+  font-size: 50px;
+  flex-direction: row;
+  display: flex;
+}
+.price {
+  color: #707070;
+  margin: auto;
+  font-size: 22px;
+  display: block;
+}
+.activeIndicator {
+  width: 250px;
+  height: 10px;
+  background-color: #009bff;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+.infoIcon {
+  min-height: 25px;
+  min-width: 25px;
+  color: #707070;
+  display: inline-block;
+  margin-left: 50px;
+  margin-right: 10px;
+}
+.middleIcon {
+  min-height: 80px;
+  min-width: 100px;
+  color: #707070;
+}
+.carGroupWrapper {
+  display: flex;
+  justify-content: center;
+}
