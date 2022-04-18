@@ -4,7 +4,7 @@ import InfoIcon from './InfoIcon';
 import PropTypes from 'prop-types';
 import MiddleIcon from './MiddleIcon';
 
-const CarGroup = ({ model, active, luggage, passengers }) => {
+const CarGroupElement = ({ model, active, luggage, passengers }) => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
@@ -27,11 +27,11 @@ const CarGroup = ({ model, active, luggage, passengers }) => {
   );
 };
 
-CarGroup.propTypes = {
+CarGroupElement.propTypes = {
   model: PropTypes.string,
   active: PropTypes.bool,
   luggage: PropTypes.number,
   passengers: PropTypes.number
 };
 
-export default CarGroup;
+export default CarGroupElement;
