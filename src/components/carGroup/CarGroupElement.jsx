@@ -4,9 +4,9 @@ import InfoIcon from './InfoIcon';
 import PropTypes from 'prop-types';
 import MiddleIcon from './MiddleIcon';
 
-const CarGroupElement = ({ model, active, luggage, passengers, price }) => {
+const CarGroupElement = ({ model, active, luggage, passengers, price, onClickItem }) => {
   return (
-    <div className={styles.wrapper}>
+    <div onClick={onClickItem} className={styles.wrapper}>
       <div className={styles.header}>
         <p>{model}</p>
       </div>
@@ -32,7 +32,8 @@ CarGroupElement.propTypes = {
   active: PropTypes.bool,
   luggage: PropTypes.number,
   passengers: PropTypes.number,
-  price: PropTypes.number
+  price: PropTypes.number,
+  onClickItem: PropTypes.func
 };
 
 export default CarGroupElement;

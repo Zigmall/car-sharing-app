@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CarGroupElement from './CarGroupElement';
 import styles from './CarGroup.module.scss';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
-const CarGroupWrapper = ({ currentIndex }) => {
+const CarGroupWrapper = () => {
   const groupArray = [
     { model: 'Small', luggage: 2, passengers: 4, price: 120 },
     { model: 'Regular', luggage: 3, passengers: 4, price: 130 },
@@ -12,6 +12,12 @@ const CarGroupWrapper = ({ currentIndex }) => {
     { model: 'Estate', luggage: 6, passengers: 5, price: 150 }
   ];
 
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const onClickItem = (index) => {
+    setCurrentIndex(index);
+  };
+
   return (
     <div className={styles.carGroupWrapper}>
       {groupArray.map((element, index) => {
@@ -19,19 +25,16 @@ const CarGroupWrapper = ({ currentIndex }) => {
           <CarGroupElement
             key={index}
             model={element.model}
-            active={index + 1 === currentIndex}
+            active={index === currentIndex}
             luggage={element.luggage}
             passengers={element.passengers}
             price={element.price}
+            onClickItem={() => onClickItem(index)}
           />
         );
       })}
     </div>
   );
-};
-
-CarGroupWrapper.propTypes = {
-  currentIndex: PropTypes.number
 };
 
 export default CarGroupWrapper;
