@@ -1,3 +1,47 @@
 .wrapper {
+  min-width: 300px;
+  background-color: lightblue;
   color: blue;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  hr {
+    color: grey;
+    width: 90%;
+  }
+}
+.topPart {
+  background-color: red;
+  min-height: 150px;
+  min-width: 800px;
+  display: flex;
+}
+.pictureSide {
+  height: 150px;
+  width: 150px;
+  background-color: orange;
+}
+.iconSide {
+  height: 150px;
+  width: 400px;
+  background-color: yellow;
+}
+.carTypeAndName {
+  display: flex;
+  label {
+    margin: 5px;
+    font-size: 30px;
+  }
+}
+.iconsLine {
+  font-size: 20px;
+  display: flex;
+  color: green;
+}
+.bottomPart {
+  min-height: 150px;
+  min-width: 800px;
+  display: flex;
+  background-color: aliceblue;
 }
