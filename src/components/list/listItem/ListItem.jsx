@@ -1,11 +1,13 @@
 import React from 'react';
+import BenefitList from './BenefitList';
 import styles from './ListItem.module.scss';
+import PropTypes from 'prop-types';
 
-const ListItem = () => {
+const ListItem = ({ viewElement }) => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.topPart}>
-        <div className={styles.pictureSide}></div>
+        <div className={styles.pictureSide}>picture</div>
         <div className={styles.iconSide}>
           <div className={styles.carTypeAndName}>
             <label>Economy</label>
@@ -21,11 +23,22 @@ const ListItem = () => {
         </div>
       </div>
       <hr></hr>
-      <div className={styles.bottomPart}></div>
-
-      <p>List item</p>
+      <div className={styles.bottomPart}>
+        <div className={styles.columnOne}></div>
+        <div className={styles.columnTwo}>
+          <BenefitList />
+        </div>
+        <div className={styles.columnThree}>
+          <label>€ 114</label>
+          <button onClick={viewElement}>View</button>
+        </div>
+      </div>
     </div>
   );
+};
+
+ListItem.propTypes = {
+  viewElement: PropTypes.func
 };
 
 export default ListItem;

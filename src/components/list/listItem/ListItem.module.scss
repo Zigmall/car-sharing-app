@@ -44,4 +44,24 @@
   min-width: 800px;
   display: flex;
   background-color: aliceblue;
+  flex-direction: row;
+  justify-content: space-between;
+  
 }
+.columnOne {
+  height: 100px;
+  width: 100px;
+  background-color: green;
+}
+
+.columnTwo {
+  padding: 0 20px;
+  background-color: lightgreen;
+}
+
+.columnThree {
+  height: 100px;
+  width: 100px;
+  background-color: green;
+}
+
