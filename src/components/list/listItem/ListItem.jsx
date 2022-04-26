@@ -2,17 +2,21 @@ import React from 'react';
 import BenefitList from './BenefitList';
 import styles from './ListItem.module.scss';
 import PropTypes from 'prop-types';
+import MiddleIcon from '../../groupElement/MiddleIcon';
 
 const benefits = ['Unlimited millage', 'Colision damage viewer', 'Theft protection'];
 
-const ListItem = ({ viewElement }) => {
+const ListItem = ({ viewElement, carClass }) => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.topPart}>
-        <div className={styles.pictureSide}>picture</div>
+        <div className={styles.pictureSide}>
+          <MiddleIcon model={'Regular'} />{' '}
+          {/*   Needs to be changed to car photo when DB connected */}
+        </div>
         <div className={styles.iconSide}>
           <div className={styles.carTypeAndName}>
-            <label>Economy</label>
+            <label>{carClass}</label>
             <p>Ford Mustang</p>
           </div>
           <div className={styles.iconsLine}>
@@ -55,7 +59,8 @@ const ListItem = ({ viewElement }) => {
 };
 
 ListItem.propTypes = {
-  viewElement: PropTypes.func
+  viewElement: PropTypes.func,
+  carClass: PropTypes.string
 };
 
 export default ListItem;
