@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import CarGroupElement from './CarGroupElement';
-import styles from './CarGroup.module.scss';
+import GroupElement from './GroupElement';
+import styles from './GroupElement.module.scss';
 // import PropTypes from 'prop-types';
 
-const CarGroupWrapper = () => {
+const GroupWrapper = () => {
   const groupArray = [
     { model: 'Small', luggage: 2, passengers: 4, price: 120 },
     { model: 'Regular', luggage: 3, passengers: 4, price: 130 },
@@ -22,7 +22,7 @@ const CarGroupWrapper = () => {
     <div className={styles.carGroupWrapper}>
       {groupArray.map((element, index) => {
         return (
-          <CarGroupElement
+          <GroupElement
             key={index}
             model={element.model}
             active={index === currentIndex}
@@ -37,4 +37,4 @@ const CarGroupWrapper = () => {
   );
 };
 
-export default CarGroupWrapper;
+export default GroupWrapper;

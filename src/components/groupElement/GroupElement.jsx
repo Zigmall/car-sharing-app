@@ -1,10 +1,10 @@
 import React from 'react';
-import styles from './CarGroup.module.scss';
+import styles from './GroupElement.module.scss';
 import InfoIcon from './InfoIcon';
 import PropTypes from 'prop-types';
 import MiddleIcon from './MiddleIcon';
 
-const CarGroupElement = ({ model, active, luggage, passengers, price, onClickItem }) => {
+const GroupElement = ({ model, active, luggage, passengers, price, onClickItem }) => {
   return (
     <div onClick={onClickItem} className={styles.wrapper}>
       <div className={styles.header}>
@@ -27,7 +27,7 @@ const CarGroupElement = ({ model, active, luggage, passengers, price, onClickIte
   );
 };
 
-CarGroupElement.propTypes = {
+GroupElement.propTypes = {
   model: PropTypes.string,
   active: PropTypes.bool,
   luggage: PropTypes.number,
@@ -36,4 +36,4 @@ CarGroupElement.propTypes = {
   onClickItem: PropTypes.func
 };
 
-export default CarGroupElement;
+export default GroupElement;

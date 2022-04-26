@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './CarGroup.module.scss';
+import styles from './GroupElement.module.scss';
 
 const InfoIcon = ({ icon }) => {
   console.log(icon);
