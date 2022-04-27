@@ -1,20 +1,16 @@
 .wrapper {
-  min-width: 300px;
-  background-color: lightblue;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  box-shadow: 0px 20px 30px 0px rgba(0, 0, 0, 0.1), 0px 4px 4px 0px rgba(0, 0, 0, 0.15),
+    0px 2px 2px 0px rgba(0, 0, 0, 0.3);
   hr {
-    // color: grey;
     width: 90%;
   }
 }
 .topPart {
-  min-height: 150px;
-  min-width: 800px;
   display: flex;
-
 }
 .pictureSide {
   margin-right: 20px;
@@ -35,44 +31,65 @@
     font-size: 20px;
   }
 }
-// .iconsLine {
-//   font-size: 20px;
-//   display: flex;
-// }
+
 .bottomPart {
-  min-height: 150px;
-  min-width: 800px;
+  min-width: 100%;
   display: flex;
-  background-color: aliceblue;
   flex-direction: row;
   justify-content: space-between;
-  
 }
 .columnOne {
   display: flex;
   flex-direction: column;
+  margin-left: 5px;
 }
 .columnOneText {
   margin-bottom: 20px;
   display: inline-block;
   margin-left: 15px;
   p {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
   }
   label {
-    font-size: 20px;
+    font-size: 18px;
   }
 }
 
 .columnTwo {
   padding: 0 20px;
-  background-color: lightgreen;
+  margin-left: 10%;
+  display: flex;
+  flex-direction: column;
+}
+
+.benefitListItem {
+  display: flex;
+  flex-direction: row;
+  margin: 3px;
+  p {
+    margin-left: 5px;
+  }
 }
 
 .columnThree {
-  height: 100px;
-  width: 100px;
-  background-color: green;
+  display: flex;
 }
-
+.price {
+  display: flex;
+  align-items: flex-end;
+  margin: 5px;
+  label {
+    font-size: 26px;
+    font-weight: bold;
+    margin-right: 25px;
+  }
+  button {
+    background-color: green;
+    height: 50px;
+    width: 200px;
+    color: white;
+    font-size: 20px;
+    border-radius: 10px;
+  }
+}

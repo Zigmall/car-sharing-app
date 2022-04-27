@@ -56,8 +56,10 @@ const Car = ({ viewElement, carClass }) => {
           <BenefitList benefits={benefits} />
         </div>
         <div className={styles.columnThree}>
-          <label>€ 114</label>
-          <button onClick={viewElement}>View</button>
+          <div className={styles.price}>
+            <label>€ 114</label>
+            <button onClick={viewElement}>View</button>
+          </div>
         </div>
       </div>
     </div>
