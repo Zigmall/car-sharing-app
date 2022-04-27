@@ -1,8 +1,7 @@
-.svgIcon {
-    
-    background-color: red;
-    svg {
-        height: 100px;
-        width: 100px;
-    }
+.svgIconBar {
+  display: flex;
+  align-items: center;
+  label {
+    margin: 0 35px 0 10px;
+  }
 }

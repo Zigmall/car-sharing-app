@@ -1,13 +1,18 @@
-import Car from './components/car/Car';
-
 import SvgIconBar from './components/svgIconBar/SvgIconBar';
 
 const App = () => {
   return (
     <div className="App">
       <>
-        <Car carClass={'Economy'} />
-        <SvgIconBar iconHeight={'20'} iconWidth={'20'} />
+        <SvgIconBar
+          iconHeight={'25'}
+          iconWidth={'25'}
+          seats={5}
+          doors={5}
+          bags={4}
+          airConditioning={true}
+          manualGearBox={true}
+        />
       </>
     </div>
   );
