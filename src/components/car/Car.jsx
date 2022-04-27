@@ -3,6 +3,8 @@ import BenefitList from './BenefitList';
 import styles from './Car.module.scss';
 import PropTypes from 'prop-types';
 import MiddleIcon from '../groupElement/MiddleIcon';
+import SvgIconBar from '../svgIconBar/SvgIconBar';
+import { GasStation, GpsDirection } from '../assets/SvgList';
 
 const benefits = ['Unlimited millage', 'Colision damage viewer', 'Theft protection'];
 
@@ -20,11 +22,15 @@ const Car = ({ viewElement, carClass }) => {
             <p>Ford Mustang</p>
           </div>
           <div className={styles.iconsLine}>
-            <p> ICON </p>
-            <p>5 seat </p>
-            <p> ICON </p>
-            <p>3 dors</p>
-            <p> ICON </p>
+            <SvgIconBar
+              iconHeight={'25'}
+              iconWidth={'25'}
+              seats={5}
+              doors={5}
+              bags={4}
+              airConditioning={true}
+              manualGearBox={true}
+            />
           </div>
         </div>
       </div>
@@ -32,15 +38,15 @@ const Car = ({ viewElement, carClass }) => {
       <div className={styles.bottomPart}>
         <div className={styles.columnOne}>
           <div className={styles.columnOneTop}>
-            <div>PetrolPumpIcon</div>
-            <div>
+            <GasStation iconHeight="30px" iconWidth="30px" />
+            <div className={styles.columnOneText}>
               <p>Fuel policy</p>
               <label>Full to full</label>
             </div>
           </div>
           <div className={styles.columnOneBottom}>
-            <div>LocationIcon</div>
-            <div>
+            <GpsDirection iconHeight="30px" iconWidth="30px" />
+            <div className={styles.columnOneText}>
               <p>Pick-up location</p>
               <label>location</label>
             </div>

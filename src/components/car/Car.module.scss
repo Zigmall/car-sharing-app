@@ -6,12 +6,11 @@
   justify-content: center;
   align-items: center;
   hr {
-    color: grey;
+    // color: grey;
     width: 90%;
   }
 }
 .topPart {
-  background-color: red;
   min-height: 150px;
   min-width: 800px;
   display: flex;
@@ -21,12 +20,8 @@
   margin-right: 20px;
   height: 150px;
   width: 250px;
-  background-color: orange;
 }
 .iconSide {
-  height: 150px;
-  width: 400px;
-  background-color: yellow;
   align-items: baseline;
 }
 .carTypeAndName {
@@ -40,11 +35,10 @@
     font-size: 20px;
   }
 }
-.iconsLine {
-  font-size: 20px;
-  display: flex;
-  color: green;
-}
+// .iconsLine {
+//   font-size: 20px;
+//   display: flex;
+// }
 .bottomPart {
   min-height: 150px;
   min-width: 800px;
@@ -55,7 +49,20 @@
   
 }
 .columnOne {
-  background-color: green;
+  display: flex;
+  flex-direction: column;
+}
+.columnOneText {
+  margin-bottom: 20px;
+  display: inline-block;
+  margin-left: 15px;
+  p {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  label {
+    font-size: 20px;
+  }
 }
 
 .columnTwo {
