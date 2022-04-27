@@ -1,13 +1,13 @@
 import Car from './components/car/Car';
 
-import SvgIcon from './components/svgIcon/SvgIcon';
+import SvgIconBar from './components/svgIconBar/SvgIconBar';
 
 const App = () => {
   return (
     <div className="App">
       <>
         <Car carClass={'Economy'} />
-        <SvgIcon iconHeight={'50'} iconWidth={'50'} />
+        <SvgIconBar iconHeight={'20'} iconWidth={'20'} />
       </>
     </div>
   );
