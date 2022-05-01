@@ -8,6 +8,7 @@ import { GearBox, Luggage, OpenDoorCar, AirConditioner } from '../assets/SvgList
 
 const CarDetails = (props) => {
   const data = {
+    CarId: 123,
     carClass: 'Sport',
     benefits: ['Unlimited millage', 'Colision damage viewer', 'Theft protection'],
     brand: 'Ford Mustang',
