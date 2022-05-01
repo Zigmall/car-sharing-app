@@ -6,7 +6,7 @@ import MiddleIcon from '../groupElement/MiddleIcon';
 import SvgIconBar from '../svgIconBar/SvgIconBar';
 import { GasStation, GpsDirection } from '../assets/SvgList';
 
-const Car = ({ viewElement, carClass, benefits }) => {
+const Car = ({ viewElement, carClass, benefits, brand, property, location, price }) => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.topPart}>
@@ -17,17 +17,17 @@ const Car = ({ viewElement, carClass, benefits }) => {
         <div className={styles.iconSide}>
           <div className={styles.carTypeAndName}>
             <label>{carClass}</label>
-            <p>Ford Mustang</p>
+            <p>{brand}</p>
           </div>
           <div className={styles.iconsLine}>
             <SvgIconBar
               iconHeight={'25'}
               iconWidth={'25'}
-              seats={5}
-              doors={5}
-              bags={4}
-              airConditioning={true}
-              manualGearBox={true}
+              seats={property.seats}
+              doors={property.doors}
+              bags={property.bags}
+              airConditioning={property.airConditioning}
+              manualGearBox={property.manualGearBox}
             />
           </div>
         </div>
@@ -46,7 +46,7 @@ const Car = ({ viewElement, carClass, benefits }) => {
             <GpsDirection iconHeight="30px" iconWidth="30px" />
             <div className={styles.columnOneText}>
               <p>Pick-up location</p>
-              <label>location</label>
+              <label>{location}</label>
             </div>
           </div>
         </div>
@@ -55,7 +55,7 @@ const Car = ({ viewElement, carClass, benefits }) => {
         </div>
         <div className={styles.columnThree}>
           <div className={styles.price}>
-            <label>€ 114</label>
+            <label>€ {price}/day</label>
             <button onClick={viewElement}>View</button>
           </div>
         </div>
@@ -67,7 +67,11 @@ const Car = ({ viewElement, carClass, benefits }) => {
 Car.propTypes = {
   viewElement: PropTypes.func,
   carClass: PropTypes.string,
-  benefits: PropTypes.array
+  benefits: PropTypes.array,
+  brand: PropTypes.string,
+  property: PropTypes.array,
+  location: PropTypes.string,
+  price: PropTypes.string
 };
 
 export default Car;

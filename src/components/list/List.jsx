@@ -7,7 +7,16 @@ const List = ({ data, ...props }) => {
   return (
     <div className={styles.wrapper}>
       {data.map((car, index) => (
-        <Car key={index} viewElement={props} carClass={car.carClass} benefits={car.benefits} />
+        <Car
+          key={index}
+          viewElement={props}
+          carClass={car.carClass}
+          benefits={car.benefits}
+          brand={car.brand}
+          property={car.property}
+          location={car.location}
+          price={car.price}
+        />
       ))}
     </div>
   );
