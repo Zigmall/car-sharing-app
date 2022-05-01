@@ -6,9 +6,7 @@ import MiddleIcon from '../groupElement/MiddleIcon';
 import SvgIconBar from '../svgIconBar/SvgIconBar';
 import { GasStation, GpsDirection } from '../assets/SvgList';
 
-const benefits = ['Unlimited millage', 'Colision damage viewer', 'Theft protection'];
-
-const Car = ({ viewElement, carClass }) => {
+const Car = ({ viewElement, carClass, benefits }) => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.topPart}>
@@ -68,7 +66,8 @@ const Car = ({ viewElement, carClass }) => {
 
 Car.propTypes = {
   viewElement: PropTypes.func,
-  carClass: PropTypes.string
+  carClass: PropTypes.string,
+  benefits: PropTypes.array
 };
 
 export default Car;
