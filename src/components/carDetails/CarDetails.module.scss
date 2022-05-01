@@ -3,13 +3,17 @@
 }
 .topPicture {
     height: 300px;
-    width: 100%;
+    width: 100px;
 }
 .bottomWrapper {
     display: flex;
 }
 .leftColumn {
     display: flex;
+    label {
+        font-size: 42px;
+        font-weight: bold;
+    }
 }
 .rightColumn {
     display: flex;

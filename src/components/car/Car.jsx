@@ -11,7 +11,7 @@ const Car = ({ viewElement, carClass, benefits, brand, property, location, price
     <div className={styles.wrapper}>
       <div className={styles.topPart}>
         <div className={styles.pictureSide}>
-          <MiddleIcon model={'Regular'} />{' '}
+          <MiddleIcon model={'Regular'} />
           {/* TODO  Needs to be changed to car photo when DB connected */}
         </div>
         <div className={styles.iconSide}>
