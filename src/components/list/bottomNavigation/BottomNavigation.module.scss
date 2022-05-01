@@ -1,0 +1,45 @@
+.wrapper p {
+  max-height: 40px;
+  min-width: 160px;
+  padding: 1px;
+  justify-content: center;
+}
+
+.iconsGroup {
+  margin: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconButton {
+  height: 30px;
+  width: 30px;
+  margin: 15px;
+  cursor: pointer;
+  button {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    font-size: 18px;
+    cursor: pointer;
+    min-height: 27px;
+    min-width: 27px;
+  }
+}
+
+.blue {
+  color: #0074ef;
+}
+
+.iconButton :hover {
+  color: #0074ef;
+  font-size: 20px;
+}
+
+.numbers {
+  display: inline-flex;
+  text-align: center;
+}
