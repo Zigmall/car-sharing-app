@@ -3,24 +3,21 @@ import Car from '../car/Car';
 import styles from './List.module.scss';
 import PropTypes from 'prop-types';
 import BottomNavigation from './bottomNavigation/BottomNavigation';
-import { Link } from 'react-router-dom';
 
 const List = ({ data, ...props }) => {
   return (
     <div className={styles.wrapper}>
       {data.map((car, index) => (
-        <Link key={car.carId} to={`/cars/${car.carId}`}>
-          <Car
-            key={index}
-            viewElement={props}
-            carClass={car.carClass}
-            benefits={car.benefits}
-            brand={car.brand}
-            property={car.property}
-            location={car.location}
-            price={car.price}
-          />
-        </Link>
+        <Car
+          key={index}
+          viewElement={props}
+          carClass={car.carClass}
+          benefits={car.benefits}
+          brand={car.brand}
+          property={car.property}
+          location={car.location}
+          price={car.price}
+        />
       ))}
       <BottomNavigation {...props} />
     </div>
