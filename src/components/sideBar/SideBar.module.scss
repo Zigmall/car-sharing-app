@@ -1,0 +1,52 @@
+.sideBarWrapper {
+    display: flex;
+    width: 100px;
+    height: 100vh;
+    position: fixed;
+    margin-top: 30px;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  
+    .sideBar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  .menuElement {
+    margin: 20px 0;
+    height: 28px;
+    width: 28px;
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    fill: #373737;
+    :hover {
+      fill: #0074ef;
+      font-size: 20px;
+    }
+    .blue {
+      fill: #0074ef;
+    }
+  }
+  
+  .addQuestion {
+    margin-bottom: 75px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    fill: #373737;
+    :hover {
+      fill: #0074ef;
+    }
+    label {
+      font-size: 12px;
+    }
+  }
+  .addSvgIcon {
+    height: 30px;
+    width: 30px;
+  }
+  
+  
