@@ -69,9 +69,9 @@ Car.propTypes = {
   carClass: PropTypes.string,
   benefits: PropTypes.array,
   brand: PropTypes.string,
-  property: PropTypes.array,
+  property: PropTypes.object,
   location: PropTypes.string,
-  price: PropTypes.string
+  price: PropTypes.number
 };
 
 export default Car;
