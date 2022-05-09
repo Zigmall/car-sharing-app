@@ -10,13 +10,13 @@ const List = ({ data, ...props }) => {
       {data.map((car, index) => (
         <Car
           key={index}
-          viewElement={props}
           carClass={car.carClass}
           benefits={car.benefits}
           brand={car.brand}
           property={car.property}
           location={car.location}
           price={car.price}
+          {...props}
         />
       ))}
       <BottomNavigation {...props} />
@@ -25,7 +25,7 @@ const List = ({ data, ...props }) => {
 };
 
 List.propTypes = {
-  data: PropTypes.object
+  data: PropTypes.array
 };
 
 export default List;
