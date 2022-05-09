@@ -6,6 +6,8 @@ import TopBar from './components/topBar/TopBar';
 import { toast } from 'react-toastify';
 import styles from './App.module.scss';
 
+import CarState from './context/car/CarState';
+
 const App = () => {
   const [userLoggedIn, setUserLoggedIn] = useState(true);
 
@@ -25,13 +27,20 @@ const App = () => {
     });
 
   return (
-    <div className={styles.app}>
-      <TopBar userName="John Doe" onLogout={onLogout} userLoggedIn={userLoggedIn} notify={notify} />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/cars/:carId" element={<CarDetails iconHeight={'25'} iconWidth={'25'} />} />
-      </Routes>
-    </div>
+    <CarState>
+      <div className={styles.app}>
+        <TopBar
+          userName="John Doe"
+          onLogout={onLogout}
+          userLoggedIn={userLoggedIn}
+          notify={notify}
+        />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/cars/:carId" element={<CarDetails iconHeight={'25'} iconWidth={'25'} />} />
+        </Routes>
+      </div>
+    </CarState>
   );
 };
 
