@@ -1,9 +1,38 @@
-import React from 'react'
+import React, { useState } from 'react';
+import styles from './Login.module.scss';
 
 const Login = () => {
+  const [user, setUser] = useState({
+    email: '',
+    password: ''
+  });
+
+  const { email, password } = user;
+
+  const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    console.log('Login user');
+  };
   return (
-    <div>Login</div>
-  )
-}
+    <div className={styles.formWrapper}>
+      <h1>
+        <span>Account Login</span>
+      </h1>
+      <form onSubmit={onSubmit}>
+        <div className={styles.formGroup}>
+          <label htmlFor="email">Email Address</label>
+          <input type="text" name="email" value={email} onChange={onChange} />
+        </div>
+        <div className={styles.formGroup}>
+          <label htmlFor="password">Password</label>
+          <input type="password" name="password" value={password} onChange={onChange} />
+        </div>
+        <input type="submit" value="login" className={styles.btn} />
+      </form>
+    </div>
+  );
+};
 
 export default Login;
