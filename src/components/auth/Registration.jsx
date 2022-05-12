@@ -34,11 +34,11 @@ const Registration = () => {
       <form onSubmit={submitForm}>
         <div className={styles.formGroup}>
           <label htmlFor="name">Name</label>
-          <input type="text" name="name" value={name} onChange={onChange} required />
+          <input type="text" value={name} name="name" onChange={onChange} />
         </div>
         <div className={styles.formGroup}>
           <label htmlFor="email">Email Address</label>
-          <input type="text" name="email" value={email} onChange={onChange} required />
+          <input type="text" value={email} name="email" onChange={onChange} />
         </div>
         <div className={styles.formGroup}>
           <label htmlFor="password">Password</label>
