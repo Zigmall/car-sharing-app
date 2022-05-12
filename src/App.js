@@ -6,6 +6,7 @@ import styles from './App.module.scss';
 
 import CarState from './context/car/CarState';
 import Bars from './components/bars/Bars';
+import Registration from './components/auth/Registration';
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
         <Bars />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/registration" element={<Registration />} />
           <Route path="/cars/:carId" element={<CarDetails iconHeight={'25'} iconWidth={'25'} />} />
         </Routes>
       </div>
