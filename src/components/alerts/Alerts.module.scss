@@ -1,2 +1,17 @@
-
+.wrapper {
+    display: flex;
+    width: 80%;
+    height: 50px;
+    background-color: rgb(239, 57, 57);
+    justify-content: center;
+    align-items: center;
+    margin: 10px auto;
+  
+    .alerts {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 18px;
+    }
+  }
   

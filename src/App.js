@@ -7,12 +7,14 @@ import CarState from './context/car/CarState';
 import Bars from './components/bars/Bars';
 import Registration from './components/auth/Registration';
 import AlertState from './context/alert/AlertState';
+import Alerts from './components/alerts/Alerts';
 
 const App = () => {
   return (
     <CarState>
       <AlertState>
         <div className={styles.app}>
+          <Alerts />
           <Bars />
           <Routes>
             <Route path="/" element={<Home />} />

@@ -2,6 +2,7 @@ import React, { useReducer } from 'react';
 // import { uuid } from 'uuidv4';
 import CarContext from './carContext';
 import carReducer from './carReducer';
+import PropTypes from 'prop-types';
 // import {
 //   ADD_CAR,
 //   DELETE_CAR,
@@ -150,6 +151,10 @@ const CarState = (props) => {
       {props.children}
     </CarContext.Provider>
   );
+};
+
+CarState.propTypes = {
+  children: PropTypes.any
 };
 
 export default CarState;

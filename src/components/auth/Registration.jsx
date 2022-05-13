@@ -48,7 +48,7 @@ const Registration = () => {
             value={password}
             onChange={onChange}
             required
-            minLength={8}
+            minLength={5}
           />
         </div>
         <div className={styles.formGroup}>
@@ -59,7 +59,7 @@ const Registration = () => {
             value={password2}
             onChange={onChange}
             required
-            minLength={8}
+            minLength={5}
           />
         </div>
         <input type="submit" value="Register" className={styles.btn} />
