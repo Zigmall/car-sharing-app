@@ -1,4 +1,4 @@
-import { GET_CARS, DIVIDE_CAR_LIST } from '../types';
+import { GET_CARS, DIVIDE_CAR_LIST, CHANGE_PAGE } from '../types';
 
 export default (state, action) => {
   switch (action.type) {
@@ -9,6 +9,12 @@ export default (state, action) => {
         loading: false
       };
 
+    case CHANGE_PAGE:
+      return {
+        ...state,
+        currentIndex: action.payload,
+        currentView: state.tableOfPages[action.payload - 1]
+      };
     case DIVIDE_CAR_LIST:
       return {
         ...state,

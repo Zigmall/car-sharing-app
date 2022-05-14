@@ -5,7 +5,8 @@ import carReducer from './carReducer';
 import PropTypes from 'prop-types';
 import {
   GET_CARS,
-  DIVIDE_CAR_LIST
+  DIVIDE_CAR_LIST,
+  CHANGE_PAGE
   //   ADD_CAR,
   //   DELETE_CAR,
   //   SET_CURRENT,
@@ -40,10 +41,16 @@ const CarState = (props) => {
     const result = new Array(Math.ceil(copyOfDb.length / 10))
       .fill()
       .map(() => copyOfDb.splice(0, 10));
-    console.log(result);
     dispatch({
       type: DIVIDE_CAR_LIST,
       payload: result
+    });
+  };
+
+  const changePage = (index) => {
+    dispatch({
+      type: CHANGE_PAGE,
+      payload: index
     });
   };
 
@@ -65,9 +72,15 @@ const CarState = (props) => {
     <CarContext.Provider
       value={{
         cars: state.cars,
+        currentIndex: state.currentIndex,
+        numberOfPages: state.numberOfPages,
+        tableOfPages: state.tableOfPages,
         currentView: state.currentView,
+        filtered: state.filtered,
+        loading: state.loading,
         getCars,
-        divideCarsIntoPages
+        divideCarsIntoPages,
+        changePage
       }}>
       {props.children}
     </CarContext.Provider>
