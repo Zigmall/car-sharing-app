@@ -8,25 +8,43 @@ import Bars from './components/bars/Bars';
 import Registration from './components/auth/Registration';
 import AlertState from './context/alert/AlertState';
 import Alerts from './components/alerts/Alerts';
+import { ApolloClient, InMemoryCache, HttpLink, gql, ApolloProvider } from '@apollo/client';
+const URL = 'https://desolate-spire-04068.herokuapp.com';
+const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  link: new HttpLink({
+    uri: URL
+  })
+});
+
+const QUOTE_QUERY = gql`
+  query getHello {
+    hello
+  }
+`;
+
+client.query({ query: QUOTE_QUERY }).then((result) => console.log('Result: ', result.data));
 
 const App = () => {
   return (
-    <CarState>
-      <AlertState>
-        <div className={styles.app}>
-          <Alerts />
-          <Bars />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/registration" element={<Registration />} />
-            <Route
-              path="/cars/:carId"
-              element={<CarDetails iconHeight={'25'} iconWidth={'25'} />}
-            />
-          </Routes>
-        </div>
-      </AlertState>
-    </CarState>
+    <ApolloProvider client={client}>
+      <CarState>
+        <AlertState>
+          <div className={styles.app}>
+            <Alerts />
+            <Bars />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/registration" element={<Registration />} />
+              <Route
+                path="/cars/:carId"
+                element={<CarDetails iconHeight={'25'} iconWidth={'25'} />}
+              />
+            </Routes>
+          </div>
+        </AlertState>
+      </CarState>
+    </ApolloProvider>
   );
 };
 
