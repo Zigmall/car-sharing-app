@@ -6,7 +6,7 @@ import Rating from '../rating/Rating';
 // import PropTypes from 'prop-types';
 
 // { year, brand, property, location, price } TODO props for component
-const CarDetails = (props) => {
+const CarDetails = () => {
   const [sumOfAllPoints, changeSumOfAllPoints] = useState(4);
   const [voted, changeVoted] = useState(false);
   const [numberOfVoters, changeNumberOfVoters] = useState(1);
@@ -48,21 +48,21 @@ const CarDetails = (props) => {
           <div className={styles.columns}>
             <div className={styles.lineOfIcons}>
               <div className={styles.informationElement}>
-                <OpenDoorCar {...props} />
+                <OpenDoorCar iconHeight={'25'} iconWidth={'25'} />
                 <label>{`${property.doors} doors`}</label>
               </div>
               <div className={styles.informationElement}>
-                <Luggage {...props} />
+                <Luggage iconHeight={'25'} iconWidth={'25'} />
                 <label>{`${property.bags} bags`}</label>
               </div>
             </div>
             <div className={styles.lineOfIcons}>
               <div className={styles.informationElement}>
-                <GearBox {...props} />
+                <GearBox iconHeight={'25'} iconWidth={'25'} />
                 <label>{property.manualGearBox ? 'Manual' : 'Automat'}</label>
               </div>
               <div className={styles.informationElement}>
-                <AirConditioner {...props} />
+                <AirConditioner iconHeight={'25'} iconWidth={'25'} />
                 <label>{property.airConditioning ? '' : 'No'} Air Conditioning</label>
               </div>
             </div>
