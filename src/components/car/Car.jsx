@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import BenefitList from './BenefitList';
 import styles from './Car.module.scss';
 import PropTypes from 'prop-types';
@@ -6,7 +7,8 @@ import MiddleIcon from '../groupElement/MiddleIcon';
 import SvgIconBar from '../svgIconBar/SvgIconBar';
 import { GasStation, GpsDirection } from '../assets/SvgList';
 
-const Car = ({ viewElement, carClass, benefits, brand, property, location, price }) => {
+const Car = ({ carClass, benefits, brand, property, location, price, id }) => {
+  const navigate = useNavigate();
   return (
     <div className={styles.wrapper}>
       <div className={styles.topPart}>
@@ -56,7 +58,7 @@ const Car = ({ viewElement, carClass, benefits, brand, property, location, price
         <div className={styles.columnThree}>
           <div className={styles.price}>
             <label>€ {price}/day</label>
-            <button onClick={viewElement}>View</button>
+            <button onClick={() => navigate(`/cars/${id}`)}>View</button>
           </div>
         </div>
       </div>
@@ -71,7 +73,8 @@ Car.propTypes = {
   brand: PropTypes.string,
   property: PropTypes.object,
   location: PropTypes.string,
-  price: PropTypes.number
+  price: PropTypes.number,
+  id: PropTypes.number
 };
 
 export default Car;

@@ -38,10 +38,7 @@ const App = () => {
               <Route path="/" element={<Home />} />
               <Route path="/registration" element={<Registration />} />
               <Route path="login" element={<Login />} />
-              <Route
-                path="/cars/:carId"
-                element={<CarDetails iconHeight={'25'} iconWidth={'25'} />}
-              />
+              <Route path="/cars/:carId" element={<CarDetails />} />
             </Routes>
           </div>
         </AlertState>
