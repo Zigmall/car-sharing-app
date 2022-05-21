@@ -6,9 +6,9 @@ import PropTypes from 'prop-types';
 const Star = ({ index, rating, hoveredNumber, onMouseEnter, onMouseLeave, onSave }) => {
   const fill = useMemo(() => {
     if (hoveredNumber >= index) {
-      return 'yellow';
+      return '#0074ef';
     } else if (!hoveredNumber && rating >= index) {
-      return 'yellow';
+      return '#0074ef';
     }
     return 'none';
   }, [rating, hoveredNumber, index]);

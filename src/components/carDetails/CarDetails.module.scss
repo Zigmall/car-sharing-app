@@ -1,20 +1,71 @@
-.wrapper {
- display: flex;   
+.carDetailsWrapper {
+ display: flex;
+ flex-direction: column;
+ margin-left: 300px;
+//  align-items: center;
+button {
+    background-color: green;
+    height: 50px;
+    width: 200px;
+    color: white;
+    font-size: 20px;
+    border-radius: 10px;
+    margin-top: 15px;
+  }
 }
 .topPicture {
-    height: 300px;
-    width: 100px;
-}
-.bottomWrapper {
-    display: flex;
+    // background-color: red;
+    height: auto;
+    width: 100%;
+    display: block;
 }
 .leftColumn {
-    display: flex;
+    margin: 20px 0 0px 0;
+    display: inline-block;
     label {
         font-size: 42px;
         font-weight: bold;
     }
 }
 .rightColumn {
+    margin: 0 30px 30px 0;
     display: flex;
+    flex-direction: column;
+    justify-content: end;
+    font-size: 20px;
+    font-weight: bold;
+    p {
+        margin-bottom: 5px;
+    }
+    
+}
+
+.bottomWrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.columns {
+display: flex;
+margin-bottom: 100px;
+}
+
+.lineOfIcons {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    label {
+        font-size: 30px;
+        margin: 15px;
+    }
+}
+
+.informationElement {
+    margin: 10px 0;
+    margin-right: 150px;
+    justify-content: center;
+    align-items: center;
+    svg {
+        margin-top: 10px;
+    }
 }

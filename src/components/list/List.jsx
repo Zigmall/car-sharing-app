@@ -7,9 +7,10 @@ import BottomNavigation from './bottomNavigation/BottomNavigation';
 const List = ({ data, ...props }) => {
   return (
     <div className={styles.wrapper}>
-      {data.map((car, index) => (
+      {data.map((car) => (
         <Car
-          key={index}
+          key={car.id}
+          id={car.id}
           carClass={car.carClass}
           benefits={car.benefits}
           brand={car.brand}
