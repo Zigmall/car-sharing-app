@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './CarDetails.module.scss';
 import MiddleIcon from '../groupElement/MiddleIcon';
 import { GearBox, Luggage, OpenDoorCar, AirConditioner } from '../assets/SvgList';
+import Rating from '../rating/Rating';
 // import PropTypes from 'prop-types';
 
 // { year, brand, property, location, price } TODO props for component
-
 const CarDetails = (props) => {
+  const [sumOfAllPoints, changeSumOfAllPoints] = useState(4);
+  const [voted, changeVoted] = useState(false);
+  const [numberOfVoters, changeNumberOfVoters] = useState(1);
+  const [overallRating, changeOverallRating] = useState(4);
+
   const data = {
     CarId: 123,
     carClass: 'Sport',
@@ -18,7 +23,7 @@ const CarDetails = (props) => {
     price: 50
   };
 
-  const { year, brand, property, location, price } = data;
+  const { year, brand, property, location, price, orderElement } = data;
 
   return (
     <div className={styles.carDetailsWrapper}>
@@ -30,23 +35,43 @@ const CarDetails = (props) => {
           <label>
             {brand} {year}
           </label>
-          <p>Rating 5.0 *****</p>
-          <div className={styles.firstLineOfIcons}>
-            <OpenDoorCar {...props} />
-            <label>{`${property.doors} doors`}</label>
-            <Luggage {...props} />
-            <label>{`${property.bags} bags`}</label>
-          </div>
-          <div className={styles.secondLineOfIcons}>
-            <AirConditioner {...props} />
-            <label>{property.airConditioning ? '' : 'No'} Air Conditioning</label>
-            <GearBox {...props} />
-            <label>{property.manualGearBox ? 'Manual' : 'Automat'}</label>
+          <Rating
+            sumOfAllPoints={sumOfAllPoints}
+            voted={voted}
+            numberOfVoters={numberOfVoters}
+            overallRating={overallRating}
+            changeSumOfAllPoints={changeSumOfAllPoints}
+            changeVoted={changeVoted}
+            changeNumberOfVoters={changeNumberOfVoters}
+            changeOverallRating={changeOverallRating}
+          />
+          <div className={styles.columns}>
+            <div className={styles.lineOfIcons}>
+              <div className={styles.informationElement}>
+                <OpenDoorCar {...props} />
+                <label>{`${property.doors} doors`}</label>
+              </div>
+              <div className={styles.informationElement}>
+                <Luggage {...props} />
+                <label>{`${property.bags} bags`}</label>
+              </div>
+            </div>
+            <div className={styles.lineOfIcons}>
+              <div className={styles.informationElement}>
+                <GearBox {...props} />
+                <label>{property.manualGearBox ? 'Manual' : 'Automat'}</label>
+              </div>
+              <div className={styles.informationElement}>
+                <AirConditioner {...props} />
+                <label>{property.airConditioning ? '' : 'No'} Air Conditioning</label>
+              </div>
+            </div>
           </div>
         </div>
         <div className={styles.rightColumn}>
-          <p>€ {price}</p>
-          <p>{location}</p>
+          <p>Price €{price}</p>
+          <p>Location: {location}</p>
+          <button onClick={orderElement}>Order</button>
         </div>
       </div>
     </div>
