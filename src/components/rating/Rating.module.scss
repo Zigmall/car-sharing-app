@@ -1,17 +1,21 @@
 .wrapper {
   height: 40px;
   width: 160px;
-  background-color: #f7f9ff;
+  background-color: #ffffff;
   margin-top: 5px;
-  padding: 1px;
+  padding: 0px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  // justify-content: center;
+  span {
+    margin-left: 10px;
+    font-size: 24px;
+  }
 }
 .counter p {
   height: 35px;
   line-height: 35px;
   width: 35px;
-  background-color: #f7f9ff;
+  background-color: #ffffff;
   text-align: center;
 }
