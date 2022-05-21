@@ -96,6 +96,7 @@ export default CarState;
 const dataFromDB = {
   cars: [
     {
+      id: 1,
       carClass: 'Sport',
       benefits: ['Unlimited millage', 'Colision damage viewer', 'Theft protection'],
       brand: 'Ford Mustang',
@@ -105,6 +106,7 @@ const dataFromDB = {
       price: 50
     },
     {
+      id: 2,
       carClass: 'Economy',
       benefits: ['Unlimited millage', 'Colision damage viewer', 'Theft protection'],
       brand: 'Toyota Yaris',
@@ -114,6 +116,7 @@ const dataFromDB = {
       price: 40
     },
     {
+      id: 3,
       carClass: 'Economy',
       benefits: ['Unlimited millage', 'Colision damage viewer', 'Theft protection'],
       brand: 'Nissan Micra',
@@ -123,6 +126,7 @@ const dataFromDB = {
       price: 35
     },
     {
+      id: 4,
       carClass: 'Sport',
       benefits: ['Unlimited millage', 'Colision damage viewer', 'Theft protection'],
       brand: 'Ford Mustang',
@@ -132,6 +136,7 @@ const dataFromDB = {
       price: 50
     },
     {
+      id: 5,
       carClass: 'Economy',
       benefits: ['Unlimited millage', 'Colision damage viewer', 'Theft protection'],
       brand: 'Toyota Yaris',
@@ -141,6 +146,7 @@ const dataFromDB = {
       price: 40
     },
     {
+      id: 6,
       carClass: 'Economy',
       benefits: ['Unlimited millage', 'Colision damage viewer', 'Theft protection'],
       brand: 'Nissan Micra',
@@ -150,6 +156,7 @@ const dataFromDB = {
       price: 35
     },
     {
+      id: 7,
       carClass: 'Sport',
       benefits: ['Unlimited millage', 'Colision damage viewer', 'Theft protection'],
       brand: 'Ford Mustang',
@@ -159,6 +166,7 @@ const dataFromDB = {
       price: 50
     },
     {
+      id: 8,
       carClass: 'Economy',
       benefits: ['Unlimited millage', 'Colision damage viewer', 'Theft protection'],
       brand: 'Toyota Yaris',
@@ -168,6 +176,7 @@ const dataFromDB = {
       price: 40
     },
     {
+      id: 9,
       carClass: 'Economy',
       benefits: ['Unlimited millage', 'Colision damage viewer', 'Theft protection'],
       brand: 'Nissan Micra',
@@ -177,6 +186,7 @@ const dataFromDB = {
       price: 35
     },
     {
+      id: 10,
       carClass: 'Sport',
       benefits: ['Unlimited millage', 'Colision damage viewer', 'Theft protection'],
       brand: 'Ford Mustang',
@@ -186,6 +196,7 @@ const dataFromDB = {
       price: 50
     },
     {
+      id: 11,
       carClass: 'Economy',
       benefits: ['Unlimited millage', 'Colision damage viewer', 'Theft protection'],
       brand: 'Toyota Yaris',
@@ -195,6 +206,7 @@ const dataFromDB = {
       price: 40
     },
     {
+      id: 12,
       carClass: 'Economy',
       benefits: ['Unlimited millage', 'Colision damage viewer', 'Theft protection'],
       brand: 'Nissan Micra',
