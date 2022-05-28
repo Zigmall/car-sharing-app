@@ -24,19 +24,22 @@
     button {
       font: inherit;
     }
+    .registerLink {
+      margin-top: 40px;
+    }
   
     .btn {
+      border: none;
       margin-top: 45px;
-      padding: 10px;
-      font-size: 1rem;
       border: none;
       cursor: pointer;
-      outline: none;
+      background-color: #0074ef;
+      padding: 10px;
+      // font-size: 40px;
+      color: black;
       display: block;
       width: 100%;
-      background-color: #0074ef;
-      color: black;
-      border: none;
+      border-radius: 25px;
     }
   
     .formGroup {

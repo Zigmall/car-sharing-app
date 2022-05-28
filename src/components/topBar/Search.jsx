@@ -5,7 +5,7 @@ const Search = () => {
   return (
     <div className={styles.searchWrapper}>
       <label>
-        <input type="text" placeholder="Search question" />
+        <input type="text" placeholder="Search" />
       </label>
     </div>
   );

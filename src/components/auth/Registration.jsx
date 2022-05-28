@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import styles from './Login.module.scss';
 import AlertContext from '../../context/alert/alertContext';
+import { Link } from 'react-router-dom';
 
 const Registration = () => {
   const [user, setUser] = useState({
@@ -64,6 +65,10 @@ const Registration = () => {
         </div>
         <input type="submit" value="Register" className={styles.btn} />
       </form>
+      <div className={styles.registerLink}>
+        <p>You already have an account? </p>
+        <Link to={'/Login'}>Log in</Link>
+      </div>
     </div>
   );
 };
