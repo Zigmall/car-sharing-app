@@ -1,17 +1,24 @@
 .wrapper {
+  display: flex;
+  width: 80%;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+  margin: 10px auto;
+  
+
+  .alerts {
     display: flex;
-    width: 80%;
-    height: 50px;
-    background-color: rgb(239, 57, 57);
     justify-content: center;
     align-items: center;
-    margin: 10px auto;
-  
-    .alerts {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 18px;
-    }
+    font-size: 18px;
   }
-  
+}
+
+.danger {
+  background-color: rgb(251, 143, 143);
+}
+
+.info {
+  background-color: rgb(84, 197, 110);
+}
