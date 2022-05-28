@@ -32,8 +32,8 @@ const App = () => {
       <CarState>
         <AlertState>
           <div className={styles.app}>
-            <Alerts />
             <Bars />
+            <Alerts />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/registration" element={<Registration />} />
