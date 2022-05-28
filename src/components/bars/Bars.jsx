@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
 import TopBar from '../topBar/TopBar';
-import { toast } from 'react-toastify';
 import SideBar from '../sideBar/SideBar';
 import CarContext from '../../context/car/carContext';
 
@@ -21,17 +20,6 @@ const Bars = () => {
       divideCarsIntoPages(cars);
     }
   }, [cars]);
-
-  const notify = () =>
-    toast.success('You have been successfully logged out!', {
-      position: 'top-center',
-      autoClose: 5000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined
-    });
 
   const sortByRating = () => {};
   const sortByPopularity = () => {};
@@ -63,7 +51,7 @@ const Bars = () => {
 
   return (
     <>
-      <TopBar userName="John Doe" onLogout={onLogout} userLoggedIn={userLoggedIn} notify={notify} />
+      <TopBar userName="John Doe" onLogout={onLogout} userLoggedIn={userLoggedIn} />
       <SideBar sideBarIndex={sideBarIndex} setColorOnSideBarIcon={setColorOnSideBarIcon} />
     </>
   );

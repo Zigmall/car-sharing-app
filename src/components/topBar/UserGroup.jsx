@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styles from './TopBar.module.scss';
 import Avatar from 'react-avatar';
 import PropTypes from 'prop-types';
-import { ToastContainer } from 'react-toastify';
 import { Link } from 'react-router-dom';
+import AlertContext from '../../context/alert/alertContext';
 
-const UserGroup = ({ userName, userLoggedIn, onLogout, notify }) => {
+const UserGroup = ({ userName, userLoggedIn, onLogout }) => {
+  const alertContext = useContext(AlertContext);
+  const { setAlert } = alertContext;
+
   return userLoggedIn ? (
     <div className={styles.userGroup}>
       <div className={styles.avatar}>
@@ -16,7 +19,7 @@ const UserGroup = ({ userName, userLoggedIn, onLogout, notify }) => {
         className={styles.logoutIcon}
         onClick={() => {
           onLogout();
-          notify();
+          setAlert('You have been successfully logged out.', 'info');
         }}>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
           <path
@@ -41,7 +44,6 @@ const UserGroup = ({ userName, userLoggedIn, onLogout, notify }) => {
           </svg>
         </div>
       </Link>
-      <ToastContainer newestOnTop={false} rtl={false} pauseOnFocusLoss />
     </div>
   );
 };
@@ -49,7 +51,6 @@ const UserGroup = ({ userName, userLoggedIn, onLogout, notify }) => {
 UserGroup.propTypes = {
   userName: PropTypes.string,
   onLogout: PropTypes.func,
-  notify: PropTypes.func,
   userLoggedIn: PropTypes.bool
 };
 
