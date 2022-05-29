@@ -19,7 +19,9 @@ const Car = ({ carClass, benefits, brand, property, location, price, id }) => {
         <div className={styles.iconSide}>
           <div className={styles.carTypeAndName}>
             <label>{carClass}</label>
-            <p>{brand}</p>
+            <p>
+              {brand.name} {brand.model.name}
+            </p>
           </div>
           <div className={styles.iconsLine}>
             <SvgIconBar
@@ -27,7 +29,7 @@ const Car = ({ carClass, benefits, brand, property, location, price, id }) => {
               iconWidth={'25'}
               seats={property.seats}
               doors={property.doors}
-              bags={property.bags}
+              bags={property.trunk}
               airConditioning={property.airConditioning}
               manualGearBox={property.manualGearBox}
             />
@@ -70,11 +72,11 @@ Car.propTypes = {
   viewElement: PropTypes.func,
   carClass: PropTypes.string,
   benefits: PropTypes.array,
-  brand: PropTypes.string,
+  brand: PropTypes.object,
   property: PropTypes.object,
   location: PropTypes.string,
   price: PropTypes.number,
-  id: PropTypes.number
+  id: PropTypes.string
 };
 
 export default Car;
