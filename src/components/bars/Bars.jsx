@@ -2,8 +2,38 @@ import React, { useState, useContext, useEffect } from 'react';
 import TopBar from '../topBar/TopBar';
 import SideBar from '../sideBar/SideBar';
 import CarContext from '../../context/car/carContext';
+import { gql, useQuery } from '@apollo/client';
+
+const ALL_CARS = gql`
+  query getCars {
+    cars {
+      id
+      carClass
+      benefits
+      brand {
+        name
+        model {
+          name
+        }
+      }
+      year
+      property {
+        seats
+        doors
+        trunk
+        airConditioning
+        manualGearBox
+      }
+      location
+      price
+    }
+  }
+`;
 
 const Bars = () => {
+  const { data } = useQuery(ALL_CARS);
+  // data && console.log('data: ', data.cars);
+
   const [userLoggedIn, setUserLoggedIn] = useState(true);
   const [sideBarIndex, setSideBarIndex] = useState(1);
 
@@ -15,11 +45,12 @@ const Bars = () => {
   };
 
   useEffect(() => {
-    getCars();
+    // data && loadCars({ data });
+    data && getCars({ data });
     if (cars !== null) {
       divideCarsIntoPages(cars);
     }
-  }, [cars]);
+  }, [cars, data]);
 
   const sortByRating = () => {};
   const sortByPopularity = () => {};

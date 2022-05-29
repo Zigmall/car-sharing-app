@@ -9,7 +9,7 @@ import Registration from './components/auth/Registration';
 import AlertState from './context/alert/AlertState';
 import Alerts from './components/alerts/Alerts';
 import Login from './components/auth/Login';
-import { ApolloClient, InMemoryCache, HttpLink, gql, ApolloProvider } from '@apollo/client';
+import { ApolloClient, InMemoryCache, HttpLink, ApolloProvider } from '@apollo/client';
 // const URL = 'https://desolate-spire-04068.herokuapp.com';
 const URL = 'http://localhost:5000';
 const client = new ApolloClient({
@@ -18,34 +18,6 @@ const client = new ApolloClient({
     uri: URL
   })
 });
-
-const QUOTE_QUERY = gql`
-  query getCars {
-    cars {
-      id
-      carClass
-      benefits
-      brand {
-        name
-        model {
-          name
-        }
-      }
-      year
-      property {
-        seats
-        doors
-        trunk
-        airConditioning
-        manualGearBox
-      }
-      location
-      price
-    }
-  }
-`;
-
-client.query({ query: QUOTE_QUERY }).then((result) => console.log('Result: ', result.data));
 
 const App = () => {
   return (
