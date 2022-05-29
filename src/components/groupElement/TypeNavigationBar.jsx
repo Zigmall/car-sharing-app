@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import GroupElement from './GroupElement';
-import styles from './GroupElement.module.scss';
-// import PropTypes from 'prop-types';
+import styles from './TypeNavigationBar.module.scss';
 
-const GroupWrapper = () => {
+const TypeNavigationBar = () => {
   const groupArray = [
     { model: 'Small', luggage: 2, passengers: 4, price: 120 },
     { model: 'Regular', luggage: 3, passengers: 4, price: 130 },
@@ -37,4 +36,4 @@ const GroupWrapper = () => {
   );
 };
 
-export default GroupWrapper;
+export default TypeNavigationBar;

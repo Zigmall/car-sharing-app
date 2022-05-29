@@ -10,7 +10,8 @@ import AlertState from './context/alert/AlertState';
 import Alerts from './components/alerts/Alerts';
 import Login from './components/auth/Login';
 import { ApolloClient, InMemoryCache, HttpLink, gql, ApolloProvider } from '@apollo/client';
-const URL = 'https://desolate-spire-04068.herokuapp.com';
+// const URL = 'https://desolate-spire-04068.herokuapp.com';
+const URL = 'http://localhost:5000';
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: new HttpLink({
@@ -19,8 +20,28 @@ const client = new ApolloClient({
 });
 
 const QUOTE_QUERY = gql`
-  query getHello {
-    hello
+  query getCars {
+    cars {
+      id
+      carClass
+      benefits
+      brand {
+        name
+        model {
+          name
+        }
+      }
+      year
+      property {
+        seats
+        doors
+        trunk
+        airConditioning
+        manualGearBox
+      }
+      location
+      price
+    }
   }
 `;
 
