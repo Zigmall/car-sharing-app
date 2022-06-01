@@ -13,6 +13,7 @@ const List = ({ data, ...props }) => {
           id={car.id}
           carClass={car.carClass}
           benefits={car.benefits}
+          model={car.model}
           brand={car.brand}
           property={car.property}
           location={car.location}

@@ -10,11 +10,9 @@ const ALL_CARS = gql`
       id
       carClass
       benefits
+      model
       brand {
         name
-        model {
-          name
-        }
       }
       year
       property {
