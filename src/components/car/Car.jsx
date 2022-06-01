@@ -7,7 +7,7 @@ import MiddleIcon from '../groupElement/MiddleIcon';
 import SvgIconBar from '../svgIconBar/SvgIconBar';
 import { GasStation, GpsDirection } from '../assets/SvgList';
 
-const Car = ({ carClass, benefits, brand, property, location, price, id }) => {
+const Car = ({ carClass, model, benefits, brand, property, location, price, id }) => {
   const navigate = useNavigate();
   return (
     <div className={styles.wrapper}>
@@ -20,7 +20,7 @@ const Car = ({ carClass, benefits, brand, property, location, price, id }) => {
           <div className={styles.carTypeAndName}>
             <label>{carClass}</label>
             <p>
-              {brand.name} {brand.model.name}
+              {brand.name} {model}
             </p>
           </div>
           <div className={styles.iconsLine}>
@@ -76,7 +76,8 @@ Car.propTypes = {
   property: PropTypes.object,
   location: PropTypes.string,
   price: PropTypes.number,
-  id: PropTypes.string
+  id: PropTypes.string,
+  model: PropTypes.string
 };
 
 export default Car;
