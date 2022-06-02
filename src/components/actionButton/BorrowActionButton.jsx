@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { gql, useMutation } from '@apollo/client';
-import styles from './ActionButton.module.scss';
+import styles from './ActionButtons.module.scss';
 import PropTypes from 'prop-types';
 import AlertContext from '../../context/alert/alertContext';
 import { useNavigate } from 'react-router-dom';
