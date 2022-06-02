@@ -25,8 +25,8 @@ const App = () => {
       <CarState>
         <AlertState>
           <div className={styles.app}>
-            <Bars />
             <Alerts />
+            <Bars />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/registration" element={<Registration />} />
