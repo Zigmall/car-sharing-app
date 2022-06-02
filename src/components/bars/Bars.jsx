@@ -43,7 +43,6 @@ const Bars = () => {
   };
 
   useEffect(() => {
-    // data && loadCars({ data });
     data && getCars({ data });
     if (cars !== null) {
       divideCarsIntoPages(cars);

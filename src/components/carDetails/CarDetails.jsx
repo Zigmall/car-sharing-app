@@ -53,10 +53,6 @@ const CarDetails = () => {
   const { car } = data;
   const availableCars = car.copies.filter((car) => car.borrower === null);
 
-  if (availableCars.length < 1 || availableCars === null) {
-    console.log('Car temporary unavailable');
-  }
-
   const sumOfAllPoints = 10;
   const numberOfVoters = 3;
   const overallRating = 3;
@@ -116,7 +112,7 @@ const CarDetails = () => {
           </h2>
           <h3>Price €{car.price}</h3>
           <p>Location: {car.location}</p>
-          <ActionButtons carCopy={car} />
+          <ActionButtons carCopy={car} returnCar={false} />
         </div>
       </div>
     </div>

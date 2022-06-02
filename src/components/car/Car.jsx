@@ -6,8 +6,20 @@ import PropTypes from 'prop-types';
 import MiddleIcon from '../groupElement/MiddleIcon';
 import SvgIconBar from '../svgIconBar/SvgIconBar';
 import { GasStation, GpsDirection } from '../assets/SvgList';
+import ActionButtons from '../actionButton/ActionButtons';
 
-const Car = ({ carClass, model, benefits, brand, property, location, price, id }) => {
+const Car = ({
+  carClass,
+  model,
+  benefits,
+  brand,
+  property,
+  location,
+  price,
+  id,
+  returnCar,
+  carCopy
+}) => {
   const navigate = useNavigate();
   return (
     <div className={styles.wrapper}>
@@ -60,7 +72,11 @@ const Car = ({ carClass, model, benefits, brand, property, location, price, id }
         <div className={styles.columnThree}>
           <div className={styles.price}>
             <label>€ {price}/day</label>
-            <button onClick={() => navigate(`/cars/${id}`)}>View</button>
+            {!returnCar ? (
+              <button onClick={() => navigate(`/cars/${id}`)}>View</button>
+            ) : (
+              <ActionButtons carCopy={carCopy} returnCar={true} />
+            )}
           </div>
         </div>
       </div>
@@ -77,7 +93,9 @@ Car.propTypes = {
   location: PropTypes.string,
   price: PropTypes.number,
   id: PropTypes.string,
-  model: PropTypes.string
+  model: PropTypes.string,
+  returnCar: PropTypes.bool,
+  carCopy: PropTypes.object
 };
 
 export default Car;
