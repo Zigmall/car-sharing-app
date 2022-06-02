@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useParams } from 'react-router';
 import styles from './CarDetails.module.scss';
 import MiddleIcon from '../groupElement/MiddleIcon';
 import { GearBox, Luggage, OpenDoorCar, AirConditioner } from '../assets/SvgList';
 import Rating from '../rating/Rating';
 import { gql, useQuery } from '@apollo/client';
-import AlertContext from '../../context/alert/alertContext';
+import ActionButtons from '../actionButton/ActionButtons';
 
 const GET_CAR = gql`
   query GetCar($carId: ID!) {
@@ -27,14 +27,17 @@ const GET_CAR = gql`
       }
       location
       price
+      copies {
+        id
+        borrower {
+          id
+        }
+      }
     }
   }
 `;
 
 const CarDetails = () => {
-  const alertContext = useContext(AlertContext);
-  const { setAlert } = alertContext;
-
   const { carId } = useParams();
   const { loading, error, data } = useQuery(GET_CAR, {
     variables: { carId }
@@ -45,10 +48,18 @@ const CarDetails = () => {
   }
   if (error) {
     console.log('error:', error.message);
-    setAlert(error.message, 'danger');
     return <p>Could not load book...</p>;
   }
   const { car } = data;
+
+  const availableCars = car.copies.filter((car) => car.borrower === null);
+  let copyId = null;
+
+  if (availableCars.length < 1 || availableCars === null) {
+    console.log('Car temporary unavailable');
+  } else {
+    copyId = availableCars[0].id;
+  }
 
   const sumOfAllPoints = 10;
   const numberOfVoters = 3;
@@ -59,8 +70,6 @@ const CarDetails = () => {
   const changeNumberOfVoters = () => {};
   const changeOverallRating = () => {};
   const changeSumOfAllPoints = () => {};
-
-  const orderElement = () => {};
 
   return !loading && !error ? (
     <div className={styles.carDetailsWrapper}>
@@ -106,9 +115,12 @@ const CarDetails = () => {
           </div>
         </div>
         <div className={styles.rightColumn}>
-          <p>Price €{car.price}</p>
+          <h2>
+            {availableCars.length}/{car.copies.length} AVAILABLE
+          </h2>
+          <h3>Price €{car.price}</h3>
           <p>Location: {car.location}</p>
-          <button onClick={orderElement}>Order</button>
+          {copyId && <ActionButtons carCopy={car} />}
         </div>
       </div>
     </div>
