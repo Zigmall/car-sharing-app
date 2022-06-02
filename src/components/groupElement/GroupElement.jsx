@@ -20,7 +20,7 @@ const GroupElement = ({ model, active, luggage, passengers, price, onClickItem }
         <MiddleIcon model={model} />
       </div>
       <div className={styles.price}>
-        <p>From {price}zł/day</p>
+        <p>From €{price}/day</p>
       </div>
       <div className={active ? styles.activeIndicator : undefined}></div>
     </div>

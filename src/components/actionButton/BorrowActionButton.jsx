@@ -32,7 +32,6 @@ const BorrowActionButton = ({ availableCarCopy }) => {
     variables: { carCopyId: availableCarCopy },
     onCompleted: () => {
       navigate('/');
-      // window.location.reload();
       setAlert('You have successfully borrowed the car', 'info');
     },
     onError: (error) => {

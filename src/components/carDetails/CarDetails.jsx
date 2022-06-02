@@ -51,14 +51,10 @@ const CarDetails = () => {
     return <p>Could not load book...</p>;
   }
   const { car } = data;
-
   const availableCars = car.copies.filter((car) => car.borrower === null);
-  let copyId = null;
 
   if (availableCars.length < 1 || availableCars === null) {
     console.log('Car temporary unavailable');
-  } else {
-    copyId = availableCars[0].id;
   }
 
   const sumOfAllPoints = 10;
@@ -79,7 +75,7 @@ const CarDetails = () => {
       <div className={styles.bottomWrapper}>
         <div className={styles.leftColumn}>
           <label>
-            {car.brand.name} {car.year}
+            {car.brand.name} {car.model} {car.year}
           </label>
           <Rating
             sumOfAllPoints={sumOfAllPoints}
@@ -120,7 +116,7 @@ const CarDetails = () => {
           </h2>
           <h3>Price €{car.price}</h3>
           <p>Location: {car.location}</p>
-          {copyId && <ActionButtons carCopy={car} />}
+          <ActionButtons carCopy={car} />
         </div>
       </div>
     </div>
