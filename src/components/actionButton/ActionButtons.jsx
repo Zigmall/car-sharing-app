@@ -15,9 +15,6 @@ const ActionButtons = ({ carCopy, returnCar }) => {
     canBorrow = !!availableCopies.length > 0;
   }
 
-  //   const canReturn = !carCopy.borrower;
-  // const carsToReturn =
-
   useEffect(() => {
     if (availableCopies !== null && availableCopies.length === 0 && !returnCar) {
       setAlert('Car temporary unavailable', 'danger');
