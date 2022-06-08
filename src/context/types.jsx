@@ -6,7 +6,7 @@
 // export const FILTER_CAR = 'FILTER_CAR';
 // export const CLEAR_FILTER = 'CLEAR_FILTER';
 
-// export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_USER = 'LOGIN_USER';
 // export const LOGIN_FAIL = 'LOGIN_FAIL';
 // export const USER_LOADED = 'USER_LOADED';
 // export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';

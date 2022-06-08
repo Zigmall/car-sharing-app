@@ -3,16 +3,16 @@ import AuthContext from './authContext';
 import authReducer from './authReducer';
 import PropTypes from 'prop-types';
 
-// import {
-//     LOGIN_SUCCESS,
-//     LOGIN_FAIL,
-//     USER_LOADED,
-//     REGISTER_FAIL,
-//     REGISTER_SUCCESS,
-//     AUTH_ERROR,
-//     CLEAN_ERRORS
-//     LOGOUT,
-// } from '../types';
+import {
+  LOGIN_USER
+  //     LOGIN_FAIL,
+  //     USER_LOADED,
+  //     REGISTER_FAIL,
+  //     REGISTER_SUCCESS,
+  //     AUTH_ERROR,
+  //     CLEAN_ERRORS
+  //     LOGOUT,
+} from '../types';
 
 const AuthState = (props) => {
   const initialState = {
@@ -30,6 +30,13 @@ const AuthState = (props) => {
   //Register User
 
   //Login
+  const loginUser = (token) => {
+    localStorage.setItem('token', token);
+    dispatch({
+      type: LOGIN_USER,
+      payload: token
+    });
+  };
 
   //Logout
 
@@ -42,7 +49,8 @@ const AuthState = (props) => {
         isAuthenticated: state.isAuthenticated,
         loading: state.loading,
         user: state.user,
-        error: state.error
+        error: state.error,
+        loginUser
       }}>
       {props.children}
     </AuthContext.Provider>

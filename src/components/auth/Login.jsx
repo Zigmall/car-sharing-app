@@ -1,20 +1,57 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './Login.module.scss';
+import { gql, useMutation } from '@apollo/client';
+import AlertContext from '../../context/alert/alertContext';
+import AuthContext from '../../context/auth/authContext';
+
+const LOG_IN_MUTATION = gql`
+  mutation ($input: LogInInput!) {
+    logIn(input: $input) {
+      message
+      success
+      token
+      currentUser {
+        firstName
+        lastName
+        email
+        avatar {
+          color
+        }
+      }
+    }
+  }
+`;
 
 const Login = () => {
+  const navigate = useNavigate();
+  const alertContext = useContext(AlertContext);
+  const { setAlert } = alertContext;
+  const authContext = useContext(AuthContext);
+  const { loginUser } = authContext;
+
+  const [login] = useMutation(LOG_IN_MUTATION, {
+    onCompleted: ({ logIn: { success, message, token } }) => {
+      setAlert(message, success ? 'info' : 'danger');
+      loginUser(token);
+      navigate('/');
+    }
+  });
   const [user, setUser] = useState({
     email: '',
     password: ''
   });
 
   const { email, password } = user;
-
   const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log('Login user');
+    const input = {
+      email,
+      password
+    };
+    login({ variables: { input } });
   };
   return (
     <div className={styles.formWrapper}>
