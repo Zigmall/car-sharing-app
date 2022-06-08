@@ -3,6 +3,7 @@ import TopBar from '../topBar/TopBar';
 import SideBar from '../sideBar/SideBar';
 import CarContext from '../../context/car/carContext';
 import { gql, useQuery } from '@apollo/client';
+import AuthContext from '../../context/auth/authContext';
 
 const ALL_CARS = gql`
   query getCars {
@@ -29,6 +30,8 @@ const ALL_CARS = gql`
 `;
 
 const Bars = () => {
+  const authContext = useContext(AuthContext);
+  const { user } = authContext;
   const { data } = useQuery(ALL_CARS);
   // data && console.log('data: ', data.cars);
 
@@ -79,7 +82,7 @@ const Bars = () => {
 
   return (
     <>
-      <TopBar userName="John Doe" onLogout={onLogout} userLoggedIn={userLoggedIn} />
+      <TopBar userName={user} onLogout={onLogout} userLoggedIn={userLoggedIn} />
       <SideBar sideBarIndex={sideBarIndex} setColorOnSideBarIcon={setColorOnSideBarIcon} />
     </>
   );

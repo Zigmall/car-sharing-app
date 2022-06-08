@@ -11,6 +11,7 @@ import Alerts from './components/alerts/Alerts';
 import Login from './components/auth/Login';
 import ReturnCars from './components/pages/returnCars/ReturnCars';
 import { ApolloClient, InMemoryCache, HttpLink, ApolloProvider } from '@apollo/client';
+import AuthState from './context/auth/AuthState';
 
 // const URL = 'https://desolate-spire-04068.herokuapp.com';
 const URL = 'http://localhost:5000';
@@ -24,21 +25,23 @@ const client = new ApolloClient({
 const App = () => {
   return (
     <ApolloProvider client={client}>
-      <CarState>
-        <AlertState>
-          <div className={styles.app}>
-            <Alerts />
-            <Bars />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/registration" element={<Registration />} />
-              <Route path="login" element={<Login />} />
-              <Route path="/cars/:carId" element={<CarDetails />} />
-              <Route path="/returnCars" element={<ReturnCars />} />
-            </Routes>
-          </div>
-        </AlertState>
-      </CarState>
+      <AuthState>
+        <CarState>
+          <AlertState>
+            <div className={styles.app}>
+              <Alerts />
+              <Bars />
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/registration" element={<Registration />} />
+                <Route path="login" element={<Login />} />
+                <Route path="/cars/:carId" element={<CarDetails />} />
+                <Route path="/returnCars" element={<ReturnCars />} />
+              </Routes>
+            </div>
+          </AlertState>
+        </CarState>
+      </AuthState>
     </ApolloProvider>
   );
 };
