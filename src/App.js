@@ -10,16 +10,37 @@ import AlertState from './context/alert/AlertState';
 import Alerts from './components/alerts/Alerts';
 import Login from './components/auth/Login';
 import ReturnCars from './components/pages/returnCars/ReturnCars';
-import { ApolloClient, InMemoryCache, HttpLink, ApolloProvider } from '@apollo/client';
+import {
+  ApolloClient,
+  InMemoryCache,
+  HttpLink,
+  ApolloProvider,
+  ApolloLink,
+  concat
+} from '@apollo/client';
 import AuthState from './context/auth/AuthState';
+import { loadUser } from './context/auth/AuthState';
 
 // const URL = 'https://desolate-spire-04068.herokuapp.com';
 const URL = 'http://localhost:5000';
+
+const authenticationLink = new ApolloLink((operation, forward) => {
+  const token = loadUser();
+
+  operation.setContext({
+    headers: {
+      Authorization: token ? `Bearer ${token}` : null
+    }
+  });
+  return forward(operation);
+});
+const httpLink = new HttpLink({
+  uri: URL
+});
+
 const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  link: new HttpLink({
-    uri: URL
-  })
+  link: concat(authenticationLink, httpLink),
+  cache: new InMemoryCache()
 });
 
 const App = () => {
