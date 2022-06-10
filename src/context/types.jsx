@@ -7,13 +7,13 @@
 // export const CLEAR_FILTER = 'CLEAR_FILTER';
 
 export const LOGIN_USER = 'LOGIN_USER';
+export const LOAD_USER = 'LOAD_USER';
 // export const LOGIN_FAIL = 'LOGIN_FAIL';
-// export const USER_LOADED = 'USER_LOADED';
 // export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 // export const REGISTER_FAIL = 'REGISTER_FAIL';
 // export const AUTH_ERROR = 'AUTH_ERROR';
 // export const CLEAN_ERRORS = 'CLEAN_ERRORS';
-// export const LOGOUT = 'LOGOUT';
+export const LOGOUT = 'LOGOUT';
 export const CHANGE_PAGE = 'CHANGE_PAGE';
 export const DIVIDE_CAR_LIST = 'DIVIDE_CAR_LIST';
 export const GET_CARS = 'GET_CARS';

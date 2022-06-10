@@ -4,15 +4,19 @@ import authReducer from './authReducer';
 import PropTypes from 'prop-types';
 
 import {
-  LOGIN_USER
+  LOGIN_USER,
+  LOAD_USER,
+  LOGOUT
   //     LOGIN_FAIL,
-  //     USER_LOADED,
   //     REGISTER_FAIL,
   //     REGISTER_SUCCESS,
   //     AUTH_ERROR,
   //     CLEAN_ERRORS
-  //     LOGOUT,
 } from '../types';
+
+export const loadUser = () => {
+  return localStorage.getItem('token') || null;
+};
 
 const AuthState = (props) => {
   const initialState = {
@@ -26,20 +30,31 @@ const AuthState = (props) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   //Load User
+  const loadUser = (user) => {
+    dispatch({
+      type: LOAD_USER,
+      payload: user
+    });
+  };
 
   //Register User
 
   //Login
-  const loginUser = (token) => {
-    localStorage.setItem('token', token);
+  const loginUser = (data) => {
+    localStorage.setItem('token', data.token);
     dispatch({
       type: LOGIN_USER,
-      payload: token
+      payload: data
     });
   };
 
   //Logout
-
+  const logout = () => {
+    localStorage.setItem('token', null);
+    dispatch({
+      type: LOGOUT
+    });
+  };
   //Clean errors
 
   return (
@@ -50,7 +65,9 @@ const AuthState = (props) => {
         loading: state.loading,
         user: state.user,
         error: state.error,
-        loginUser
+        loginUser,
+        loadUser,
+        logout
       }}>
       {props.children}
     </AuthContext.Provider>

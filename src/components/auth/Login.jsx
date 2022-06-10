@@ -15,6 +15,7 @@ const LOG_IN_MUTATION = gql`
         firstName
         lastName
         email
+        isAdmin
         avatar {
           color
         }
@@ -31,10 +32,11 @@ const Login = () => {
   const { loginUser } = authContext;
 
   const [login] = useMutation(LOG_IN_MUTATION, {
-    onCompleted: ({ logIn: { success, message, token } }) => {
+    onCompleted: ({ logIn: { success, message, token, currentUser } }) => {
       setAlert(message, success ? 'info' : 'danger');
-      loginUser(token);
-      navigate('/');
+      const resData = { currentUser, token };
+      loginUser(resData);
+      success && navigate('/');
     }
   });
   const [user, setUser] = useState({

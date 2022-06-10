@@ -5,16 +5,22 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import AlertContext from '../../context/alert/alertContext';
 
-const UserGroup = ({ userName, userLoggedIn, onLogout }) => {
+const UserGroup = ({ user, onLogout }) => {
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
-
-  return userLoggedIn ? (
+  return user ? (
     <div className={styles.userGroup}>
       <div className={styles.avatar}>
-        <Avatar name={userName} size="40" round={true} colors={['#dde4f9', '#7b97ec', '#4f77ef']} />
+        <Avatar
+          name={`${user.firstName} ${user.lastName}`}
+          size="40"
+          round={true}
+          color={user.avatar.color}
+        />
       </div>
-      <p>{userName}</p>
+      <p>
+        {user.firstName} {user.lastName}
+      </p>
       <div
         className={styles.logoutIcon}
         onClick={() => {
@@ -49,7 +55,7 @@ const UserGroup = ({ userName, userLoggedIn, onLogout }) => {
 };
 
 UserGroup.propTypes = {
-  userName: PropTypes.string,
+  user: PropTypes.object,
   onLogout: PropTypes.func,
   userLoggedIn: PropTypes.bool
 };
