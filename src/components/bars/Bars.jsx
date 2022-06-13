@@ -46,19 +46,14 @@ const GET_CURRENT_USER = gql`
 
 const Bars = () => {
   const authContext = useContext(AuthContext);
-  const { user, loadUser, logout } = authContext;
+  const { user, loadUser, logout, getTokenInfo, token } = authContext;
   const { data } = useQuery(ALL_CARS);
-
-  // data && console.log('data: ', data.cars);
-
-  // const [userLoggedIn, setUserLoggedIn] = useState(true);
   const [sideBarIndex, setSideBarIndex] = useState(1);
 
   const carContext = useContext(CarContext);
   const { getCars, divideCarsIntoPages, cars } = carContext;
 
   const onLogout = () => {
-    // setUserLoggedIn(false);
     logout();
     client.resetStore();
   };
@@ -69,15 +64,21 @@ const Bars = () => {
     if (cars !== null) {
       divideCarsIntoPages(cars);
     }
-    if (error) {
-      console.log(error);
-    }
-
-    if (!loading) {
-      data3;
-    }
     !loading && !error && loadUser(data3);
-  }, [cars, data]);
+
+    const intervalId = setInterval(() => {
+      const tokenInfo = getTokenInfo(token);
+
+      if (tokenInfo && tokenInfo.exp - Math.round(Date.now() / 1000) < 30) {
+        console.log('logout');
+        logout();
+      }
+    }, 15000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [cars, data, setInterval]);
 
   // error && console.log(error);
 

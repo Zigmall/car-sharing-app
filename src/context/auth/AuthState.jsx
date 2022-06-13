@@ -2,6 +2,7 @@ import React, { useReducer } from 'react';
 import AuthContext from './authContext';
 import authReducer from './authReducer';
 import PropTypes from 'prop-types';
+import jwt from 'jwt-decode';
 
 import {
   LOGIN_USER,
@@ -15,7 +16,22 @@ import {
 } from '../types';
 
 export const loadUser = () => {
-  return localStorage.getItem('token') || null;
+  const token = localStorage.getItem('token');
+  if (token === 'null') {
+    return null;
+  }
+  return token;
+};
+
+const getTokenInfo = () => {
+  const token = loadUser();
+
+  if (!token) {
+    return null;
+  } else {
+    const payload = jwt(token);
+    return payload;
+  }
 };
 
 const AuthState = (props) => {
@@ -50,7 +66,7 @@ const AuthState = (props) => {
 
   //Logout
   const logout = () => {
-    localStorage.setItem('token', null);
+    localStorage.removeItem('token');
     dispatch({
       type: LOGOUT
     });
@@ -67,7 +83,8 @@ const AuthState = (props) => {
         error: state.error,
         loginUser,
         loadUser,
-        logout
+        logout,
+        getTokenInfo
       }}>
       {props.children}
     </AuthContext.Provider>
