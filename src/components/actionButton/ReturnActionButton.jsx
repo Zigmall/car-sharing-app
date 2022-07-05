@@ -41,7 +41,7 @@ const ReturnActionButton = ({ borrowedCarCopy }) => {
       setAlert('You have successfully returned car', 'info');
     },
     onError: (error) => {
-      setAlert('Error, cannot return the car', 'danger');
+      setAlert(error.message, 'danger');
       console.log(error);
     }
   });
