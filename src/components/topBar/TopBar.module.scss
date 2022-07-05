@@ -45,7 +45,7 @@
   .logoutIcon {
     height: 30px;
     width: 30px;
-    margin-left: 30px;
+    margin-left: 10px;
     fill: '#373737';
     :hover {
       fill: #0074ef;
@@ -55,4 +55,26 @@
   .avatar {
     margin: 0 10px 0 10px;
   }
+
+  :hover {
+    fill: #0074ef;
+  }
+
+  a:hover {
+    color: #0074ef;
+    text-decoration: none;
+  }
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
 }
+
+.login {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  
+}
+
