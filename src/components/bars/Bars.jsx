@@ -82,32 +82,33 @@ const Bars = () => {
 
   // error && console.log(error);
 
-  const sortByRating = () => {};
-  const sortByPopularity = () => {};
+  // const sortByRating = () => {};
+  // const sortByPopularity = () => {};
 
-  const sortBy = (sortingType) => {
-    switch (sortingType) {
-      case 'Dashboard':
-        resetList();
-        break;
-      case 'Highest rated':
-        sortByRating();
-        break;
-      case 'Most popular':
-        sortByPopularity();
-        break;
+  // const sortBy = (sortingType) => {
+  //   switch (sortingType) {
+  //     case 'Dashboard':
+  //       resetList();
+  //       break;
+  //     case 'Highest rated':
+  //       sortByRating();
+  //       break;
+  //     case 'Most popular':
+  //       sortByPopularity();
+  //       break;
 
-      default:
-        resetList();
-        break;
-    }
-  };
+  //     default:
+  //       resetList();
+  //       break;
+  //   }
+  // };
 
-  const resetList = () => {};
+  // const resetList = () => {};
 
-  const setColorOnSideBarIcon = (index, label) => {
+  const setColorOnSideBarIcon = (index) => {
     setSideBarIndex(index);
-    sortBy(label);
+    // console.log(label);
+    // sortBy(label);
   };
 
   return (
