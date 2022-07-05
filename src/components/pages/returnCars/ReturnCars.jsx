@@ -39,10 +39,15 @@ const GET_ALL_BORROWED_CARS = gql`
 `;
 
 const ReturnCars = () => {
-  const { data } = useQuery(GET_ALL_BORROWED_CARS, { variables: { userId: 'VXNlci0y' } });
+  const { data } = useQuery(GET_ALL_BORROWED_CARS, { variables: { userId: 'VXNlci0x' } });
   return (
     <div className={styles.returnCarWrapper}>
-      {data &&
+      {data && data.user.borrowedCarCopies.length < 1 ? (
+        <div className={styles.noCars}>
+          <h1>You have no cars to return</h1>
+        </div>
+      ) : (
+        data &&
         data.user.borrowedCarCopies.map((car, index) => (
           <Car
             key={index}
@@ -57,7 +62,8 @@ const ReturnCars = () => {
             carCopy={car}
             returnCar={true}
           />
-        ))}
+        ))
+      )}
     </div>
   );
 };
