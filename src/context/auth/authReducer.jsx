@@ -7,20 +7,23 @@ export default (state, action) => {
         ...state,
         token: action.payload.token,
         user: action.payload.currentUser,
-        loading: false
+        loading: false,
+        isAuthenticated: true
       };
     case LOAD_USER:
       return {
         ...state,
         user: action.payload.currentUser,
-        loading: false
+        loading: false,
+        isAuthenticated: true
       };
     case LOGOUT:
       return {
         ...state,
         user: null,
         token: null,
-        loading: false
+        loading: false,
+        isAuthenticated: false
       };
 
     default:

@@ -4,8 +4,10 @@ import styles from './ReturnCars.module.scss';
 import Car from '../../car/Car';
 
 const GET_ALL_BORROWED_CARS = gql`
-  query ($userId: ID!) {
-    user(id: $userId) {
+  query {
+    currentUser {
+      id
+      lastName
       borrowedCarCopies {
         id
         car {
@@ -39,16 +41,26 @@ const GET_ALL_BORROWED_CARS = gql`
 `;
 
 const ReturnCars = () => {
-  const { data } = useQuery(GET_ALL_BORROWED_CARS, { variables: { userId: 'VXNlci0x' } });
+  const { data } = useQuery(GET_ALL_BORROWED_CARS);
+  let info = null;
+  const setInfo = (data) => {
+    if (data.currentUser === null) {
+      info = 'You need to be logged in.';
+    } else if (data.currentUser.borrowedCarCopies.length === 0) {
+      info = 'You have no cars to return.';
+    }
+  };
+  data && setInfo(data);
+
   return (
     <div className={styles.returnCarWrapper}>
-      {data && data.user.borrowedCarCopies.length < 1 ? (
+      {data && info ? (
         <div className={styles.noCars}>
-          <h1>You have no cars to return</h1>
+          <h1>{info}</h1>
         </div>
       ) : (
         data &&
-        data.user.borrowedCarCopies.map((car, index) => (
+        data.currentUser.borrowedCarCopies.map((car, index) => (
           <Car
             key={index}
             id={car.car.id}
