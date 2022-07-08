@@ -12,12 +12,41 @@ const LOG_IN_MUTATION = gql`
       success
       token
       currentUser {
+        id
         firstName
         lastName
         email
         isAdmin
         avatar {
           color
+        }
+        borrowedCarCopies {
+          id
+          car {
+            id
+            carClass
+            benefits
+            model
+            brand {
+              name
+            }
+            year
+            property {
+              seats
+              doors
+              trunk
+              airConditioning
+              manualGearBox
+            }
+            location
+            price
+            copies {
+              id
+              borrower {
+                id
+              }
+            }
+          }
         }
       }
     }
@@ -38,7 +67,9 @@ const Login = () => {
       loginUser(resData);
       success && navigate('/');
     }
+    // refetchQueries: [{ query: GET_ALL_BORROWED_CARS }]
   });
+
   const [user, setUser] = useState({
     email: '',
     password: ''
@@ -54,7 +85,14 @@ const Login = () => {
       password
     };
     login({ variables: { input } });
+    // fetchUserData();
   };
+
+  // const fetchUserData = () => {
+  //   const { data } = useQuery(GET_ALL_BORROWED_CARS);
+  //   console.log('...data...', data);
+  // };
+
   return (
     <div className={styles.formWrapper}>
       <h1>

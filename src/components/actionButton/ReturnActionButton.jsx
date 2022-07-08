@@ -3,19 +3,40 @@ import { gql, useMutation } from '@apollo/client';
 import styles from './ActionButtons.module.scss';
 import PropTypes from 'prop-types';
 import AlertContext from '../../context/alert/alertContext';
+// import { GET_ALL_BORROWED_CARS } from '../../queries/queries';
 
 const RETURN_CAR = gql`
   mutation ReturnCarCopy($returnCarCopyId: ID!) {
     returnCarCopy(id: $returnCarCopyId) {
+      id
       borrower {
         id
         borrowedCarCopies {
           id
-          borrower {
-            id
-          }
           car {
             id
+            carClass
+            benefits
+            model
+            brand {
+              name
+            }
+            year
+            property {
+              seats
+              doors
+              trunk
+              airConditioning
+              manualGearBox
+            }
+            location
+            price
+            copies {
+              id
+              borrower {
+                id
+              }
+            }
           }
         }
       }
@@ -44,6 +65,7 @@ const ReturnActionButton = ({ borrowedCarCopy }) => {
       setAlert(error.message, 'danger');
       console.log(error);
     }
+    // refetchQueries: [{ query: GET_ALL_BORROWED_CARS }]
   });
 
   return (

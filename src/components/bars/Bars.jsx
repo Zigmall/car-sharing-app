@@ -4,7 +4,8 @@ import SideBar from '../sideBar/SideBar';
 import CarContext from '../../context/car/carContext';
 import { gql, useQuery } from '@apollo/client';
 import AuthContext from '../../context/auth/authContext';
-import { AVATAR_FRAGMENT } from '../fragments/Fragments';
+// import { AVATAR_FRAGMENT } from '../fragments/Fragments';
+import { useNavigate } from 'react-router-dom';
 
 const ALL_CARS = gql`
   query getCars {
@@ -36,15 +37,44 @@ const GET_CURRENT_USER = gql`
       id
       firstName
       lastName
+      isAdmin
       avatar {
-        ...avatarFields
+        color
+      }
+      borrowedCarCopies {
+        id
+        car {
+          id
+          carClass
+          benefits
+          model
+          brand {
+            name
+          }
+          year
+          property {
+            seats
+            doors
+            trunk
+            airConditioning
+            manualGearBox
+          }
+          location
+          price
+          copies {
+            id
+            borrower {
+              id
+            }
+          }
+        }
       }
     }
   }
-  ${AVATAR_FRAGMENT}
 `;
 
 const Bars = () => {
+  const navigate = useNavigate();
   const authContext = useContext(AuthContext);
   const { user, loadUser, logout, getTokenInfo, token } = authContext;
   const { data } = useQuery(ALL_CARS);
@@ -74,6 +104,7 @@ const Bars = () => {
         logout();
       }
     }, 15000);
+    navigate('/');
 
     return () => {
       clearInterval(intervalId);
