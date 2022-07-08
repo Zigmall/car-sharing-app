@@ -2,6 +2,8 @@ import React from 'react';
 import styles from './SideBar.module.scss';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import AuthContext from '../../context/auth/authContext';
+import { useContext } from 'react';
 
 const SideBar = ({ setColorOnSideBarIcon, sideBarIndex }) => {
   const userMenuArray = [
@@ -31,11 +33,23 @@ const SideBar = ({ setColorOnSideBarIcon, sideBarIndex }) => {
     }
   ];
 
+  const authContext = useContext(AuthContext);
+  const { user } = authContext;
+
   return (
     <div className={styles.sideBarWrapper}>
       <div className={styles.sideBar}>
         {userMenuArray.map((element, index) => (
-          <Link key={index} to={element.destination} title={element.label}>
+          <Link
+            key={index}
+            to={
+              user
+                ? element.destination === '/return-car'
+                  ? `/return-car/${user.id}`
+                  : element.destination
+                : element.destination
+            }
+            title={element.label}>
             <div className={styles.navElement} onClick={() => setColorOnSideBarIcon(index + 1)}>
               <div className={styles.menuIcon}>
                 <svg
