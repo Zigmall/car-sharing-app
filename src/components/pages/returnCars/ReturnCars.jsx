@@ -1,66 +1,31 @@
-import { gql, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import React from 'react';
 import styles from './ReturnCars.module.scss';
 import Car from '../../car/Car';
-
-const GET_ALL_BORROWED_CARS = gql`
-  query {
-    currentUser {
-      id
-      lastName
-      borrowedCarCopies {
-        id
-        car {
-          id
-          carClass
-          benefits
-          model
-          brand {
-            name
-          }
-          year
-          property {
-            seats
-            doors
-            trunk
-            airConditioning
-            manualGearBox
-          }
-          location
-          price
-          copies {
-            id
-            borrower {
-              id
-            }
-          }
-        }
-      }
-    }
-  }
-`;
+import { GET_ALL_BORROWED_CARS } from '../../../queries/queries';
+import { useParams } from 'react-router-dom';
 
 const ReturnCars = () => {
-  const { data } = useQuery(GET_ALL_BORROWED_CARS);
-  let info = null;
-  const setInfo = (data) => {
-    if (data.currentUser === null) {
-      info = 'You need to be logged in.';
-    } else if (data.currentUser.borrowedCarCopies.length === 0) {
-      info = 'You have no cars to return.';
+  const userId = useParams().userId;
+  const { data } = useQuery(GET_ALL_BORROWED_CARS, {
+    variables: {
+      userId: userId
     }
-  };
-  data && setInfo(data);
+  });
+
+  // let info = null;
+  // const setInfo = (data) => {
+  //   if (data.currentUser === null) {
+  //     info = 'You need to be logged in.';
+  //   } else if (data.currentUser.borrowedCarCopies.length === 0) {
+  //     info = 'You have no cars to return.';
+  //   }
+  // };
 
   return (
     <div className={styles.returnCarWrapper}>
-      {data && info ? (
-        <div className={styles.noCars}>
-          <h1>{info}</h1>
-        </div>
-      ) : (
-        data &&
-        data.currentUser.borrowedCarCopies.map((car, index) => (
+      {data && data.user.borrowedCarCopies.length > 0 ? (
+        data.user.borrowedCarCopies.map((car, index) => (
           <Car
             key={index}
             id={car.car.id}
@@ -75,6 +40,8 @@ const ReturnCars = () => {
             returnCar={true}
           />
         ))
+      ) : (
+        <div className={styles.noCars}>You have no cars to return.</div>
       )}
     </div>
   );
