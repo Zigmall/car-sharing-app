@@ -7,20 +7,25 @@ import { useParams } from 'react-router-dom';
 
 const ReturnCars = () => {
   const userId = useParams().userId;
-  const { data } = useQuery(GET_ALL_BORROWED_CARS, {
+  if (!userId) {
+    return (
+      <div className={styles.noCars}>
+        <p>You need to be logged in</p>
+      </div>
+    );
+  }
+  const { loading, error, data } = useQuery(GET_ALL_BORROWED_CARS, {
     variables: {
       userId: userId
     }
   });
 
-  // let info = null;
-  // const setInfo = (data) => {
-  //   if (data.currentUser === null) {
-  //     info = 'You need to be logged in.';
-  //   } else if (data.currentUser.borrowedCarCopies.length === 0) {
-  //     info = 'You have no cars to return.';
-  //   }
-  // };
+  if (error) {
+    console.log(error);
+  }
+  if (loading) {
+    return <p className={styles.noCars}>Loading...</p>;
+  }
 
   return (
     <div className={styles.returnCarWrapper}>
