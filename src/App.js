@@ -61,7 +61,7 @@ const App = () => {
                 <Route path="/cars/:carId" element={<CarDetails />} />
                 <Route path="/return-car/:userId" element={<ReturnCars />} />
                 <Route path="/users" element={<Users />} />
-                <Route path="/users/:userId" element={<User />} />
+                <Route path="/user/:userId" element={<User />} />
               </Routes>
             </div>
           </AlertState>
