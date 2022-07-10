@@ -1,10 +1,16 @@
-.wrapper {
-  position: fixed;
-  width: 80%;
+.alertWrapper {
   display: flex;
   justify-content: center;
+}
+
+.wrapper {
+  position: fixed;
+  width: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 50px;
-  margin: 50px 9%;
+  margin: 0px;
   
 
   .alerts {
