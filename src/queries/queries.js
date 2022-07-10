@@ -57,4 +57,27 @@ const GET_ALL_USERS = gql`
   }
 `;
 
-export { GET_ALL_BORROWED_CARS, GET_ALL_USERS };
+const GET_USER = gql`
+  query User($userId: ID!) {
+    user(id: $userId) {
+      id
+      avatar {
+        color
+      }
+      firstName
+      lastName
+      isAdmin
+      borrowedCarCopies {
+        id
+        car {
+          brand {
+            name
+          }
+          model
+        }
+      }
+    }
+  }
+`;
+
+export { GET_ALL_BORROWED_CARS, GET_ALL_USERS, GET_USER };
