@@ -2,6 +2,8 @@ import React from 'react';
 import Home from './components/pages/home/Home';
 import { Route, Routes } from 'react-router';
 import CarDetails from './components/carDetails/CarDetails';
+import Users from './components/users/Users';
+import User from './components/user/User';
 import styles from './App.module.scss';
 import CarState from './context/car/CarState';
 import Bars from './components/bars/Bars';
@@ -58,7 +60,8 @@ const App = () => {
                 <Route path="login" element={<Login />} />
                 <Route path="/cars/:carId" element={<CarDetails />} />
                 <Route path="/return-car/:userId" element={<ReturnCars />} />
-                <Route path="/return-car" element={<ReturnCars />} />
+                <Route path="/users" element={<Users />} />
+                <Route path="/users/:userId" element={<User />} />
               </Routes>
             </div>
           </AlertState>
