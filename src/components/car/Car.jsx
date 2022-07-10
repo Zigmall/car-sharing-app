@@ -6,8 +6,20 @@ import PropTypes from 'prop-types';
 import MiddleIcon from '../groupElement/MiddleIcon';
 import SvgIconBar from '../svgIconBar/SvgIconBar';
 import { GasStation, GpsDirection } from '../assets/SvgList';
+import ActionButtons from '../actionButton/ActionButtons';
 
-const Car = ({ carClass, benefits, brand, property, location, price, id }) => {
+const Car = ({
+  carClass,
+  model,
+  benefits,
+  brand,
+  property,
+  location,
+  price,
+  id,
+  returnCar,
+  carCopy
+}) => {
   const navigate = useNavigate();
   return (
     <div className={styles.wrapper}>
@@ -19,7 +31,9 @@ const Car = ({ carClass, benefits, brand, property, location, price, id }) => {
         <div className={styles.iconSide}>
           <div className={styles.carTypeAndName}>
             <label>{carClass}</label>
-            <p>{brand}</p>
+            <p>
+              {brand.name} {model}
+            </p>
           </div>
           <div className={styles.iconsLine}>
             <SvgIconBar
@@ -27,7 +41,7 @@ const Car = ({ carClass, benefits, brand, property, location, price, id }) => {
               iconWidth={'25'}
               seats={property.seats}
               doors={property.doors}
-              bags={property.bags}
+              bags={property.trunk}
               airConditioning={property.airConditioning}
               manualGearBox={property.manualGearBox}
             />
@@ -58,7 +72,11 @@ const Car = ({ carClass, benefits, brand, property, location, price, id }) => {
         <div className={styles.columnThree}>
           <div className={styles.price}>
             <label>€ {price}/day</label>
-            <button onClick={() => navigate(`/cars/${id}`)}>View</button>
+            {!returnCar ? (
+              <button onClick={() => navigate(`/cars/${id}`)}>View</button>
+            ) : (
+              <ActionButtons carCopy={carCopy} returnCar={true} />
+            )}
           </div>
         </div>
       </div>
@@ -70,11 +88,14 @@ Car.propTypes = {
   viewElement: PropTypes.func,
   carClass: PropTypes.string,
   benefits: PropTypes.array,
-  brand: PropTypes.string,
+  brand: PropTypes.object,
   property: PropTypes.object,
   location: PropTypes.string,
   price: PropTypes.number,
-  id: PropTypes.number
+  id: PropTypes.string,
+  model: PropTypes.string,
+  returnCar: PropTypes.bool,
+  carCopy: PropTypes.object
 };
 
 export default Car;

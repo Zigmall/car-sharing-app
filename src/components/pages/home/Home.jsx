@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import List from '../../list/List';
 import CarContext from '../../../context/car/carContext';
+import TypeNavigationBar from '../../groupElement/TypeNavigationBar';
 
 const Home = () => {
   const carContext = useContext(CarContext);
@@ -10,6 +11,7 @@ const Home = () => {
 
   return (
     <>
+      <TypeNavigationBar />
       {currentView && (
         <List
           data={currentView}

@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Star from './star/Star';
 import styles from './Rating.module.scss';
 import PropTypes from 'prop-types';
+import AlertContext from '../../context/alert/alertContext';
 
 const Rating = ({
   sumOfAllPoints,
@@ -13,6 +14,9 @@ const Rating = ({
   changeNumberOfVoters,
   changeOverallRating
 }) => {
+  const alertContext = useContext(AlertContext);
+  const { setAlert } = alertContext;
+
   const [hoveredNumber, setHoveredNumber] = useState(0);
 
   const onMouseEnter = (index) => {
@@ -27,10 +31,10 @@ const Rating = ({
     if (!voted) {
       changeSumOfAllPoints(sumOfAllPoints + index);
       changeNumberOfVoters(numberOfVoters + 1);
-      setRatingAlert('Thank you for your vote.');
+      setAlert('Thank you for your vote.', 'info');
       changeVoted(true);
     } else {
-      setRatingAlert('You already voted!');
+      setAlert('You have already voted!', 'danger');
     }
   };
 
@@ -41,10 +45,6 @@ const Rating = ({
         : ((sumOfAllPoints / numberOfVoters) * 10) / 10
     );
   });
-
-  const setRatingAlert = (text) => {
-    alert(text);
-  };
 
   return (
     <div className={styles.wrapper}>

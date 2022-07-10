@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './GroupElement.module.scss';
+import styles from './TypeNavigationBar.module.scss';
 
 const MiddleIcon = ({ model }) => {
   let carModel = null;

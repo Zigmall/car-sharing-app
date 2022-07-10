@@ -1,31 +1,69 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useParams } from 'react-router';
 import styles from './CarDetails.module.scss';
 import MiddleIcon from '../groupElement/MiddleIcon';
 import { GearBox, Luggage, OpenDoorCar, AirConditioner } from '../assets/SvgList';
 import Rating from '../rating/Rating';
-// import PropTypes from 'prop-types';
+import { gql, useQuery } from '@apollo/client';
+import ActionButtons from '../actionButton/ActionButtons';
 
-// { year, brand, property, location, price } TODO props for component
+const GET_CAR = gql`
+  query GetCar($carId: ID!) {
+    car(id: $carId) {
+      id
+      carClass
+      benefits
+      model
+      brand {
+        name
+      }
+      year
+      property {
+        seats
+        doors
+        trunk
+        airConditioning
+        manualGearBox
+      }
+      location
+      price
+      copies {
+        id
+        borrower {
+          id
+        }
+      }
+    }
+  }
+`;
+
 const CarDetails = () => {
-  const [sumOfAllPoints, changeSumOfAllPoints] = useState(4);
-  const [voted, changeVoted] = useState(false);
-  const [numberOfVoters, changeNumberOfVoters] = useState(1);
-  const [overallRating, changeOverallRating] = useState(4);
+  const { carId } = useParams();
+  const { loading, error, data } = useQuery(GET_CAR, {
+    variables: { carId }
+  });
 
-  const data = {
-    CarId: 123,
-    carClass: 'Sport',
-    benefits: ['Unlimited millage', 'Colision damage viewer', 'Theft protection'],
-    brand: 'Ford Mustang',
-    year: 2022,
-    property: { seats: 4, doors: 3, bags: 2, airConditioning: false, manualGearBox: false },
-    location: 'Warszawa',
-    price: 50
-  };
+  if (loading) {
+    return <p>loading...</p>;
+  }
+  if (error) {
+    console.log('error:', error.message);
+    return <p>Could not load book...</p>;
+  }
+  const { car } = data;
+  const availableCars = car.copies.filter((car) => car.borrower === null);
 
-  const { year, brand, property, location, price, orderElement } = data;
+  const sumOfAllPoints = 10;
+  const numberOfVoters = 3;
+  const overallRating = 3;
+  const voted = true;
 
-  return (
+  const changeVoted = () => {};
+  const changeNumberOfVoters = () => {};
+  const changeOverallRating = () => {};
+  const changeSumOfAllPoints = () => {};
+
+  return !loading && !error ? (
     <div className={styles.carDetailsWrapper}>
       <div className={styles.topPicture}>
         <MiddleIcon model={'Regular'} />
@@ -33,7 +71,7 @@ const CarDetails = () => {
       <div className={styles.bottomWrapper}>
         <div className={styles.leftColumn}>
           <label>
-            {brand} {year}
+            {car.brand.name} {car.model} {car.year}
           </label>
           <Rating
             sumOfAllPoints={sumOfAllPoints}
@@ -49,33 +87,36 @@ const CarDetails = () => {
             <div className={styles.lineOfIcons}>
               <div className={styles.informationElement}>
                 <OpenDoorCar iconHeight={'25'} iconWidth={'25'} />
-                <label>{`${property.doors} doors`}</label>
+                <label>{`${car.property.doors} doors`}</label>
               </div>
               <div className={styles.informationElement}>
                 <Luggage iconHeight={'25'} iconWidth={'25'} />
-                <label>{`${property.bags} bags`}</label>
+                <label>{`${car.property.trunk} bags`}</label>
               </div>
             </div>
             <div className={styles.lineOfIcons}>
               <div className={styles.informationElement}>
                 <GearBox iconHeight={'25'} iconWidth={'25'} />
-                <label>{property.manualGearBox ? 'Manual' : 'Automat'}</label>
+                <label>{car.property.manualGearBox ? 'Manual' : 'Automat'}</label>
               </div>
               <div className={styles.informationElement}>
                 <AirConditioner iconHeight={'25'} iconWidth={'25'} />
-                <label>{property.airConditioning ? '' : 'No'} Air Conditioning</label>
+                <label>{car.property.airConditioning ? '' : 'No'} Air Conditioning</label>
               </div>
             </div>
           </div>
         </div>
         <div className={styles.rightColumn}>
-          <p>Price €{price}</p>
-          <p>Location: {location}</p>
-          <button onClick={orderElement}>Order</button>
+          <h2>
+            {availableCars.length}/{car.copies.length} AVAILABLE
+          </h2>
+          <h3>Price €{car.price}</h3>
+          <p>Location: {car.location}</p>
+          <ActionButtons carCopy={car} returnCar={false} />
         </div>
       </div>
     </div>
-  );
+  ) : null;
 };
 
 // CarDetails.propTypes = {
