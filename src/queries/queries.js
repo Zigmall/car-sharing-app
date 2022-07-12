@@ -80,4 +80,70 @@ const GET_USER = gql`
   }
 `;
 
-export { GET_ALL_BORROWED_CARS, GET_ALL_USERS, GET_USER };
+const ALL_CARS = gql`
+  query getCars {
+    cars {
+      id
+      carClass
+      benefits
+      model
+      brand {
+        name
+      }
+      year
+      property {
+        seats
+        doors
+        trunk
+        airConditioning
+        manualGearBox
+      }
+      location
+      price
+    }
+  }
+`;
+
+const GET_CURRENT_USER = gql`
+  query getCurrentUser {
+    currentUser {
+      id
+      firstName
+      lastName
+      isAdmin
+      avatar {
+        color
+      }
+      borrowedCarCopies {
+        id
+        car {
+          id
+          carClass
+          benefits
+          model
+          brand {
+            name
+          }
+          year
+          property {
+            seats
+            doors
+            trunk
+            airConditioning
+            manualGearBox
+          }
+          location
+          price
+          copies {
+            id
+            borrower {
+              id
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export { GET_ALL_BORROWED_CARS, GET_ALL_USERS, GET_USER, ALL_CARS, GET_CURRENT_USER };

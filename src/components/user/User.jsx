@@ -2,14 +2,12 @@ import React from 'react';
 import styles from './User.module.scss';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-import { GET_USER } from '../../queries/queries';
+import { GET_ALL_USERS } from '../../queries/queries';
 import EditUserForm from '../editUserForm/EditUserForm';
 
 const User = () => {
   const { userId } = useParams();
-  const { data, loading, error } = useQuery(GET_USER, {
-    variables: { userId }
-  });
+  const { loading, error, data } = useQuery(GET_ALL_USERS);
 
   if (loading) return <p>Loading...</p>;
   if (error) {
@@ -17,7 +15,7 @@ const User = () => {
     return <p>Something went wrong</p>;
   }
 
-  console.log('User >>>', data);
+  const user = data.allUsers.filter((user) => user.id === userId);
 
   return (
     <>
@@ -30,10 +28,10 @@ const User = () => {
               </a>
             </div>
             <h1>
-              {data.user.firstName} {data.user.lastName}
+              {user[0].firstName} {user[0].lastName}
             </h1>
             <div className={styles.user__form}>
-              <EditUserForm user={data.user} />
+              <EditUserForm userIs={userId} user={user[0]} />
             </div>
           </div>
         </div>

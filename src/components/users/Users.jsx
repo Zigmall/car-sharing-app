@@ -12,7 +12,6 @@ const Users = () => {
     console.log(error);
     return <p>Something went wrong</p>;
   }
-  console.log('data', data);
   return (
     <div className={styles.left__space}>
       <div className={styles.users__wrapper}>
