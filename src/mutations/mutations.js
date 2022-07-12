@@ -16,7 +16,6 @@ const UPDATE_USER = gql`
       user {
         firstName
         lastName
-        isAdmin
       }
       message
       success
