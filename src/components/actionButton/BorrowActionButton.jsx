@@ -1,29 +1,12 @@
 import React, { useContext } from 'react';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import styles from './ActionButtons.module.scss';
 import PropTypes from 'prop-types';
 import AlertContext from '../../context/alert/alertContext';
 import { useNavigate } from 'react-router-dom';
 import { GET_ALL_BORROWED_CARS } from '../../queries/queries';
 import AuthContext from '../../context/auth/authContext';
-
-const BORROW_CAR = gql`
-  mutation BorrowCarCopy($carCopyId: ID!) {
-    borrowCarCopy(id: $carCopyId) {
-      id
-      borrower {
-        borrowedCarCopies {
-          id
-          car {
-            copies {
-              id
-            }
-          }
-        }
-      }
-    }
-  }
-`;
+import { BORROW_CAR } from '../../mutations/mutations';
 
 const BorrowActionButton = ({ availableCarCopy }) => {
   const navigate = useNavigate();
@@ -37,7 +20,7 @@ const BorrowActionButton = ({ availableCarCopy }) => {
     variables: { carCopyId: availableCarCopy },
     onCompleted: () => {
       navigate('/');
-      setAlert('You have successfully borrowed the car', 'info');
+      setAlert('You have successfully borrowed the car', 'success');
     },
     onError: (error) => {
       setAlert(error.message, 'danger');
