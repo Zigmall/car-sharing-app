@@ -47,24 +47,21 @@ const Registration = () => {
     } else if (password !== password2) {
       setAlert('Passwords need to be the same!', 'danger');
     } else {
-      setAlert('You successfully created an account.', 'info');
-      // navigate('/');
       const input = {
         email: email,
         firstName: firstName,
         lastName: lastName
       };
-      console.log('new User, sending...', input);
       createUser({ variables: { input } });
     }
   };
 
-  const [createUser, { loading: isCreating }] = useMutation(CREATE_USER, {
+  const [createUser] = useMutation(CREATE_USER, {
     onCompleted: ({ createUser }) => {
-      const { success, message, user } = createUser;
-      !isCreating && console.log('123');
+      // const { success, message, user } = createUser;
+      const { success } = createUser;
       if (success) {
-        console.log('success', message, user);
+        setAlert('You successfully created an account.', 'success');
         navigate('/');
       }
     }
