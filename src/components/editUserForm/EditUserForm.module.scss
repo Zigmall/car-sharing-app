@@ -1,3 +1,48 @@
 .edit__user__wrapper {
   display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.edit__user__form {
+}
+
+.form__email {
+  width: 100%;
+  display: inline-block;
+}
+
+.name__group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.form__element {
+  // width: 40%;
+}
+.form__label {
+  display: inline-block;
+  margin: 0.6rem 0;
+}
+
+.form__input {
+  display: inline-block;
+  width: 100%;
+  margin: 0;
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+}
+
+.button__update {
+  display: inline-block;
+  // width: 100%;
+  margin-top: 3rem;
+  padding: 0.5rem 2rem;
+  border-radius: 0.3rem;
+  background-color: #0074ef;
+  color: white;
+  // font-weight: bold;
+  cursor: pointer;
 }
