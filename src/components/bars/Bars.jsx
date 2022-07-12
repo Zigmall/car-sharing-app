@@ -2,76 +2,10 @@ import React, { useState, useContext, useEffect } from 'react';
 import TopBar from '../topBar/TopBar';
 import SideBar from '../sideBar/SideBar';
 import CarContext from '../../context/car/carContext';
-import { gql, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import AuthContext from '../../context/auth/authContext';
-// import { AVATAR_FRAGMENT } from '../fragments/Fragments';
 import { useNavigate } from 'react-router-dom';
-
-const ALL_CARS = gql`
-  query getCars {
-    cars {
-      id
-      carClass
-      benefits
-      model
-      brand {
-        name
-      }
-      year
-      property {
-        seats
-        doors
-        trunk
-        airConditioning
-        manualGearBox
-      }
-      location
-      price
-    }
-  }
-`;
-
-const GET_CURRENT_USER = gql`
-  query getCurrentUser {
-    currentUser {
-      id
-      firstName
-      lastName
-      isAdmin
-      avatar {
-        color
-      }
-      borrowedCarCopies {
-        id
-        car {
-          id
-          carClass
-          benefits
-          model
-          brand {
-            name
-          }
-          year
-          property {
-            seats
-            doors
-            trunk
-            airConditioning
-            manualGearBox
-          }
-          location
-          price
-          copies {
-            id
-            borrower {
-              id
-            }
-          }
-        }
-      }
-    }
-  }
-`;
+import { ALL_CARS, GET_CURRENT_USER } from '../../queries/queries';
 
 const Bars = () => {
   const navigate = useNavigate();
@@ -102,9 +36,10 @@ const Bars = () => {
       if (tokenInfo && tokenInfo.exp - Math.round(Date.now() / 1000) < 30) {
         console.log('logout');
         logout();
+        navigate('/');
+        setSideBarIndex(1);
       }
     }, 15000);
-    navigate('/');
 
     return () => {
       clearInterval(intervalId);
