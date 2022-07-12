@@ -25,7 +25,7 @@ const UserGroup = ({ user, onLogout }) => {
         className={styles.logoutIcon}
         onClick={() => {
           onLogout();
-          setAlert('You have been successfully logged out.', 'info');
+          setAlert('You have been successfully logged out.', 'success');
         }}>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
           <path

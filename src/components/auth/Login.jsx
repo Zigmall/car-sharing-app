@@ -15,7 +15,7 @@ const Login = () => {
 
   const [login] = useMutation(LOG_IN, {
     onCompleted: ({ logIn: { success, message, token, currentUser } }) => {
-      setAlert(message, success ? 'info' : 'danger');
+      setAlert(message, success ? 'success' : 'danger');
       const resData = { currentUser, token };
       loginUser(resData);
       success && navigate('/');

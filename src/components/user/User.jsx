@@ -12,7 +12,13 @@ const User = () => {
   if (loading) return <p>Loading...</p>;
   if (error) {
     console.log(error);
-    return <p>Something went wrong</p>;
+    return (
+      <div className={styles.left__space}>
+        <div className={styles.error__message}>
+          <p>Something went wrong</p>
+        </div>
+      </div>
+    );
   }
 
   const user = data.allUsers.filter((user) => user.id === userId);
