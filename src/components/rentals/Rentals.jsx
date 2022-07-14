@@ -1,11 +1,41 @@
 import React from 'react';
 import styles from './Rentals.module.scss';
+import { GET_BRANDS } from '../../queries/queries';
+import { useQuery } from '@apollo/client';
 
 const Rentals = () => {
+  const { loading, error, data } = useQuery(GET_BRANDS);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :</p>;
+  console.log('brands', data);
+
   return (
     <>
       <div className={styles.left__space}>
-        <p>Rentals</p>
+        <div className={styles.rentals__wrapper}>
+          {data &&
+            data.brands.map((brand, index) => {
+              return (
+                <div key={index} className={styles.brand__item}>
+                  <h1>{brand.name}</h1>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Model</th>
+                        <th>ID</th>
+                        <th>Year</th>
+                        <th>Borrowed</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {brand.cars.length > 0 &&
+                        brand.cars.map((car) => <CarRow key={car.id} car={car} />)}
+                    </tbody>
+                  </table>
+                </div>
+              );
+            })}
+        </div>
       </div>
     </>
   );

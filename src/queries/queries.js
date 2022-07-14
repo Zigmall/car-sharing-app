@@ -146,4 +146,18 @@ const GET_CURRENT_USER = gql`
   }
 `;
 
-export { GET_ALL_BORROWED_CARS, GET_ALL_USERS, GET_USER, ALL_CARS, GET_CURRENT_USER };
+const GET_BRANDS = gql`
+  query Brands {
+    brands {
+      name
+      cars {
+        id
+        copies {
+          id
+        }
+      }
+    }
+  }
+`;
+
+export { GET_ALL_BORROWED_CARS, GET_ALL_USERS, GET_USER, ALL_CARS, GET_CURRENT_USER, GET_BRANDS };
