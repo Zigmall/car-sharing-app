@@ -4,24 +4,32 @@ import styles from './Login.module.scss';
 import AlertContext from '../../context/alert/alertContext';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { USER_FRAGMENT, CAR_COPY_FRAGMENT } from '../fragments/Fragments';
+// import { CAR_COPY_FRAGMENT } from '../fragments/Fragments';
 
-const CREATE_USER = gql`
-  mutation CreateUser($input: CreateUserInput!) {
-    createUser(input: $input) {
+const SIGN_UP = gql`
+  mutation SignUp($input: SignUp!) {
+    signUp(input: $input) {
       success
       message
       user {
-        ...userFields
+        id
+        firstName
+        lastName
+        email
         borrowedCarCopies {
-          ...carCopyFields
+          id
+          car {
+            id
+          }
+          borrower {
+            id
+            firstName
+            lastName
+          }
         }
       }
     }
   }
-
-  ${USER_FRAGMENT}
-  ${CAR_COPY_FRAGMENT}
 `;
 
 const Registration = () => {
@@ -50,16 +58,17 @@ const Registration = () => {
       const input = {
         email: email,
         firstName: firstName,
-        lastName: lastName
+        lastName: lastName,
+        password: password
       };
-      createUser({ variables: { input } });
+      signUp({ variables: { input } });
     }
   };
 
-  const [createUser] = useMutation(CREATE_USER, {
-    onCompleted: ({ createUser }) => {
+  const [signUp] = useMutation(SIGN_UP, {
+    onCompleted: ({ signUp }) => {
       // const { success, message, user } = createUser;
-      const { success } = createUser;
+      const { success } = signUp;
       if (success) {
         setAlert('You successfully created an account.', 'success');
         navigate('/');

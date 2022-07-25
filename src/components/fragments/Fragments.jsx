@@ -40,9 +40,6 @@ export const CAR_COPY_FRAGMENT = gql`
       id
       firstName
       lastName
-      avatar {
-        ...avatarFields
-      }
     }
   }
   ${AVATAR_FRAGMENT}

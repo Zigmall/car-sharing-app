@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './Rentals.module.scss';
 import { GET_BRANDS } from '../../queries/queries';
 import { useQuery } from '@apollo/client';
+import CarRow from './CarRow';
 
 const Rentals = () => {
   const { loading, error, data } = useQuery(GET_BRANDS);
@@ -14,9 +15,9 @@ const Rentals = () => {
       <div className={styles.left__space}>
         <div className={styles.rentals__wrapper}>
           {data &&
-            data.brands.map((brand, index) => {
+            data.brands.map((brand) => {
               return (
-                <div key={index} className={styles.brand__item}>
+                <div key={brand.id} className={styles.brand__item}>
                   <h1>{brand.name}</h1>
                   <table>
                     <thead>
@@ -24,7 +25,6 @@ const Rentals = () => {
                         <th>Model</th>
                         <th>ID</th>
                         <th>Year</th>
-                        <th>Borrowed</th>
                       </tr>
                     </thead>
                     <tbody>

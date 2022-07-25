@@ -149,11 +149,18 @@ const GET_CURRENT_USER = gql`
 const GET_BRANDS = gql`
   query Brands {
     brands {
+      id
       name
       cars {
         id
+        model
+        year
         copies {
           id
+          borrower {
+            firstName
+            lastName
+          }
         }
       }
     }
