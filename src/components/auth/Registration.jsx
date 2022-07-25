@@ -5,13 +5,15 @@ import AlertContext from '../../context/alert/alertContext';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 // import { CAR_COPY_FRAGMENT } from '../fragments/Fragments';
+import AuthContext from '../../context/auth/authContext';
 
 const SIGN_UP = gql`
   mutation SignUp($input: SignUp!) {
     signUp(input: $input) {
       success
       message
-      user {
+      token
+      currentUser {
         id
         firstName
         lastName
@@ -27,12 +29,17 @@ const SIGN_UP = gql`
             lastName
           }
         }
+        avatar {
+          color
+        }
       }
     }
   }
 `;
 
 const Registration = () => {
+  const authContext = useContext(AuthContext);
+  const { loginUser } = authContext;
   const navigate = useNavigate();
   const [user, setUser] = useState({
     email: '',
@@ -67,12 +74,16 @@ const Registration = () => {
 
   const [signUp] = useMutation(SIGN_UP, {
     onCompleted: ({ signUp }) => {
-      // const { success, message, user } = createUser;
-      const { success } = signUp;
+      const { success, message, currentUser, token } = signUp;
       if (success) {
-        setAlert('You successfully created an account.', 'success');
-        navigate('/');
+        setAlert(message, 'success');
+        const resData = { currentUser, token };
+        loginUser(resData);
+        success && navigate('/');
       }
+    },
+    onError: (error) => {
+      setAlert(error.message, 'danger');
     }
   });
 
