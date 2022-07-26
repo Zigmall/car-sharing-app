@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { GET_ALL_USERS } from '../../queries/queries';
 import EditUserForm from '../editUserForm/EditUserForm';
+import { Link } from 'react-router-dom';
 
 const User = () => {
   const { userId } = useParams();
@@ -29,9 +30,9 @@ const User = () => {
         <div className={styles.left__space}>
           <div className={styles.user__wrapper}>
             <div className={styles.button__wrapper}>
-              <a href="/users" className={styles.button__back}>
+              <Link to={'/users'} className={styles.button__back}>
                 Back
-              </a>
+              </Link>
             </div>
             <h1>
               {user[0].firstName} {user[0].lastName}
