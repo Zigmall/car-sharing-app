@@ -53,6 +53,14 @@ const GET_ALL_USERS = gql`
           model
         }
       }
+      address {
+        city
+        country
+        street
+        houseNumber
+        flatNumber
+        postCode
+      }
     }
   }
 `;

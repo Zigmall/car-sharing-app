@@ -5,9 +5,12 @@ import { useMutation } from '@apollo/client';
 import { UPDATE_USER } from '../../mutations/mutations';
 import { GET_ALL_USERS } from '../../queries/queries';
 import AlertContext from '../../context/alert/alertContext';
+import AuthContext from '../../context/auth/authContext';
 
 const EditUserForm = ({ user }) => {
-  console.log('user', user);
+  // console.log('user', user);
+  const authContext = useContext(AuthContext);
+  const { user: currentUser } = authContext;
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
   const [firstName, setFirstName] = useState(user.firstName);
@@ -15,9 +18,25 @@ const EditUserForm = ({ user }) => {
   const [email, setEmail] = useState(user.email);
   const [mobile, setMobile] = useState(user.mobile);
   const [isAdmin, setIsAdmin] = useState(user.isAdmin);
+  const [country, setCountry] = useState(user.address.country);
+  const [city, setCity] = useState(user.address.city);
+  const [street, setStreet] = useState(user.address.street);
+  const [houseNumber, setHouseNumber] = useState(user.address.houseNumber);
+  const [flatNumber, setFlatNumber] = useState(user.address.flatNumber);
+  const [postCode, setPostCode] = useState(user.address.postCode);
 
   const [updateUser] = useMutation(UPDATE_USER, {
-    variables: { input: { id: user.id, firstName, lastName, email, mobile, isAdmin } },
+    variables: {
+      input: {
+        id: user.id,
+        firstName,
+        lastName,
+        email,
+        mobile,
+        isAdmin,
+        address: { country, city, street, houseNumber, flatNumber, postCode }
+      }
+    },
     refetchQueries: [{ query: GET_ALL_USERS }]
   });
 
@@ -27,11 +46,10 @@ const EditUserForm = ({ user }) => {
 
   const handleUpdateUser = (e) => {
     e.preventDefault();
-    if ((firstName === '' || lastName === '' || email === '', mobile === '')) {
+    if (firstName === '' || lastName === '' || email === '') {
       setAlert('Please fill out all fields', 'warning');
     } else {
       setAlert('User updated', 'success');
-      console.log('values >>>', firstName, lastName, email, mobile, isAdmin);
       updateUser();
     }
   };
@@ -40,11 +58,12 @@ const EditUserForm = ({ user }) => {
     <>
       <div className={styles.edit__user__wrapper}>
         <h3>Update User Details</h3>
+        <h4>* Mandatory field</h4>
         <div className={styles.edit__user__form}>
           <form onSubmit={handleUpdateUser}>
             <div className={styles.name__group}>
               <div className={styles.form__element}>
-                <label className={styles.form__label}>First Name</label>
+                <label className={styles.form__label}>* First Name </label>
                 <input
                   type="text"
                   className={styles.form__input}
@@ -55,7 +74,7 @@ const EditUserForm = ({ user }) => {
               </div>
 
               <div className={styles.form__element}>
-                <label className={styles.form__label}>Last Name</label>
+                <label className={styles.form__label}>* Last Name</label>
                 <input
                   type="text"
                   className={styles.form__input}
@@ -68,7 +87,7 @@ const EditUserForm = ({ user }) => {
 
             <div className={styles.name__group}>
               <div className={styles.form__element}>
-                <label className={styles.form__label}>Email</label>
+                <label className={styles.form__label}>* Email</label>
                 <input
                   type="text"
                   className={styles.form__input}
@@ -90,15 +109,90 @@ const EditUserForm = ({ user }) => {
               </div>
             </div>
 
-            <div className={styles.admin__wrapper}>
-              <input
-                type="checkbox"
-                className={styles.admin__checkbox}
-                id="admin"
-                checked={isAdmin}
-                onChange={() => handleCheckboxChange()}
-              />
-              <label className={styles.form__label}>Administrator</label>
+            {currentUser && currentUser.isAdmin && (
+              <div className={styles.admin__wrapper}>
+                <input
+                  type="checkbox"
+                  className={styles.admin__checkbox}
+                  id="admin"
+                  checked={isAdmin}
+                  onChange={() => handleCheckboxChange()}
+                />
+                <label className={styles.form__label}>Administrator</label>
+              </div>
+            )}
+
+            <h2>Address</h2>
+            <div className={styles.name__group}>
+              <div className={styles.form__element}>
+                <label className={styles.form__label}>Country</label>
+                <input
+                  type="text"
+                  className={styles.form__input}
+                  id="country"
+                  value={country}
+                  onChange={(e) => setCountry(e.target.value)}
+                />
+              </div>
+
+              <div className={styles.form__element}>
+                <label className={styles.form__label}>City</label>
+                <input
+                  type="text"
+                  className={styles.form__input}
+                  id="city"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className={styles.name__group}>
+              <div className={styles.form__element}>
+                <label className={styles.form__label}>Street</label>
+                <input
+                  type="text"
+                  className={styles.form__input}
+                  id="street"
+                  value={street}
+                  onChange={(e) => setStreet(e.target.value)}
+                />
+              </div>
+
+              <div className={styles.form__element}>
+                <label className={styles.form__label}>House number</label>
+                <input
+                  type="text"
+                  className={styles.form__input}
+                  id="houseNumber"
+                  value={houseNumber}
+                  onChange={(e) => setHouseNumber(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className={styles.name__group}>
+              <div className={styles.form__element}>
+                <label className={styles.form__label}>Flat number</label>
+                <input
+                  type="text"
+                  className={styles.form__input}
+                  id="flatNumber"
+                  value={flatNumber}
+                  onChange={(e) => setFlatNumber(e.target.value)}
+                />
+              </div>
+
+              <div className={styles.form__element}>
+                <label className={styles.form__label}>Postcode</label>
+                <input
+                  type="text"
+                  className={styles.form__input}
+                  id="postCode"
+                  value={postCode}
+                  onChange={(e) => setPostCode(e.target.value)}
+                />
+              </div>
             </div>
 
             <button type="submit" className={styles.button__update}>

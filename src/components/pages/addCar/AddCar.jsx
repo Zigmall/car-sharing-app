@@ -3,8 +3,10 @@ import styles from './AddCar.module.scss';
 
 const AddCar = () => {
   return (
-    <div>AddCar</div>
-  )
-}
+    <div className={styles.wrapper}>
+      <p>AddCar</p>
+    </div>
+  );
+};
 
-export default AddCar
+export default AddCar;

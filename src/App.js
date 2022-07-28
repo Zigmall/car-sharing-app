@@ -23,6 +23,7 @@ import {
 } from '@apollo/client';
 import AuthState from './context/auth/AuthState';
 import { loadUser } from './context/auth/AuthState';
+import AddCar from './components/pages/addCar/AddCar';
 
 // const URL = 'https://desolate-spire-04068.herokuapp.com';
 const URL = 'http://localhost:5000';
@@ -64,6 +65,7 @@ const App = () => {
                 <Route path="/users" element={<Users />} />
                 <Route path="/user/:userId" element={<User />} />
                 <Route path="/rentals" element={<Rentals />} />
+                <Route path="/add-car" element={<AddCar />} />
               </Routes>
             </div>
           </AlertState>
