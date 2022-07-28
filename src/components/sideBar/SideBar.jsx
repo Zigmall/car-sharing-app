@@ -6,7 +6,7 @@ import AuthContext from '../../context/auth/authContext';
 import { useContext } from 'react';
 
 const SideBar = ({ setColorOnSideBarIcon, sideBarIndex }) => {
-  const userMenuArray = [
+  const userMenu = [
     {
       label: 'Dashboard',
       icon: [
@@ -41,7 +41,7 @@ const SideBar = ({ setColorOnSideBarIcon, sideBarIndex }) => {
     }
   ];
 
-  const adminMenuArray = [
+  const adminMenu = [
     {
       label: 'Dashboard',
       icon: [
@@ -89,7 +89,7 @@ const SideBar = ({ setColorOnSideBarIcon, sideBarIndex }) => {
   const authContext = useContext(AuthContext);
   const { user } = authContext;
   let menu = [];
-  menu = user && user.isAdmin ? adminMenuArray : userMenuArray;
+  user && user.isAdmin ? (menu = adminMenu) : (menu = userMenu);
   return (
     <div className={styles.sideBarWrapper}>
       <div className={styles.sideBar}>

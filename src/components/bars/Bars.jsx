@@ -6,6 +6,7 @@ import { useQuery } from '@apollo/client';
 import AuthContext from '../../context/auth/authContext';
 import { useNavigate } from 'react-router-dom';
 import { ALL_CARS, GET_CURRENT_USER } from '../../queries/queries';
+import { useApolloClient } from '@apollo/client';
 
 const Bars = () => {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const Bars = () => {
   const { user, loadUser, logout, getTokenInfo, token } = authContext;
   const { data } = useQuery(ALL_CARS);
   const [sideBarIndex, setSideBarIndex] = useState(1);
+  const client = useApolloClient();
 
   const carContext = useContext(CarContext);
   const { getCars, divideCarsIntoPages, cars } = carContext;
@@ -20,15 +22,20 @@ const Bars = () => {
   const onLogout = () => {
     logout();
     client.resetStore();
+    navigate('/');
   };
-  const { loading, error, data: data3, client } = useQuery(GET_CURRENT_USER);
+
+  useQuery(GET_CURRENT_USER, {
+    onCompleted: (currentUser) => {
+      loadUser(currentUser);
+    }
+  });
 
   useEffect(() => {
     data && getCars({ data });
     if (cars !== null) {
       divideCarsIntoPages(cars);
     }
-    !loading && !error && loadUser(data3);
 
     const intervalId = setInterval(() => {
       const tokenInfo = getTokenInfo(token);
