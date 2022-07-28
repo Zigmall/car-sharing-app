@@ -100,6 +100,8 @@ const SideBar = ({ setColorOnSideBarIcon, sideBarIndex }) => {
               user
                 ? element.destination === '/return-car'
                   ? `/return-car/${user.id}`
+                  : element.destination === '/settings'
+                  ? `/user/${user.id}`
                   : element.destination
                 : element.destination
             }

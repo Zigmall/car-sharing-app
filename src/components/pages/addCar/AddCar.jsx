@@ -3,7 +3,7 @@ import styles from './AddCar.module.scss';
 
 const AddCar = () => {
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.left__space}>
       <p>AddCar</p>
     </div>
   );

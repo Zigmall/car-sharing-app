@@ -8,7 +8,6 @@ const Rentals = () => {
   const { loading, error, data } = useQuery(GET_BRANDS);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :</p>;
-  console.log('brands', data);
 
   return (
     <>
