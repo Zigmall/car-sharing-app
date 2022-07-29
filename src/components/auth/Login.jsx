@@ -18,6 +18,7 @@ const Login = () => {
       setAlert(message, success ? 'success' : 'danger');
       const resData = { currentUser, token };
       loginUser(resData);
+
       success && navigate('/');
     }
   });

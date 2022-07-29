@@ -19,7 +19,6 @@ const Bars = () => {
 
   const carContext = useContext(CarContext);
   const { getCars, divideCarsIntoPages, cars } = carContext;
-  console.log('useLocation:', useLocation().pathname);
 
   const onLogout = () => {
     logout();

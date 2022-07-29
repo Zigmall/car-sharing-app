@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import styles from './EditUserForm.module.scss';
 import PropTypes from 'prop-types';
 import { useMutation } from '@apollo/client';
-import { UPDATE_USER } from '../../mutations/mutations';
+import { UPDATE_USER, UPDATE_MY_PERSONAL_DATA } from '../../mutations/mutations';
 import { GET_ALL_USERS } from '../../queries/queries';
 import AlertContext from '../../context/alert/alertContext';
 import AuthContext from '../../context/auth/authContext';
@@ -25,20 +25,34 @@ const EditUserForm = ({ user }) => {
   const [flatNumber, setFlatNumber] = useState(user.address.flatNumber);
   const [postCode, setPostCode] = useState(user.address.postCode);
 
-  const [updateUser] = useMutation(UPDATE_USER, {
-    variables: {
-      input: {
-        id: user.id,
-        firstName,
-        lastName,
-        email,
-        mobile,
-        isAdmin,
-        address: { country, city, street, houseNumber, flatNumber, postCode }
-      }
-    },
-    refetchQueries: [{ query: GET_ALL_USERS }]
-  });
+  const [updateUser] = user.isAdmin
+    ? useMutation(UPDATE_USER, {
+        variables: {
+          input: {
+            id: user.id,
+            firstName,
+            lastName,
+            email,
+            mobile,
+            isAdmin,
+            address: { country, city, street, houseNumber, flatNumber, postCode }
+          }
+        },
+        refetchQueries: [{ query: GET_ALL_USERS }]
+      })
+    : useMutation(UPDATE_MY_PERSONAL_DATA, {
+        variables: {
+          input: {
+            id: user.id,
+            firstName,
+            lastName,
+            email,
+            mobile,
+            address: { country, city, street, houseNumber, flatNumber, postCode }
+          }
+        },
+        refetchQueries: [{ query: GET_ALL_USERS }]
+      });
 
   const handleCheckboxChange = () => {
     setIsAdmin(!isAdmin);

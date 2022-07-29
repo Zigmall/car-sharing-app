@@ -58,14 +58,15 @@ const App = () => {
               <Bars />
               <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/add-car" element={<AddCar />} />
                 <Route path="/registration" element={<Registration />} />
                 <Route path="login" element={<Login />} />
                 <Route path="/cars/:carId" element={<CarDetails />} />
+                <Route path="/return-car" element={<ReturnCars />} />
                 <Route path="/return-car/:userId" element={<ReturnCars />} />
-                <Route path="/users" element={<Users />} />
-                <Route path="/user/:userId" element={<User />} />
                 <Route path="/rentals" element={<Rentals />} />
-                <Route path="/add-car" element={<AddCar />} />
+                <Route path="/user/:userId" element={<User />} />
+                <Route path="/users" element={<Users />} />
               </Routes>
             </div>
           </AlertState>

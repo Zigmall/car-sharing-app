@@ -23,6 +23,19 @@ const UPDATE_USER = gql`
   }
 `;
 
+const UPDATE_MY_PERSONAL_DATA = gql`
+  mutation ($input: UpdateMyPersonalDataInput!) {
+    updateMyPersonalData(input: $input) {
+      user {
+        firstName
+        lastName
+      }
+      message
+      success
+    }
+  }
+`;
+
 const LOG_IN = gql`
   mutation ($input: LogInInput!) {
     logIn(input: $input) {
@@ -137,4 +150,4 @@ const BORROW_CAR = gql`
   }
 `;
 
-export { DELETE_USER, UPDATE_USER, LOG_IN, RETURN_CAR, BORROW_CAR };
+export { DELETE_USER, UPDATE_USER, LOG_IN, RETURN_CAR, BORROW_CAR, UPDATE_MY_PERSONAL_DATA };

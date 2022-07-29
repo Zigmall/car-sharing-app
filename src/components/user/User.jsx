@@ -30,7 +30,7 @@ const User = () => {
         <div className={styles.left__space}>
           <div className={styles.user__wrapper}>
             <div className={styles.button__wrapper}>
-              <Link to={'/users'} className={styles.button__back}>
+              <Link to={user.isAdmin ? '/users' : '/'} className={styles.button__back}>
                 Back
               </Link>
             </div>
