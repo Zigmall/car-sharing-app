@@ -59,7 +59,7 @@ const Login = () => {
       </form>
       <div className={styles.registerLink}>
         <p>Don&apos;t have account? </p>
-        <Link to={'/Registration'}>Register</Link>
+        <Link to={'/registration'}>Register</Link>
       </div>
     </div>
   );

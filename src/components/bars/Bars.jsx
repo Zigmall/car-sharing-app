@@ -7,6 +7,7 @@ import AuthContext from '../../context/auth/authContext';
 import { useNavigate } from 'react-router-dom';
 import { ALL_CARS, GET_CURRENT_USER } from '../../queries/queries';
 import { useApolloClient } from '@apollo/client';
+import { useLocation } from 'react-router-dom';
 
 const Bars = () => {
   const navigate = useNavigate();
@@ -18,10 +19,12 @@ const Bars = () => {
 
   const carContext = useContext(CarContext);
   const { getCars, divideCarsIntoPages, cars } = carContext;
+  console.log('useLocation:', useLocation().pathname);
 
   const onLogout = () => {
     logout();
     client.resetStore();
+    setSideBarIndex(1);
     navigate('/');
   };
 
@@ -86,8 +89,12 @@ const Bars = () => {
 
   return (
     <>
-      <TopBar user={user} onLogout={onLogout} />
-      <SideBar sideBarIndex={sideBarIndex} setColorOnSideBarIcon={setColorOnSideBarIcon} />
+      {useLocation().pathname === '/login' || useLocation().pathname === '/registration' ? null : (
+        <>
+          <TopBar user={user} onLogout={onLogout} />
+          <SideBar sideBarIndex={sideBarIndex} setColorOnSideBarIcon={setColorOnSideBarIcon} />
+        </>
+      )}
     </>
   );
 };
