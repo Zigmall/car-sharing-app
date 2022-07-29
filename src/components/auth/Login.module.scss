@@ -1,6 +1,6 @@
 .formWrapper {
   max-width: 500px;
-  margin: 10px auto;
+  margin: 4rem auto;
   overflow: hidden;
 
   .btn:hover {
@@ -27,8 +27,13 @@
   button {
     font: inherit;
   }
-  .registerLink a {
+
+  .registerLink {
     margin-top: 40px;
+
+  }
+
+  .registerLink a {
     // text-decoration: none;
     font-size: 20px;
     color: black;
@@ -57,7 +62,7 @@
     }
   }
 }
-.button__wrapper {
-  display: flex;
-  justify-content: flex-end;
-}
+// .button__wrapper {
+//   display: flex;
+//   // justify-content: flex-end;
+// }

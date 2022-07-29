@@ -4,7 +4,6 @@ import styles from './Login.module.scss';
 import AlertContext from '../../context/alert/alertContext';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-// import { CAR_COPY_FRAGMENT } from '../fragments/Fragments';
 import AuthContext from '../../context/auth/authContext';
 
 const SIGN_UP = gql`
@@ -131,7 +130,7 @@ const Registration = () => {
       </form>
       <div className={styles.registerLink}>
         <p>You already have an account? </p>
-        <Link to={'/Login'}>Log in</Link>
+        <Link to={'/login'}>Log in</Link>
       </div>
     </div>
   );
