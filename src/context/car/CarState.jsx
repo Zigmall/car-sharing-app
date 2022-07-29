@@ -6,7 +6,8 @@ import PropTypes from 'prop-types';
 import {
   GET_CARS,
   DIVIDE_CAR_LIST,
-  CHANGE_PAGE
+  CHANGE_PAGE,
+  CHANGE_TAB
   //   ADD_CAR,
   //   DELETE_CAR,
   //   SET_CURRENT,
@@ -24,7 +25,8 @@ const CarState = (props) => {
     tableOfPages: [],
     currentView: null,
     filtered: null,
-    loading: true
+    loading: true,
+    navIndex: 1
   };
 
   const [state, dispatch] = useReducer(carReducer, initialState);
@@ -54,6 +56,13 @@ const CarState = (props) => {
     });
   };
 
+  const changeTab = (index) => {
+    dispatch({
+      type: CHANGE_TAB,
+      payload: index
+    });
+  };
+
   //Add Car
 
   //Delete Car
@@ -78,9 +87,11 @@ const CarState = (props) => {
         currentView: state.currentView,
         filtered: state.filtered,
         loading: state.loading,
+        navIndex: state.navIndex,
         getCars,
         divideCarsIntoPages,
-        changePage
+        changePage,
+        changeTab
       }}>
       {props.children}
     </CarContext.Provider>
@@ -92,128 +103,3 @@ CarState.propTypes = {
 };
 
 export default CarState;
-
-// const dataFromDB = {
-//   cars: [
-//     {
-//       id: 1,
-//       carClass: 'Sport',
-//       benefits: ['Unlimited millage', 'Colision damage viewer', 'Theft protection'],
-//       brand: 'Ford Mustang',
-//       year: 2022,
-//       property: { seats: 4, doors: 3, bags: 2, airConditioning: false, manualGearBox: false },
-//       location: 'Warszawa',
-//       price: 50
-//     },
-//     {
-//       id: 2,
-//       carClass: 'Economy',
-//       benefits: ['Unlimited millage', 'Colision damage viewer', 'Theft protection'],
-//       brand: 'Toyota Yaris',
-//       year: 2021,
-//       property: { seats: 4, doors: 5, bags: 3, airConditioning: true, manualGearBox: true },
-//       location: 'Gdańsk',
-//       price: 40
-//     },
-//     {
-//       id: 3,
-//       carClass: 'Economy',
-//       benefits: ['Unlimited millage', 'Colision damage viewer', 'Theft protection'],
-//       brand: 'Nissan Micra',
-//       year: 2021,
-//       property: { seats: 4, doors: 5, bags: 4, airConditioning: true, manualGearBox: false },
-//       location: 'Poznań',
-//       price: 35
-//     },
-//     {
-//       id: 4,
-//       carClass: 'Sport',
-//       benefits: ['Unlimited millage', 'Colision damage viewer', 'Theft protection'],
-//       brand: 'Ford Mustang',
-//       year: 2022,
-//       property: { seats: 4, doors: 3, bags: 2, airConditioning: false, manualGearBox: false },
-//       location: 'Warszawa',
-//       price: 50
-//     },
-//     {
-//       id: 5,
-//       carClass: 'Economy',
-//       benefits: ['Unlimited millage', 'Colision damage viewer', 'Theft protection'],
-//       brand: 'Toyota Yaris',
-//       year: 2021,
-//       property: { seats: 4, doors: 5, bags: 3, airConditioning: true, manualGearBox: true },
-//       location: 'Gdańsk',
-//       price: 40
-//     },
-//     {
-//       id: 6,
-//       carClass: 'Economy',
-//       benefits: ['Unlimited millage', 'Colision damage viewer', 'Theft protection'],
-//       brand: 'Nissan Micra',
-//       year: 2021,
-//       property: { seats: 4, doors: 5, bags: 4, airConditioning: true, manualGearBox: false },
-//       location: 'Poznań',
-//       price: 35
-//     },
-//     {
-//       id: 7,
-//       carClass: 'Sport',
-//       benefits: ['Unlimited millage', 'Colision damage viewer', 'Theft protection'],
-//       brand: 'Ford Mustang',
-//       year: 2022,
-//       property: { seats: 4, doors: 3, bags: 2, airConditioning: false, manualGearBox: false },
-//       location: 'Warszawa',
-//       price: 50
-//     },
-//     {
-//       id: 8,
-//       carClass: 'Economy',
-//       benefits: ['Unlimited millage', 'Colision damage viewer', 'Theft protection'],
-//       brand: 'Toyota Yaris',
-//       year: 2021,
-//       property: { seats: 4, doors: 5, bags: 3, airConditioning: true, manualGearBox: true },
-//       location: 'Gdańsk',
-//       price: 40
-//     },
-//     {
-//       id: 9,
-//       carClass: 'Economy',
-//       benefits: ['Unlimited millage', 'Colision damage viewer', 'Theft protection'],
-//       brand: 'Nissan Micra',
-//       year: 2021,
-//       property: { seats: 4, doors: 5, bags: 4, airConditioning: true, manualGearBox: false },
-//       location: 'Poznań',
-//       price: 35
-//     },
-//     {
-//       id: 10,
-//       carClass: 'Sport',
-//       benefits: ['Unlimited millage', 'Colision damage viewer', 'Theft protection'],
-//       brand: 'Ford Mustang',
-//       year: 2022,
-//       property: { seats: 4, doors: 3, bags: 2, airConditioning: false, manualGearBox: false },
-//       location: 'Warszawa',
-//       price: 50
-//     },
-//     {
-//       id: 11,
-//       carClass: 'Economy',
-//       benefits: ['Unlimited millage', 'Colision damage viewer', 'Theft protection'],
-//       brand: 'Toyota Yaris',
-//       year: 2021,
-//       property: { seats: 4, doors: 5, bags: 3, airConditioning: true, manualGearBox: true },
-//       location: 'Gdańsk',
-//       price: 40
-//     },
-//     {
-//       id: 12,
-//       carClass: 'Economy',
-//       benefits: ['Unlimited millage', 'Colision damage viewer', 'Theft protection'],
-//       brand: 'Nissan Micra',
-//       year: 2021,
-//       property: { seats: 4, doors: 5, bags: 4, airConditioning: true, manualGearBox: false },
-//       location: 'Poznań',
-//       price: 35
-//     }
-//   ]
-// };
