@@ -1,10 +1,61 @@
 .left__space {
-    margin-left: 12.9rem;
+    margin-left: 9rem;
   }
   
   .rentals__wrapper {
     display: flex;
     flex-direction: column;
-    // justify-content: center;
     margin-top: 1rem;
+  }
+
+  .error__message {
+    font-size: 2rem;
+    margin-top: 2rem;
+    text-align: center;
+  }
+
+  .car__wrapper {
+    display: flex;
+    flex-direction: column;
+    margin: 4rem auto;
+    width: 55%;
+    border-radius: 0.3rem;
+    border: 1px solid black;
+    padding: 3rem;
+  }
+
+  .car__header {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+  }
+
+  .car__form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+  }
+
+  .form__label {
+    
+  }
+
+
+
+
+
+  .user__wrapper {
+    display: flex;
+    flex-direction: column;
+    margin: 4rem auto;
+    width: 60%;
+    border-radius: 0.3rem;
+    border: 1px solid black;
+    padding: 3rem;
+  }
+  
+  .button__wrapper {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem;
   }
