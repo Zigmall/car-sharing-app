@@ -5,6 +5,7 @@ import AlertContext from '../../context/alert/alertContext';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/auth/authContext';
+import CarContext from '../../context/car/carContext';
 
 const SIGN_UP = gql`
   mutation SignUp($input: SignUp!) {
@@ -39,6 +40,8 @@ const SIGN_UP = gql`
 const Registration = () => {
   const authContext = useContext(AuthContext);
   const { loginUser } = authContext;
+  const carContext = useContext(CarContext);
+  const { changeTab } = carContext;
   const navigate = useNavigate();
   const [user, setUser] = useState({
     email: '',
@@ -78,6 +81,7 @@ const Registration = () => {
         setAlert(message, 'success');
         const resData = { currentUser, token };
         loginUser(resData);
+        changeTab(1);
         success && navigate('/');
       }
     },

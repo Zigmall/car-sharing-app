@@ -4,6 +4,7 @@ import styles from './Login.module.scss';
 import { useMutation } from '@apollo/client';
 import AlertContext from '../../context/alert/alertContext';
 import AuthContext from '../../context/auth/authContext';
+import CarContext from '../../context/car/carContext';
 import { LOG_IN } from '../../mutations/mutations';
 
 const Login = () => {
@@ -12,13 +13,15 @@ const Login = () => {
   const { setAlert } = alertContext;
   const authContext = useContext(AuthContext);
   const { loginUser } = authContext;
+  const carContext = useContext(CarContext);
+  const { changeTab } = carContext;
 
   const [login] = useMutation(LOG_IN, {
     onCompleted: ({ logIn: { success, message, token, currentUser } }) => {
       setAlert(message, success ? 'success' : 'danger');
       const resData = { currentUser, token };
       loginUser(resData);
-
+      changeTab(1);
       success && navigate('/');
     }
   });

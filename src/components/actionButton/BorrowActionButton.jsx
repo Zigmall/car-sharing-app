@@ -6,6 +6,7 @@ import AlertContext from '../../context/alert/alertContext';
 import { useNavigate } from 'react-router-dom';
 import { GET_ALL_BORROWED_CARS } from '../../queries/queries';
 import AuthContext from '../../context/auth/authContext';
+import CarContext from '../../context/car/carContext';
 import { BORROW_CAR } from '../../mutations/mutations';
 
 const BorrowActionButton = ({ availableCarCopy }) => {
@@ -15,10 +16,13 @@ const BorrowActionButton = ({ availableCarCopy }) => {
   const userId = user && user.id;
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
+  const carContext = useContext(CarContext);
+  const { changeTab } = carContext;
 
   const [borrowCar, { loading }] = useMutation(BORROW_CAR, {
     variables: { carCopyId: availableCarCopy },
     onCompleted: () => {
+      changeTab(1);
       navigate('/');
       setAlert('You have successfully borrowed the car', 'success');
     },

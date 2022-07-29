@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import TopBar from '../topBar/TopBar';
 import SideBar from '../sideBar/SideBar';
 import CarContext from '../../context/car/carContext';
@@ -14,16 +14,15 @@ const Bars = () => {
   const authContext = useContext(AuthContext);
   const { user, loadUser, logout, getTokenInfo, token } = authContext;
   const { data } = useQuery(ALL_CARS);
-  const [sideBarIndex, setSideBarIndex] = useState(1);
   const client = useApolloClient();
 
   const carContext = useContext(CarContext);
-  const { getCars, divideCarsIntoPages, cars } = carContext;
+  const { getCars, divideCarsIntoPages, cars, navIndex, changeTab } = carContext;
 
   const onLogout = () => {
     logout();
     client.resetStore();
-    setSideBarIndex(1);
+    changeTab(1);
     navigate('/');
   };
 
@@ -46,7 +45,7 @@ const Bars = () => {
         console.log('logout');
         logout();
         navigate('/');
-        setSideBarIndex(1);
+        changeTab(1);
       }
     }, 15000);
 
@@ -81,7 +80,7 @@ const Bars = () => {
   // const resetList = () => {};
 
   const setColorOnSideBarIcon = (index) => {
-    setSideBarIndex(index);
+    changeTab(index);
     // console.log(label);
     // sortBy(label);
   };
@@ -91,7 +90,7 @@ const Bars = () => {
       {useLocation().pathname === '/login' || useLocation().pathname === '/registration' ? null : (
         <>
           <TopBar user={user} onLogout={onLogout} />
-          <SideBar sideBarIndex={sideBarIndex} setColorOnSideBarIcon={setColorOnSideBarIcon} />
+          <SideBar sideBarIndex={navIndex} setColorOnSideBarIcon={setColorOnSideBarIcon} />
         </>
       )}
     </>
