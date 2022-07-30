@@ -13,7 +13,7 @@
 .car__wrapper {
   display: flex;
   flex-direction: column;
-  margin: 4rem auto;
+  margin: 2rem auto;
   width: 55%;
   border-radius: 0.3rem;
   border: 1px solid black;
@@ -101,7 +101,7 @@
 }
 
 .textarea__input {
-  display: flex;
+  display: block;
   width: 100%;
   height: 3rem;
   margin: 0;
@@ -110,12 +110,19 @@
   border: 1px solid black;
 }
 
+
 .button__update {
   display: inline-block;
-  margin-top: 3rem;
+  margin-top: 1rem;
   padding: 0.5rem 2rem;
   border-radius: 0.3rem;
   background-color: #0074ef;
   color: white;
   cursor: pointer;
+}
+
+.description__line {
+  display: inline-block;
+  margin-right: 1rem;
+  width: 100%;
 }

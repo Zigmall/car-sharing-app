@@ -1,16 +1,19 @@
 import React, { useState, useContext } from 'react';
 import styles from './AddCar.module.scss';
-import { GET_BRANDS } from '../../../queries/queries';
+import { GET_BRANDS, ALL_CARS } from '../../../queries/queries';
 import { useQuery } from '@apollo/client';
 import AlertContext from '../../../context/alert/alertContext';
+import { CREATE_CAR } from '../../../mutations/mutations';
+import { useMutation } from '@apollo/client';
 
 const AddCar = () => {
-  const [brad, setBrand] = useState('');
+  const [brand, setBrand] = useState('');
   const { loading, error, data } = useQuery(GET_BRANDS);
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
 
   const [model, setModel] = useState('');
+  const [carClass, setCarClass] = useState('');
   const [year, setYear] = useState(0);
   const [price, setPrice] = useState(0);
   const [mileage, setMileage] = useState(false);
@@ -26,30 +29,81 @@ const AddCar = () => {
   const [location, setLocation] = useState('');
   const [description, setDescription] = useState('');
 
-  // const [createNewCar] = useMutation(CREATE_NEW_CAR, {
-  const createNewCar = () => {
-    console.log({
-      model,
-      year,
-      price,
-      mileage,
-      collision,
-      theftProtection,
-      roadsideAssistance,
-      seats,
-      doors,
-      trunk,
-      engine,
-      airConditioning,
-      manualGearBox,
-      location,
-      description
-    });
+  const resetForm = () => {
+    setBrand('');
+    setModel('');
+    setCarClass('');
+    setYear(0);
+    setPrice(0);
+    setMileage(false);
+    setCollision(false);
+    setTheftProtection(false);
+    setRoadsideAssistance(false);
+    setSeats(0);
+    setDoors(0);
+    setTrunk(0);
+    setEngine('');
+    setAirConditioning(false);
+    setManualGearBox(false);
+    setLocation('');
+    setDescription('');
   };
+
+  const checkBenefits = () => {
+    let array = new Array();
+    if (mileage) {
+      array.push('Unlimited mileage');
+    }
+    if (collision) {
+      array.push('Collision damage protection');
+    }
+    if (theftProtection) {
+      array.push('Theft protection');
+    }
+    if (roadsideAssistance) {
+      array.push('Roadside assistance');
+    }
+    return array;
+  };
+
+  const [createNewCar] = useMutation(CREATE_CAR, {
+    variables: {
+      input: {
+        brand,
+        model,
+        carClass,
+        year: parseInt(year),
+        price: parseInt(price),
+        benefits: checkBenefits(),
+        property: {
+          seats,
+          doors,
+          trunk,
+          engine,
+          airConditioning,
+          manualGearBox
+        },
+        location,
+        description,
+        picturePath: {
+          url: 'www'
+        }
+      }
+    },
+    onCompleted: () => {
+      setAlert('Car has been added', 'success');
+      resetForm();
+    },
+    onError: (error) => {
+      console.log(error.message);
+    },
+    refetchQueries: [{ query: ALL_CARS }]
+  });
 
   const handleCreateCar = (e) => {
     e.preventDefault();
     if (
+      brand === '' ||
       model === '' ||
       year === 0 ||
       price === 0 ||
@@ -94,8 +148,9 @@ const AddCar = () => {
                     <label className={styles.form__label}>Brand</label>
                     <select
                       className={styles.form__select}
-                      value={brad}
+                      value={brand}
                       onChange={(e) => setBrand(e.target.value)}>
+                      <option value="">Select brand</option>
                       {brands.map((brand) => (
                         <option key={brand.id} value={brand.id}>
                           {brand.name}
@@ -103,6 +158,17 @@ const AddCar = () => {
                       ))}
                     </select>
                   </div>
+                </div>
+
+                <div className={styles.form__element}>
+                  <label className={styles.form__label}>Car class</label>
+                  <input
+                    type="text"
+                    className={styles.form__input}
+                    id="carClass"
+                    value={carClass}
+                    onChange={(e) => setCarClass(e.target.value)}
+                  />
                 </div>
 
                 <div className={styles.form__line}>
@@ -269,18 +335,17 @@ const AddCar = () => {
                   <label className={styles.form__label}>Manual Gearbox</label>
                 </div>
               </div>
-              <div className={styles.property__line}>
-                <div className={styles.form__element}>
-                  <label className={styles.form__label}>Description</label>
-                  <textarea
-                    type="textarea"
-                    className={styles.textarea__input}
-                    id="description"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                  />
-                </div>
+              <div className={styles.description__line}>
+                <label className={styles.form__label}>Description</label>
+                <textarea
+                  type="textarea"
+                  className={styles.textarea__input}
+                  id="description"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
               </div>
+
               <button type="submit" className={styles.button__update}>
                 Create car
               </button>
