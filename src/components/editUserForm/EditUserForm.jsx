@@ -38,6 +38,9 @@ const EditUserForm = ({ user }) => {
             address: { country, city, street, houseNumber, flatNumber, postCode }
           }
         },
+        onCompleted: () => {
+          setAlert('User has been updated', 'success');
+        },
         refetchQueries: [{ query: GET_ALL_USERS }]
       })
     : useMutation(UPDATE_MY_PERSONAL_DATA, {
@@ -51,6 +54,10 @@ const EditUserForm = ({ user }) => {
             address: { country, city, street, houseNumber, flatNumber, postCode }
           }
         },
+        onCompleted: () => {
+          setAlert('Your data has been updated', 'success');
+          // authContext.setUser(currentUser);
+        },
         refetchQueries: [{ query: GET_ALL_USERS }]
       });
 
@@ -63,7 +70,6 @@ const EditUserForm = ({ user }) => {
     if (firstName === '' || lastName === '' || email === '') {
       setAlert('Please fill out all fields', 'warning');
     } else {
-      setAlert('User updated', 'success');
       updateUser();
     }
   };
