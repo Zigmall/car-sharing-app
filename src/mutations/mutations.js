@@ -150,4 +150,30 @@ const BORROW_CAR = gql`
   }
 `;
 
-export { DELETE_USER, UPDATE_USER, LOG_IN, RETURN_CAR, BORROW_CAR, UPDATE_MY_PERSONAL_DATA };
+const CREATE_CAR = gql`
+  mutation CreateCar($input: CreateCarInput!) {
+    createCar(input: $input) {
+      success
+      message
+      car {
+        model
+        carClass
+        brand {
+          id
+          name
+        }
+        id
+      }
+    }
+  }
+`;
+
+export {
+  DELETE_USER,
+  UPDATE_USER,
+  LOG_IN,
+  RETURN_CAR,
+  BORROW_CAR,
+  UPDATE_MY_PERSONAL_DATA,
+  CREATE_CAR
+};
