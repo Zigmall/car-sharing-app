@@ -21,9 +21,9 @@ const SvgIconBar = (props) => {
 };
 
 SvgIconBar.propTypes = {
-  seats: PropTypes.number,
-  doors: PropTypes.number,
-  bags: PropTypes.number,
+  seats: PropTypes.string,
+  doors: PropTypes.string,
+  bags: PropTypes.string,
   airConditioning: PropTypes.bool,
   manualGearBox: PropTypes.bool
 };
