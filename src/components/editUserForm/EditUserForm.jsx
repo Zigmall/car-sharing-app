@@ -3,7 +3,7 @@ import styles from './EditUserForm.module.scss';
 import PropTypes from 'prop-types';
 import { useMutation } from '@apollo/client';
 import { UPDATE_USER, UPDATE_MY_PERSONAL_DATA } from '../../mutations/mutations';
-import { GET_ALL_USERS } from '../../queries/queries';
+import { GET_ALL_USERS, GET_CURRENT_USER } from '../../queries/queries';
 import AlertContext from '../../context/alert/alertContext';
 import AuthContext from '../../context/auth/authContext';
 
@@ -58,7 +58,7 @@ const EditUserForm = ({ user }) => {
           setAlert('Your data has been updated', 'success');
           // authContext.setUser(currentUser);
         },
-        refetchQueries: [{ query: GET_ALL_USERS }]
+        refetchQueries: [{ query: GET_CURRENT_USER }]
       });
 
   const handleCheckboxChange = () => {

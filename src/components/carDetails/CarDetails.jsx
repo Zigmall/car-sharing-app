@@ -48,7 +48,7 @@ const CarDetails = () => {
   }
   if (error) {
     console.log('error:', error.message);
-    return <p>Could not load book...</p>;
+    return <p>Could not load car...</p>;
   }
   const { car } = data;
   const availableCars = car.copies.filter((car) => car.borrower === null);
