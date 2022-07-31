@@ -25,7 +25,7 @@ const EditUserForm = ({ user }) => {
   const [flatNumber, setFlatNumber] = useState(user.address.flatNumber);
   const [postCode, setPostCode] = useState(user.address.postCode);
 
-  const [updateUser] = user.isAdmin
+  const [updateUser] = currentUser.isAdmin
     ? useMutation(UPDATE_USER, {
         variables: {
           input: {

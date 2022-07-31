@@ -8,6 +8,7 @@ import EditUserForm from '../editUserForm/EditUserForm';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import CarContext from '../../context/car/carContext';
+import AuthContext from '../../context/auth/authContext';
 
 const User = () => {
   const { userId } = useParams();
@@ -15,6 +16,8 @@ const User = () => {
   const navigate = useNavigate();
   const carContext = useContext(CarContext);
   const { changeTab } = carContext;
+  const authContext = useContext(AuthContext);
+  const { user: currentUsser } = authContext;
 
   if (loading) return <p>Loading...</p>;
   if (error) {
@@ -31,7 +34,7 @@ const User = () => {
   const user = data.allUsers.filter((user) => user.id === userId);
 
   const goBack = () => {
-    if (user.isAdmin) {
+    if (currentUsser.isAdmin) {
       navigate('/users');
     } else {
       changeTab(1);
