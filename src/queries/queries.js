@@ -175,10 +175,6 @@ const GET_BRANDS = gql`
         year
         copies {
           id
-          borrower {
-            firstName
-            lastName
-          }
         }
       }
     }
