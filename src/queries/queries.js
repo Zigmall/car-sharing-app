@@ -119,6 +119,16 @@ const GET_CURRENT_USER = gql`
       firstName
       lastName
       isAdmin
+      email
+      mobile
+      address {
+        city
+        country
+        street
+        houseNumber
+        flatNumber
+        postCode
+      }
       avatar {
         color
       }
