@@ -18,7 +18,7 @@ const UserRow = ({ user }) => {
   };
   const navigate = useNavigate();
   const handleEdit = () => {
-    navigate(`/user/${user.id}`);
+    navigate(`/users/${user.id}`);
   };
 
   return (
