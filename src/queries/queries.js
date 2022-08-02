@@ -1,10 +1,13 @@
 import { gql } from '@apollo/client';
 
 const GET_ALL_BORROWED_CARS = gql`
-  query BorrowedCarCopies($userId: ID!) {
+  query User($userId: ID!) {
     user(id: $userId) {
-      borrowedCarCopies {
+      id
+      borrowedCars {
         id
+        startDate
+        endDate
         car {
           id
           carClass
@@ -23,12 +26,6 @@ const GET_ALL_BORROWED_CARS = gql`
           }
           location
           price
-          copies {
-            id
-            borrower {
-              id
-            }
-          }
         }
       }
     }

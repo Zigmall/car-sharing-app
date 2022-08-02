@@ -85,47 +85,31 @@ const LOG_IN = gql`
 `;
 
 const RETURN_CAR = gql`
-  mutation ReturnCarCopy($returnCarCopyId: ID!) {
-    returnCarCopy(id: $returnCarCopyId) {
-      id
-      borrower {
+  mutation ReturnCar($returnCarId: ID!) {
+    returnCar(id: $returnCarId) {
+      success
+      message
+      borrowedCar {
         id
-        borrowedCarCopies {
+        startDate
+        car {
           id
-          car {
-            id
-            carClass
-            benefits
-            model
-            brand {
-              name
-            }
-            year
-            property {
-              seats
-              doors
-              trunk
-              airConditioning
-              manualGearBox
-            }
-            location
-            price
-            copies {
-              id
-              borrower {
-                id
-              }
-            }
+          carClass
+          benefits
+          model
+          brand {
+            name
           }
-        }
-      }
-      id
-      car {
-        copies {
-          id
-          borrower {
-            id
+          year
+          property {
+            seats
+            doors
+            trunk
+            airConditioning
+            manualGearBox
           }
+          location
+          price
         }
       }
     }
