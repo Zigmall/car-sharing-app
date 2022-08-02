@@ -1,21 +1,25 @@
 .alertWrapper {
   display: flex;
   justify-content: center;
+  margin-top: 0.5rem;
 }
 
 .wrapper {
+  border-radius: 0.3rem;
   position: fixed;
   width: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 50px;
+  height: 70px;
   margin: 0px;
+  
   
 
   .alerts {
     justify-content: center;
-    font-size: 18px;
+    font-size: 24px;
+    font-weight: bold;
     align-items: center;
     display: flex;
   }

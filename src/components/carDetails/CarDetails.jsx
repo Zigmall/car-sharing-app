@@ -27,12 +27,6 @@ const GET_CAR = gql`
       }
       location
       price
-      copies {
-        id
-        borrower {
-          id
-        }
-      }
     }
   }
 `;
@@ -51,7 +45,6 @@ const CarDetails = () => {
     return <p>Could not load car...</p>;
   }
   const { car } = data;
-  const availableCars = car.copies.filter((car) => car.borrower === null);
 
   const sumOfAllPoints = 10;
   const numberOfVoters = 3;
@@ -107,12 +100,9 @@ const CarDetails = () => {
           </div>
         </div>
         <div className={styles.rightColumn}>
-          <h2>
-            {availableCars.length}/{car.copies.length} AVAILABLE
-          </h2>
           <h3>Price €{car.price}</h3>
           <p>Location: {car.location}</p>
-          <ActionButtons carCopy={car} returnCar={false} />
+          <ActionButtons car={car} returnCar={false} />
         </div>
       </div>
     </div>

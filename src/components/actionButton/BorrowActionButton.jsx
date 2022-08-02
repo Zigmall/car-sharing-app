@@ -9,7 +9,7 @@ import AuthContext from '../../context/auth/authContext';
 import CarContext from '../../context/car/carContext';
 import { BORROW_CAR } from '../../mutations/mutations';
 
-const BorrowActionButton = ({ availableCarCopy }) => {
+const BorrowActionButton = ({ carId }) => {
   const navigate = useNavigate();
   const authContext = useContext(AuthContext);
   const { user } = authContext;
@@ -20,11 +20,11 @@ const BorrowActionButton = ({ availableCarCopy }) => {
   const { changeTab } = carContext;
 
   const [borrowCar, { loading }] = useMutation(BORROW_CAR, {
-    variables: { carCopyId: availableCarCopy },
-    onCompleted: () => {
+    variables: { borrowCarId: carId },
+    onCompleted: ({ borrowCar: { success, message } }) => {
       changeTab(1);
       navigate('/');
-      setAlert('You have successfully borrowed the car', 'success');
+      success ? setAlert(message, 'success') : setAlert(message, 'warning');
     },
     onError: (error) => {
       setAlert(error.message, 'danger');
@@ -41,7 +41,7 @@ const BorrowActionButton = ({ availableCarCopy }) => {
 };
 
 BorrowActionButton.propTypes = {
-  availableCarCopy: PropTypes.string
+  carId: PropTypes.string
 };
 
 export default BorrowActionButton;
