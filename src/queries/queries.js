@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 const GET_ALL_BORROWED_CARS = gql`
-  query User($userId: ID!) {
+  query getAllBorrowedCars($userId: ID!) {
     user(id: $userId) {
       id
       borrowedCars {

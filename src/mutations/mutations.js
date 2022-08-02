@@ -117,17 +117,23 @@ const RETURN_CAR = gql`
 `;
 
 const BORROW_CAR = gql`
-  mutation BorrowCarCopy($carCopyId: ID!) {
-    borrowCarCopy(id: $carCopyId) {
-      id
-      borrower {
-        borrowedCarCopies {
+  mutation BorrowCar($borrowCarId: ID!) {
+    borrowCar(id: $borrowCarId) {
+      success
+      message
+      borrowedCar {
+        id
+        car {
           id
-          car {
-            copies {
-              id
-            }
+          brand {
+            name
           }
+          model
+        }
+        borrower {
+          id
+          firstName
+          lastName
         }
       }
     }
