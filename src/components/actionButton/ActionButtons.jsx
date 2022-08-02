@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import AlertContext from '../../context/alert/alertContext';
 import ReturnActionButton from './ReturnActionButton';
 
-const ActionButtons = ({ carCopy, returnCar }) => {
+const ActionButtons = ({ car, returnCar }) => {
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
 
   let availableCopies = null;
   let canBorrow = null;
   if (!returnCar) {
-    availableCopies = carCopy.copies.filter((car) => car.borrower === null);
+    availableCopies = car.copies.filter((car) => car.borrower === null);
     canBorrow = !!availableCopies.length > 0;
   }
 
@@ -23,13 +23,13 @@ const ActionButtons = ({ carCopy, returnCar }) => {
   return (
     <div>
       {canBorrow && <BorrowActionButton availableCarCopy={availableCopies[0].id} />}
-      {returnCar && <ReturnActionButton borrowedCarCopy={carCopy} />}
+      {returnCar && <ReturnActionButton car={car} />}
     </div>
   );
 };
 
 ActionButtons.propTypes = {
-  carCopy: PropTypes.object,
+  car: PropTypes.object,
   returnCar: PropTypes.bool
 };
 

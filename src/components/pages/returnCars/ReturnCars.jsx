@@ -26,11 +26,12 @@ const ReturnCars = () => {
   if (loading) {
     return <p className={styles.noCars}>Loading...</p>;
   }
+  const currentlyBorrowedCars = data.user.borrowedCars.filter((car) => car.endDate === null);
 
   return (
     <div className={styles.returnCarWrapper}>
-      {data && data.user.borrowedCarCopies.length > 0 ? (
-        data.user.borrowedCarCopies.map((car, index) => (
+      {currentlyBorrowedCars && currentlyBorrowedCars.length > 0 ? (
+        currentlyBorrowedCars.map((car, index) => (
           <Car
             key={index}
             id={car.car.id}
@@ -41,7 +42,7 @@ const ReturnCars = () => {
             property={car.car.property}
             location={car.car.location}
             price={car.car.price}
-            carCopy={car}
+            car={car}
             returnCar={true}
           />
         ))
