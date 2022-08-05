@@ -1,0 +1,128 @@
+.left__space {
+  margin-left: 9rem;
+}
+
+
+
+.error__message {
+  font-size: 2rem;
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.car__wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem auto;
+  width: 55%;
+  border-radius: 0.3rem;
+  border: 1px solid black;
+  padding: 3rem;
+}
+
+.car__header {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+.car__form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+  h2 {
+    margin: 2.5rem 0 0 0;
+  }
+}
+
+.form__label {
+  margin-right: 1rem;
+}
+
+.car__form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+.form__line {
+  display: flex;
+  flex-direction: row;
+  margin-top: 1rem;
+  justify-content: space-between;
+}
+
+.form__element {
+  display: inline-block;
+  margin-right: 1rem;
+}
+
+.form__input {
+  display: flex;
+  width: 100%;
+  margin: 0;
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+  border: 1px solid black;
+}
+
+
+.button__wrapper {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem;
+}
+
+.benefit__wrapper {
+  display: block;
+  margin-top: 1rem;
+  input {
+    margin: 0;
+  }
+  .form__label {
+    margin-left: 0.6rem;
+    font-size: 1.2rem;
+  }
+}
+
+.benefit__line {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.property__line {
+  display: flex;
+  width: 100%;
+  margin: 0;
+  padding: 0.5rem 0;
+  margin: 2rem 0;
+}
+
+.textarea__input {
+  display: block;
+  width: 100%;
+  height: 3rem;
+  margin: 0;
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+  border: 1px solid black;
+}
+
+
+.button__update {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.5rem 2rem;
+  border-radius: 0.3rem;
+  background-color: #0074ef;
+  color: white;
+  cursor: pointer;
+}
+
+.description__line {
+  display: inline-block;
+  margin-right: 1rem;
+  width: 100%;
+}

@@ -1,35 +1,21 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import BorrowActionButton from './BorrowActionButton';
 import PropTypes from 'prop-types';
-import AlertContext from '../../context/alert/alertContext';
 import ReturnActionButton from './ReturnActionButton';
 
-const ActionButtons = ({ carCopy, returnCar }) => {
-  const alertContext = useContext(AlertContext);
-  const { setAlert } = alertContext;
+const ActionButtons = ({ car, returnCar }) => {
+  console.log(car);
 
-  let availableCopies = null;
-  let canBorrow = null;
-  if (!returnCar) {
-    availableCopies = carCopy.copies.filter((car) => car.borrower === null);
-    canBorrow = !!availableCopies.length > 0;
-  }
-
-  useEffect(() => {
-    if (availableCopies !== null && availableCopies.length === 0 && !returnCar) {
-      setAlert('Car temporary unavailable', 'danger');
-    }
-  }, []);
   return (
     <div>
-      {canBorrow && <BorrowActionButton availableCarCopy={availableCopies[0].id} />}
-      {returnCar && <ReturnActionButton borrowedCarCopy={carCopy} />}
+      {!returnCar && <BorrowActionButton carId={car.id} />}
+      {returnCar && <ReturnActionButton car={car} />}
     </div>
   );
 };
 
 ActionButtons.propTypes = {
-  carCopy: PropTypes.object,
+  car: PropTypes.object,
   returnCar: PropTypes.bool
 };
 

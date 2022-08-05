@@ -4,27 +4,44 @@ import styles from './Login.module.scss';
 import AlertContext from '../../context/alert/alertContext';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { USER_FRAGMENT, CAR_COPY_FRAGMENT } from '../fragments/Fragments';
+import AuthContext from '../../context/auth/authContext';
+import CarContext from '../../context/car/carContext';
 
-const CREATE_USER = gql`
-  mutation CreateUser($input: CreateUserInput!) {
-    createUser(input: $input) {
+const SIGN_UP = gql`
+  mutation SignUp($input: SignUp!) {
+    signUp(input: $input) {
       success
       message
-      user {
-        ...userFields
+      token
+      currentUser {
+        id
+        firstName
+        lastName
+        email
         borrowedCarCopies {
-          ...carCopyFields
+          id
+          car {
+            id
+          }
+          borrower {
+            id
+            firstName
+            lastName
+          }
+        }
+        avatar {
+          color
         }
       }
     }
   }
-
-  ${USER_FRAGMENT}
-  ${CAR_COPY_FRAGMENT}
 `;
 
 const Registration = () => {
+  const authContext = useContext(AuthContext);
+  const { loginUser } = authContext;
+  const carContext = useContext(CarContext);
+  const { changeTab } = carContext;
   const navigate = useNavigate();
   const [user, setUser] = useState({
     email: '',
@@ -47,26 +64,29 @@ const Registration = () => {
     } else if (password !== password2) {
       setAlert('Passwords need to be the same!', 'danger');
     } else {
-      setAlert('You successfully created an account.', 'info');
-      // navigate('/');
       const input = {
         email: email,
         firstName: firstName,
-        lastName: lastName
+        lastName: lastName,
+        password: password
       };
-      console.log('new User, sending...', input);
-      createUser({ variables: { input } });
+      signUp({ variables: { input } });
     }
   };
 
-  const [createUser, { loading: isCreating }] = useMutation(CREATE_USER, {
-    onCompleted: ({ createUser }) => {
-      const { success, message, user } = createUser;
-      !isCreating && console.log('123');
+  const [signUp] = useMutation(SIGN_UP, {
+    onCompleted: ({ signUp }) => {
+      const { success, message, currentUser, token } = signUp;
       if (success) {
-        console.log('success', message, user);
-        navigate('/');
+        setAlert(message, 'success');
+        const resData = { currentUser, token };
+        loginUser(resData);
+        changeTab(1);
+        success && navigate('/');
       }
+    },
+    onError: (error) => {
+      setAlert(error.message, 'danger');
     }
   });
 
@@ -114,7 +134,7 @@ const Registration = () => {
       </form>
       <div className={styles.registerLink}>
         <p>You already have an account? </p>
-        <Link to={'/Login'}>Log in</Link>
+        <Link to={'/login'}>Log in</Link>
       </div>
     </div>
   );

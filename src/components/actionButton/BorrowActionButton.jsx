@@ -1,43 +1,30 @@
 import React, { useContext } from 'react';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import styles from './ActionButtons.module.scss';
 import PropTypes from 'prop-types';
 import AlertContext from '../../context/alert/alertContext';
 import { useNavigate } from 'react-router-dom';
 import { GET_ALL_BORROWED_CARS } from '../../queries/queries';
 import AuthContext from '../../context/auth/authContext';
+import CarContext from '../../context/car/carContext';
+import { BORROW_CAR } from '../../mutations/mutations';
 
-const BORROW_CAR = gql`
-  mutation BorrowCarCopy($carCopyId: ID!) {
-    borrowCarCopy(id: $carCopyId) {
-      id
-      borrower {
-        borrowedCarCopies {
-          id
-          car {
-            copies {
-              id
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-
-const BorrowActionButton = ({ availableCarCopy }) => {
+const BorrowActionButton = ({ carId }) => {
   const navigate = useNavigate();
   const authContext = useContext(AuthContext);
   const { user } = authContext;
   const userId = user && user.id;
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
+  const carContext = useContext(CarContext);
+  const { changeTab } = carContext;
 
   const [borrowCar, { loading }] = useMutation(BORROW_CAR, {
-    variables: { carCopyId: availableCarCopy },
-    onCompleted: () => {
+    variables: { borrowCarId: carId },
+    onCompleted: ({ borrowCar: { success, message } }) => {
+      changeTab(1);
       navigate('/');
-      setAlert('You have successfully borrowed the car', 'info');
+      success ? setAlert(message, 'success') : setAlert(message, 'warning');
     },
     onError: (error) => {
       setAlert(error.message, 'danger');
@@ -54,7 +41,7 @@ const BorrowActionButton = ({ availableCarCopy }) => {
 };
 
 BorrowActionButton.propTypes = {
-  availableCarCopy: PropTypes.string
+  carId: PropTypes.string
 };
 
 export default BorrowActionButton;

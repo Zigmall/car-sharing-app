@@ -18,7 +18,7 @@ const Car = ({
   price,
   id,
   returnCar,
-  carCopy
+  car
 }) => {
   const navigate = useNavigate();
   return (
@@ -75,7 +75,7 @@ const Car = ({
             {!returnCar ? (
               <button onClick={() => navigate(`/cars/${id}`)}>View</button>
             ) : (
-              <ActionButtons carCopy={carCopy} returnCar={true} />
+              <ActionButtons car={car} returnCar={returnCar} />
             )}
           </div>
         </div>
@@ -95,7 +95,7 @@ Car.propTypes = {
   id: PropTypes.string,
   model: PropTypes.string,
   returnCar: PropTypes.bool,
-  carCopy: PropTypes.object
+  car: PropTypes.object
 };
 
 export default Car;

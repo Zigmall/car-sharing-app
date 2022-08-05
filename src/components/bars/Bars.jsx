@@ -1,100 +1,42 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import TopBar from '../topBar/TopBar';
 import SideBar from '../sideBar/SideBar';
 import CarContext from '../../context/car/carContext';
-import { gql, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import AuthContext from '../../context/auth/authContext';
-// import { AVATAR_FRAGMENT } from '../fragments/Fragments';
 import { useNavigate } from 'react-router-dom';
-
-const ALL_CARS = gql`
-  query getCars {
-    cars {
-      id
-      carClass
-      benefits
-      model
-      brand {
-        name
-      }
-      year
-      property {
-        seats
-        doors
-        trunk
-        airConditioning
-        manualGearBox
-      }
-      location
-      price
-    }
-  }
-`;
-
-const GET_CURRENT_USER = gql`
-  query getCurrentUser {
-    currentUser {
-      id
-      firstName
-      lastName
-      isAdmin
-      avatar {
-        color
-      }
-      borrowedCarCopies {
-        id
-        car {
-          id
-          carClass
-          benefits
-          model
-          brand {
-            name
-          }
-          year
-          property {
-            seats
-            doors
-            trunk
-            airConditioning
-            manualGearBox
-          }
-          location
-          price
-          copies {
-            id
-            borrower {
-              id
-            }
-          }
-        }
-      }
-    }
-  }
-`;
+import { ALL_CARS, GET_CURRENT_USER } from '../../queries/queries';
+import { useApolloClient } from '@apollo/client';
+import { useLocation } from 'react-router-dom';
 
 const Bars = () => {
   const navigate = useNavigate();
   const authContext = useContext(AuthContext);
   const { user, loadUser, logout, getTokenInfo, token } = authContext;
   const { data } = useQuery(ALL_CARS);
-  const [sideBarIndex, setSideBarIndex] = useState(1);
+  const client = useApolloClient();
 
   const carContext = useContext(CarContext);
-  const { getCars, divideCarsIntoPages, cars } = carContext;
+  const { getCars, divideCarsIntoPages, cars, navIndex, changeTab } = carContext;
 
   const onLogout = () => {
     logout();
     client.resetStore();
+    changeTab(1);
+    navigate('/');
   };
-  const { loading, error, data: data3, client } = useQuery(GET_CURRENT_USER);
+
+  useQuery(GET_CURRENT_USER, {
+    onCompleted: (currentUser) => {
+      loadUser(currentUser);
+    }
+  });
 
   useEffect(() => {
     data && getCars({ data });
     if (cars !== null) {
       divideCarsIntoPages(cars);
     }
-    !loading && !error && loadUser(data3);
 
     const intervalId = setInterval(() => {
       const tokenInfo = getTokenInfo(token);
@@ -102,9 +44,10 @@ const Bars = () => {
       if (tokenInfo && tokenInfo.exp - Math.round(Date.now() / 1000) < 30) {
         console.log('logout');
         logout();
+        navigate('/');
+        changeTab(1);
       }
     }, 15000);
-    navigate('/');
 
     return () => {
       clearInterval(intervalId);
@@ -137,15 +80,19 @@ const Bars = () => {
   // const resetList = () => {};
 
   const setColorOnSideBarIcon = (index) => {
-    setSideBarIndex(index);
+    changeTab(index);
     // console.log(label);
     // sortBy(label);
   };
 
   return (
     <>
-      <TopBar user={user} onLogout={onLogout} />
-      <SideBar sideBarIndex={sideBarIndex} setColorOnSideBarIcon={setColorOnSideBarIcon} />
+      {useLocation().pathname === '/login' || useLocation().pathname === '/registration' ? null : (
+        <>
+          <TopBar user={user} onLogout={onLogout} />
+          <SideBar sideBarIndex={navIndex} setColorOnSideBarIcon={setColorOnSideBarIcon} />
+        </>
+      )}
     </>
   );
 };

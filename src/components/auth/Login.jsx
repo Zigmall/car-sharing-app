@@ -1,57 +1,11 @@
 import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './Login.module.scss';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import AlertContext from '../../context/alert/alertContext';
 import AuthContext from '../../context/auth/authContext';
-
-const LOG_IN_MUTATION = gql`
-  mutation ($input: LogInInput!) {
-    logIn(input: $input) {
-      message
-      success
-      token
-      currentUser {
-        id
-        firstName
-        lastName
-        email
-        isAdmin
-        avatar {
-          color
-        }
-        borrowedCarCopies {
-          id
-          car {
-            id
-            carClass
-            benefits
-            model
-            brand {
-              name
-            }
-            year
-            property {
-              seats
-              doors
-              trunk
-              airConditioning
-              manualGearBox
-            }
-            location
-            price
-            copies {
-              id
-              borrower {
-                id
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
+import CarContext from '../../context/car/carContext';
+import { LOG_IN } from '../../mutations/mutations';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -59,15 +13,17 @@ const Login = () => {
   const { setAlert } = alertContext;
   const authContext = useContext(AuthContext);
   const { loginUser } = authContext;
+  const carContext = useContext(CarContext);
+  const { changeTab } = carContext;
 
-  const [login] = useMutation(LOG_IN_MUTATION, {
+  const [login] = useMutation(LOG_IN, {
     onCompleted: ({ logIn: { success, message, token, currentUser } }) => {
-      setAlert(message, success ? 'info' : 'danger');
+      setAlert(message, success ? 'success' : 'danger');
       const resData = { currentUser, token };
       loginUser(resData);
+      changeTab(1);
       success && navigate('/');
     }
-    // refetchQueries: [{ query: GET_ALL_BORROWED_CARS }]
   });
 
   const [user, setUser] = useState({
@@ -85,13 +41,7 @@ const Login = () => {
       password
     };
     login({ variables: { input } });
-    // fetchUserData();
   };
-
-  // const fetchUserData = () => {
-  //   const { data } = useQuery(GET_ALL_BORROWED_CARS);
-  //   console.log('...data...', data);
-  // };
 
   return (
     <div className={styles.formWrapper}>
@@ -107,11 +57,13 @@ const Login = () => {
           <label htmlFor="password">Password</label>
           <input type="password" name="password" value={password} onChange={onChange} />
         </div>
-        <input type="submit" value="login" className={styles.btn} />
+        <div className={styles.button__wrapper}>
+          <input type="submit" value="login" className={styles.btn} />
+        </div>
       </form>
       <div className={styles.registerLink}>
         <p>Don&apos;t have account? </p>
-        <Link to={'/Registration'}>Register</Link>
+        <Link to={'/registration'}>Register</Link>
       </div>
     </div>
   );

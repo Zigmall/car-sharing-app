@@ -2,6 +2,9 @@ import React from 'react';
 import Home from './components/pages/home/Home';
 import { Route, Routes } from 'react-router';
 import CarDetails from './components/carDetails/CarDetails';
+import Users from './components/users/Users';
+import User from './components/user/User';
+import Rentals from './components/rentals/Rentals';
 import styles from './App.module.scss';
 import CarState from './context/car/CarState';
 import Bars from './components/bars/Bars';
@@ -20,6 +23,7 @@ import {
 } from '@apollo/client';
 import AuthState from './context/auth/AuthState';
 import { loadUser } from './context/auth/AuthState';
+import AddCar from './components/pages/addCar/AddCar';
 
 // const URL = 'https://desolate-spire-04068.herokuapp.com';
 const URL = 'http://localhost:5000';
@@ -54,11 +58,15 @@ const App = () => {
               <Bars />
               <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/add-car" element={<AddCar />} />
                 <Route path="/registration" element={<Registration />} />
                 <Route path="login" element={<Login />} />
                 <Route path="/cars/:carId" element={<CarDetails />} />
-                <Route path="/return-car/:userId" element={<ReturnCars />} />
                 <Route path="/return-car" element={<ReturnCars />} />
+                <Route path="/return-car/:userId" element={<ReturnCars />} />
+                <Route path="/rentals" element={<Rentals />} />
+                <Route path="/users/:userId" element={<User />} />
+                <Route path="/users" element={<Users />} />
               </Routes>
             </div>
           </AlertState>

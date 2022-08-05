@@ -1,15 +1,25 @@
-.wrapper {
-  position: fixed;
-  width: 80%;
+.alertWrapper {
   display: flex;
   justify-content: center;
-  height: 50px;
-  margin: 50px 9%;
+  margin-top: 0.5rem;
+}
+
+.wrapper {
+  border-radius: 0.3rem;
+  position: fixed;
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 70px;
+  margin: 0px;
+  
   
 
   .alerts {
     justify-content: center;
-    font-size: 18px;
+    font-size: 24px;
+    font-weight: bold;
     align-items: center;
     display: flex;
   }
@@ -19,6 +29,10 @@
   background-color: rgb(251, 143, 143);
 }
 
-.info {
+.success {
   background-color: rgb(84, 197, 110);
+}
+
+.warning {
+  background-color: rgb(242, 199, 5);
 }
