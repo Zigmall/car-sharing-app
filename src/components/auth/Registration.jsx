@@ -18,15 +18,28 @@ const SIGN_UP = gql`
         firstName
         lastName
         email
-        borrowedCarCopies {
+        borrowedCars {
           id
+          startDate
+          endDate
           car {
             id
-          }
-          borrower {
-            id
-            firstName
-            lastName
+            carClass
+            benefits
+            model
+            brand {
+              name
+            }
+            year
+            property {
+              seats
+              doors
+              trunk
+              airConditioning
+              manualGearBox
+            }
+            location
+            price
           }
         }
         avatar {

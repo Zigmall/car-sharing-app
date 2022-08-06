@@ -17,7 +17,7 @@ const User = () => {
   const carContext = useContext(CarContext);
   const { changeTab } = carContext;
   const authContext = useContext(AuthContext);
-  const { user: currentUsser } = authContext;
+  const { user: currentUser } = authContext;
 
   if (loading) return <p>Loading...</p>;
   if (error) {
@@ -34,7 +34,7 @@ const User = () => {
   const user = data.allUsers.filter((user) => user.id === userId);
 
   const goBack = () => {
-    if (currentUsser.isAdmin) {
+    if (currentUser.isAdmin) {
       navigate('/users');
     } else {
       changeTab(1);

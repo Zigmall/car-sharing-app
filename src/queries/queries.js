@@ -41,13 +41,28 @@ const GET_ALL_USERS = gql`
       email
       isAdmin
       mobile
-      borrowedCarCopies {
+      borrowedCars {
         id
+        startDate
+        endDate
         car {
+          id
+          carClass
+          benefits
+          model
           brand {
             name
           }
-          model
+          year
+          property {
+            seats
+            doors
+            trunk
+            airConditioning
+            manualGearBox
+          }
+          location
+          price
         }
       }
       address {
@@ -72,13 +87,28 @@ const GET_USER = gql`
       firstName
       lastName
       isAdmin
-      borrowedCarCopies {
+      borrowedCars {
         id
+        startDate
+        endDate
         car {
+          id
+          carClass
+          benefits
+          model
           brand {
             name
           }
-          model
+          year
+          property {
+            seats
+            doors
+            trunk
+            airConditioning
+            manualGearBox
+          }
+          location
+          price
         }
       }
     }
@@ -129,8 +159,10 @@ const GET_CURRENT_USER = gql`
       avatar {
         color
       }
-      borrowedCarCopies {
+      borrowedCars {
         id
+        startDate
+        endDate
         car {
           id
           carClass
@@ -149,12 +181,6 @@ const GET_CURRENT_USER = gql`
           }
           location
           price
-          copies {
-            id
-            borrower {
-              id
-            }
-          }
         }
       }
     }
@@ -170,9 +196,6 @@ const GET_BRANDS = gql`
         id
         model
         year
-        copies {
-          id
-        }
       }
     }
   }

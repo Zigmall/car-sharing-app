@@ -51,8 +51,10 @@ const LOG_IN = gql`
         avatar {
           color
         }
-        borrowedCarCopies {
+        borrowedCars {
           id
+          startDate
+          endDate
           car {
             id
             carClass
@@ -71,12 +73,6 @@ const LOG_IN = gql`
             }
             location
             price
-            copies {
-              id
-              borrower {
-                id
-              }
-            }
           }
         }
       }

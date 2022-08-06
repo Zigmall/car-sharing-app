@@ -29,18 +29,3 @@ export const USER_FRAGMENT = gql`
   }
   ${AVATAR_FRAGMENT}
 `;
-
-export const CAR_COPY_FRAGMENT = gql`
-  fragment carCopyFields on CarCopy {
-    id
-    car {
-      id
-    }
-    borrower {
-      id
-      firstName
-      lastName
-    }
-  }
-  ${AVATAR_FRAGMENT}
-`;

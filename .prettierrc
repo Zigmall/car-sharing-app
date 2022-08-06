@@ -1,6 +1,7 @@
 {
   "semi": true,
   "tabWidth": 2,
+  "endOfLine": "lf",
   "printWidth": 100,
   "singleQuote": true,
   "trailingComma": "none",
@@ -8,7 +9,7 @@
   "prettier/prettier": [
     "error",
     {
-      "endOfLine": "auto"
+      "endOfLine": "lf"
     }
   ]
 }
