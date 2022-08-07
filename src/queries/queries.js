@@ -201,4 +201,36 @@ const GET_BRANDS = gql`
   }
 `;
 
-export { GET_ALL_BORROWED_CARS, GET_ALL_USERS, GET_USER, ALL_CARS, GET_CURRENT_USER, GET_BRANDS };
+const GET_CAR = gql`
+  query GetCar($carId: ID!) {
+    car(id: $carId) {
+      id
+      carClass
+      benefits
+      model
+      brand {
+        name
+      }
+      year
+      property {
+        seats
+        doors
+        trunk
+        airConditioning
+        manualGearBox
+      }
+      location
+      price
+    }
+  }
+`;
+
+export {
+  GET_ALL_BORROWED_CARS,
+  GET_ALL_USERS,
+  GET_USER,
+  ALL_CARS,
+  GET_CURRENT_USER,
+  GET_BRANDS,
+  GET_CAR
+};
