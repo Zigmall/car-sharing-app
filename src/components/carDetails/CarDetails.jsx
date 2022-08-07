@@ -4,32 +4,10 @@ import styles from './CarDetails.module.scss';
 import MiddleIcon from '../groupElement/MiddleIcon';
 import { GearBox, Luggage, OpenDoorCar, AirConditioner } from '../assets/SvgList';
 import Rating from '../rating/Rating';
-import { gql, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import ActionButtons from '../actionButton/ActionButtons';
-
-const GET_CAR = gql`
-  query GetCar($carId: ID!) {
-    car(id: $carId) {
-      id
-      carClass
-      benefits
-      model
-      brand {
-        name
-      }
-      year
-      property {
-        seats
-        doors
-        trunk
-        airConditioning
-        manualGearBox
-      }
-      location
-      price
-    }
-  }
-`;
+import Comment from '../comment/Comment';
+import { GET_CAR } from '../../queries/queries';
 
 const CarDetails = () => {
   const { carId } = useParams();
@@ -105,17 +83,11 @@ const CarDetails = () => {
           <ActionButtons car={car} returnCar={false} />
         </div>
       </div>
+      <div className={styles.review}>
+        <Comment />
+      </div>
     </div>
   ) : null;
 };
-
-// CarDetails.propTypes = {
-//   carClass: PropTypes.string,
-//   benefits: PropTypes.array,
-//   brand: PropTypes.string,
-//   property: PropTypes.array,
-//   location: PropTypes.string,
-//   price: PropTypes.string
-// };
 
 export default CarDetails;
