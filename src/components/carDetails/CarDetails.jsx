@@ -84,7 +84,18 @@ const CarDetails = () => {
         </div>
       </div>
       <div className={styles.review}>
-        <Comment />
+        <h3>RATINGS AND COMMENTS</h3>
+        <h3>RATING 5/5</h3>
+        <h3>46 ratings</h3>
+        {car.comments.map((comment) => (
+          <Comment
+            key={comment.id}
+            createdAt={comment.createdAt}
+            rating={comment.rating}
+            text={comment.text}
+            author={comment.user}
+          />
+        ))}
       </div>
     </div>
   ) : null;

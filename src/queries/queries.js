@@ -221,6 +221,21 @@ const GET_CAR = gql`
       }
       location
       price
+      comments {
+        id
+        text
+        user {
+          id
+          firstName
+          lastName
+        }
+        car {
+          id
+          model
+        }
+        rating
+        createdAt
+      }
     }
   }
 `;
