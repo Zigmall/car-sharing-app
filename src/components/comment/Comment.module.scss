@@ -1,20 +1,43 @@
 .comment__wrapper {
   font-family: inherit;
   font-size: inherit;
-  display: block;
+  display: flex;
+  flex-direction: column;
   width: 100%;
   overflow: hidden;
   resize: both;
-  min-height: 150px;
   line-height: 20px;
   border: none;
   resize: none;
   background-color: #ffffff;
   box-shadow: 0px 5px 10px 5px rgba(0, 0, 0, 0.051);
-
+  border-radius: 0.3rem;
+  h4 {
+    margin: 0;
+  }
   textarea {
-    padding: 20px;
+    margin-top: 1rem;
+    min-height: 6rem;
     outline: none;
     resize: none;
+    padding: 1rem;
+    border: 1px solid #e6e6e6;
+    border-radius: 0.3rem;
   }
+}
+.comment__textarea {
+  font-family: inherit;
+  font-size: inherit;
+  width: max(100% - 2rem);
+  line-height: 20px;
+  border: none;
+  background-color: #ffffff;
+}
+.comment__border {
+  margin: 1rem;
+}
+
+.button__wrapper {
+  display: flex;
+  justify-content: flex-end;
 }
