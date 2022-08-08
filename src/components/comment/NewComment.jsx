@@ -1,33 +1,63 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Rating from '../rating/Rating';
 import styles from './Comment.module.scss';
 import PropTypes from 'prop-types';
+import AlertContext from '../../context/alert/alertContext';
+import AuthContext from '../../context/auth/authContext';
+import { CREATE_COMMENT } from '../../mutations/mutations';
+import { GET_CAR } from '../../queries/queries';
+import { useMutation } from '@apollo/client';
 
-const NewComment = ({ comments }) => {
+const NewComment = ({ comments, carId }) => {
+  const alertContext = useContext(AlertContext);
+  const { setAlert } = alertContext;
+  const authContext = useContext(AuthContext);
+  const { user } = authContext;
   const [comment, setComment] = useState('');
+  const [rating, changeRating] = useState(0);
   console.log(comments);
-  // const sumPoints = comments.reduce((acc, curr) => acc + curr.rating, 0);
+  const voted = false;
 
-  const [sumOfAllPoints, changeSumOfAllPoints] = useState(0);
-  const [numberOfVoters, changeNumberOfVoters] = useState(0);
-  const [overallRating, changeOverallRating] = useState(0);
-  const [voted, changeVoted] = useState(false);
+  const handleSendComment = (e) => {
+    e.preventDefault();
+    console.log(comments);
+    if (user === null || user === undefined || user.id === null || user.id === undefined) {
+      setAlert('You need to be logged in to comment', 'danger');
+    } else if (comment === '') {
+      setAlert('Comment cannot be empty', 'danger');
+    } else if (rating === 0) {
+      setAlert('You need to rate car', 'warning');
+    } else {
+      const input = {
+        text: comment,
+        userId: user.id,
+        carId,
+        rating
+      };
+      createComment({ variables: { input } });
+    }
+  };
 
-  console.log('overal', overallRating);
+  const [createComment] = useMutation(CREATE_COMMENT, {
+    onCompleted: ({ createComment }) => {
+      const { success, message } = createComment;
+      if (success) {
+        setAlert(message, 'success');
+        setComment('');
+        changeRating(0);
+      }
+    },
+    onError: (error) => {
+      setAlert(error.message, 'danger');
+    },
+    refetchQueries: [{ query: GET_CAR, variables: { carId } }]
+  });
+
   return (
     <div className={styles.comment__wrapper}>
       <div className={styles.comment__border}>
         <h3>Rate this car</h3>
-        <Rating
-          sumOfAllPoints={sumOfAllPoints}
-          voted={voted}
-          numberOfVoters={numberOfVoters}
-          overallRating={overallRating}
-          changeSumOfAllPoints={changeSumOfAllPoints}
-          changeVoted={changeVoted}
-          changeNumberOfVoters={changeNumberOfVoters}
-          changeOverallRating={changeOverallRating}
-        />
+        <Rating voted={voted} rating={rating} changeRating={changeRating} />
         <textarea
           onChange={(e) => setComment(e.target.value)}
           className={styles.comment__textarea}
@@ -37,7 +67,9 @@ const NewComment = ({ comments }) => {
           required
         />
         <div className={styles.button__wrapper}>
-          <button className={styles.comment__button}>Send comment</button>
+          <button onClick={(e) => handleSendComment(e)} className={styles.comment__button}>
+            Send comment
+          </button>
         </div>
       </div>
     </div>
@@ -45,7 +77,8 @@ const NewComment = ({ comments }) => {
 };
 
 NewComment.propTypes = {
-  comments: PropTypes.arrayOf(PropTypes.object)
+  comments: PropTypes.arrayOf(PropTypes.object),
+  carId: PropTypes.string
 };
 
 export default NewComment;

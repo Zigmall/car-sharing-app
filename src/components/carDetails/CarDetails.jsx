@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router';
 import styles from './CarDetails.module.scss';
 import MiddleIcon from '../groupElement/MiddleIcon';
@@ -12,12 +12,20 @@ import NewComment from '../comment/NewComment';
 
 const CarDetails = () => {
   const { carId } = useParams();
+  const [rating, changeRating] = useState(3.4);
+  const voted = true;
   const { loading, error, data } = useQuery(GET_CAR, {
     variables: { carId }
   });
 
   if (loading) {
-    return <p>loading...</p>;
+    return (
+      <div className={styles.left__space}>
+        <div className={styles.error__message}>
+          <p>loading...</p>
+        </div>
+      </div>
+    );
   }
   if (error) {
     console.log('error:', error.message);
@@ -25,15 +33,23 @@ const CarDetails = () => {
   }
   const { car } = data;
 
-  const sumOfAllPoints = 10;
-  const numberOfVoters = 3;
-  const overallRating = 3;
-  const voted = true;
+  // const sumOfAllPoints = 10;
+  // const numberOfVoters = 3;
+  // const overallRating = 3;
 
-  const changeVoted = () => {};
-  const changeNumberOfVoters = () => {};
-  const changeOverallRating = () => {};
-  const changeSumOfAllPoints = () => {};
+  // const changeVoted = () => {};
+  // const changeNumberOfVoters = () => {};
+  // const changeOverallRating = () => {};
+  // const changeSumOfAllPoints = () => {};
+  // const sumPoints = comments.reduce((acc, curr) => acc + curr.rating, 0);
+
+  // useEffect(() => {
+  //   changeOverallRating(
+  //     isNaN(Math.round((sumOfAllPoints / numberOfVoters) * 10) / 10)
+  //       ? 0
+  //       : ((sumOfAllPoints / numberOfVoters) * 10) / 10
+  //   );
+  // });
 
   return !loading && !error ? (
     <div className={styles.carDetailsWrapper}>
@@ -45,16 +61,7 @@ const CarDetails = () => {
           <label>
             {car.brand.name} {car.model} {car.year}
           </label>
-          <Rating
-            sumOfAllPoints={sumOfAllPoints}
-            voted={voted}
-            numberOfVoters={numberOfVoters}
-            overallRating={overallRating}
-            changeSumOfAllPoints={changeSumOfAllPoints}
-            changeVoted={changeVoted}
-            changeNumberOfVoters={changeNumberOfVoters}
-            changeOverallRating={changeOverallRating}
-          />
+          <Rating voted={voted} rating={rating} changeRating={changeRating} />
           <div className={styles.columns}>
             <div className={styles.lineOfIcons}>
               <div className={styles.informationElement}>
@@ -97,7 +104,7 @@ const CarDetails = () => {
             author={comment.user}
           />
         ))}
-        <NewComment comments={car.comments} />
+        <NewComment comments={car.comments} carId={carId} />
       </div>
     </div>
   ) : null;
