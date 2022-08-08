@@ -1,18 +1,18 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import Star from './star/Star';
 import styles from './Rating.module.scss';
 import PropTypes from 'prop-types';
 import AlertContext from '../../context/alert/alertContext';
 
 const Rating = ({
-  sumOfAllPoints,
+  // sumOfAllPoints,
   voted,
-  numberOfVoters,
-  overallRating,
-  changeSumOfAllPoints,
-  changeVoted,
-  changeNumberOfVoters,
-  changeOverallRating
+  // numberOfVoters,
+  rating,
+  // changeSumOfAllPoints,
+  // changeVoted,
+  // changeNumberOfVoters,
+  changeRating
 }) => {
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
@@ -29,22 +29,22 @@ const Rating = ({
 
   const onSave = (index) => {
     if (!voted) {
-      changeSumOfAllPoints(sumOfAllPoints + index);
-      changeNumberOfVoters(numberOfVoters + 1);
-      setAlert('Thank you for your vote.', 'info');
+      changeRating(index);
+      // changeNumberOfVoters(numberOfVoters + 1);
+      // setAlert('Thank you for your vote.', 'success');
       // changeVoted(true);
     } else {
-      setAlert('You have already voted!', 'danger');
+      setAlert('Action not allowed!', 'danger');
     }
   };
 
-  useEffect(() => {
-    changeOverallRating(
-      isNaN(Math.round((sumOfAllPoints / numberOfVoters) * 10) / 10)
-        ? 0
-        : ((sumOfAllPoints / numberOfVoters) * 10) / 10
-    );
-  });
+  // useEffect(() => {
+  //   changeOverallRating(
+  //     isNaN(Math.round((sumOfAllPoints / numberOfVoters) * 10) / 10)
+  //       ? 0
+  //       : ((sumOfAllPoints / numberOfVoters) * 10) / 10
+  //   );
+  // });
 
   return (
     <div className={styles.wrapper}>
@@ -53,7 +53,7 @@ const Rating = ({
           <Star
             key={index}
             index={index}
-            rating={overallRating}
+            rating={rating}
             hoveredNumber={hoveredNumber}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
@@ -62,7 +62,8 @@ const Rating = ({
         );
       })}
       <div className={styles.counter}>
-        <span>{overallRating.toFixed(1)}</span>
+        {/* <span>{rating}</span> */}
+        <span>{rating.toFixed(1)}</span>
       </div>
     </div>
   );
@@ -70,13 +71,13 @@ const Rating = ({
 
 Rating.propTypes = {
   voted: PropTypes.bool,
-  changeVoted: PropTypes.func,
-  sumOfAllPoints: PropTypes.number,
-  changeSumOfAllPoints: PropTypes.func,
-  numberOfVoters: PropTypes.number,
-  changeNumberOfVoters: PropTypes.func,
-  overallRating: PropTypes.number,
-  changeOverallRating: PropTypes.func
+  // changeVoted: PropTypes.func,
+  // sumOfAllPoints: PropTypes.number,
+  // changeSumOfAllPoints: PropTypes.func,
+  // numberOfVoters: PropTypes.number,
+  // changeNumberOfVoters: PropTypes.func,
+  rating: PropTypes.number,
+  changeRating: PropTypes.func
 };
 
 export default Rating;
