@@ -32,7 +32,7 @@ const Rating = ({
       changeSumOfAllPoints(sumOfAllPoints + index);
       changeNumberOfVoters(numberOfVoters + 1);
       setAlert('Thank you for your vote.', 'info');
-      changeVoted(true);
+      // changeVoted(true);
     } else {
       setAlert('You have already voted!', 'danger');
     }

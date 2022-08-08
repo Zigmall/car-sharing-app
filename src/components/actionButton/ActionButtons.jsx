@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 import ReturnActionButton from './ReturnActionButton';
 
 const ActionButtons = ({ car, returnCar }) => {
-  console.log(car);
-
   return (
     <div>
       {!returnCar && <BorrowActionButton carId={car.id} />}

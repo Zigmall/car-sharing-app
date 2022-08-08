@@ -8,6 +8,7 @@ import { useQuery } from '@apollo/client';
 import ActionButtons from '../actionButton/ActionButtons';
 import Comment from '../comment/Comment';
 import { GET_CAR } from '../../queries/queries';
+import NewComment from '../comment/NewComment';
 
 const CarDetails = () => {
   const { carId } = useParams();
@@ -96,6 +97,7 @@ const CarDetails = () => {
             author={comment.user}
           />
         ))}
+        <NewComment comments={car.comments} />
       </div>
     </div>
   ) : null;

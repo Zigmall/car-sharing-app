@@ -1,20 +1,19 @@
 import React, { useState } from 'react';
 import Rating from '../rating/Rating';
 import styles from './Comment.module.scss';
+import PropTypes from 'prop-types';
 
-const NewComment = () => {
+const NewComment = ({ comments }) => {
   const [comment, setComment] = useState('');
+  console.log(comments);
+  // const sumPoints = comments.reduce((acc, curr) => acc + curr.rating, 0);
 
-  const sumOfAllPoints = 10;
-  const numberOfVoters = 3;
-  const overallRating = 3;
-  const voted = true;
+  const [sumOfAllPoints, changeSumOfAllPoints] = useState(0);
+  const [numberOfVoters, changeNumberOfVoters] = useState(0);
+  const [overallRating, changeOverallRating] = useState(0);
+  const [voted, changeVoted] = useState(false);
 
-  const changeVoted = () => {};
-  const changeNumberOfVoters = () => {};
-  const changeOverallRating = () => {};
-  const changeSumOfAllPoints = () => {};
-
+  console.log('overal', overallRating);
   return (
     <div className={styles.comment__wrapper}>
       <div className={styles.comment__border}>
@@ -43,6 +42,10 @@ const NewComment = () => {
       </div>
     </div>
   );
+};
+
+NewComment.propTypes = {
+  comments: PropTypes.arrayOf(PropTypes.object)
 };
 
 export default NewComment;
