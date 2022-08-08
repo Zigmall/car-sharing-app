@@ -4,19 +4,9 @@ import styles from './Rating.module.scss';
 import PropTypes from 'prop-types';
 import AlertContext from '../../context/alert/alertContext';
 
-const Rating = ({
-  // sumOfAllPoints,
-  voted,
-  // numberOfVoters,
-  rating,
-  // changeSumOfAllPoints,
-  // changeVoted,
-  // changeNumberOfVoters,
-  changeRating
-}) => {
+const Rating = ({ voted, rating, changeRating = () => {} }) => {
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
-
   const [hoveredNumber, setHoveredNumber] = useState(0);
 
   const onMouseEnter = (index) => {
@@ -30,21 +20,10 @@ const Rating = ({
   const onSave = (index) => {
     if (!voted) {
       changeRating(index);
-      // changeNumberOfVoters(numberOfVoters + 1);
-      // setAlert('Thank you for your vote.', 'success');
-      // changeVoted(true);
     } else {
       setAlert('Action not allowed!', 'danger');
     }
   };
-
-  // useEffect(() => {
-  //   changeOverallRating(
-  //     isNaN(Math.round((sumOfAllPoints / numberOfVoters) * 10) / 10)
-  //       ? 0
-  //       : ((sumOfAllPoints / numberOfVoters) * 10) / 10
-  //   );
-  // });
 
   return (
     <div className={styles.wrapper}>
@@ -62,7 +41,6 @@ const Rating = ({
         );
       })}
       <div className={styles.counter}>
-        {/* <span>{rating}</span> */}
         <span>{rating.toFixed(1)}</span>
       </div>
     </div>
@@ -71,11 +49,6 @@ const Rating = ({
 
 Rating.propTypes = {
   voted: PropTypes.bool,
-  // changeVoted: PropTypes.func,
-  // sumOfAllPoints: PropTypes.number,
-  // changeSumOfAllPoints: PropTypes.func,
-  // numberOfVoters: PropTypes.number,
-  // changeNumberOfVoters: PropTypes.func,
   rating: PropTypes.number,
   changeRating: PropTypes.func
 };

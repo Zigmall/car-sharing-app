@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router';
 import styles from './CarDetails.module.scss';
 import MiddleIcon from '../groupElement/MiddleIcon';
@@ -12,7 +12,6 @@ import NewComment from '../comment/NewComment';
 
 const CarDetails = () => {
   const { carId } = useParams();
-  const [rating, changeRating] = useState(3.4);
   const voted = true;
   const { loading, error, data } = useQuery(GET_CAR, {
     variables: { carId }
@@ -32,24 +31,12 @@ const CarDetails = () => {
     return <p>Could not load car...</p>;
   }
   const { car } = data;
+  const sumOfAllPoints = car.comments.reduce((acc, curr) => acc + curr.rating, 0);
+  const numberOfComments = car.comments.length;
 
-  // const sumOfAllPoints = 10;
-  // const numberOfVoters = 3;
-  // const overallRating = 3;
-
-  // const changeVoted = () => {};
-  // const changeNumberOfVoters = () => {};
-  // const changeOverallRating = () => {};
-  // const changeSumOfAllPoints = () => {};
-  // const sumPoints = comments.reduce((acc, curr) => acc + curr.rating, 0);
-
-  // useEffect(() => {
-  //   changeOverallRating(
-  //     isNaN(Math.round((sumOfAllPoints / numberOfVoters) * 10) / 10)
-  //       ? 0
-  //       : ((sumOfAllPoints / numberOfVoters) * 10) / 10
-  //   );
-  // });
+  const overallRating = isNaN(Math.round((sumOfAllPoints / numberOfComments) * 10) / 10)
+    ? 0
+    : ((sumOfAllPoints / numberOfComments) * 10) / 10;
 
   return !loading && !error ? (
     <div className={styles.carDetailsWrapper}>
@@ -61,7 +48,7 @@ const CarDetails = () => {
           <label>
             {car.brand.name} {car.model} {car.year}
           </label>
-          <Rating voted={voted} rating={rating} changeRating={changeRating} />
+          <Rating voted={voted} rating={overallRating} />
           <div className={styles.columns}>
             <div className={styles.lineOfIcons}>
               <div className={styles.informationElement}>
@@ -93,8 +80,7 @@ const CarDetails = () => {
       </div>
       <div className={styles.review}>
         <h3>RATINGS AND COMMENTS</h3>
-        <h3>RATING 5/5</h3>
-        <h3>46 ratings</h3>
+        <h3>{`${car.comments.length} ratings`}</h3>
         {car.comments.map((comment) => (
           <Comment
             key={comment.id}

@@ -8,19 +8,17 @@ import { CREATE_COMMENT } from '../../mutations/mutations';
 import { GET_CAR } from '../../queries/queries';
 import { useMutation } from '@apollo/client';
 
-const NewComment = ({ comments, carId }) => {
+const NewComment = ({ carId }) => {
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
   const authContext = useContext(AuthContext);
   const { user } = authContext;
   const [comment, setComment] = useState('');
   const [rating, changeRating] = useState(0);
-  console.log(comments);
   const voted = false;
 
   const handleSendComment = (e) => {
     e.preventDefault();
-    console.log(comments);
     if (user === null || user === undefined || user.id === null || user.id === undefined) {
       setAlert('You need to be logged in to comment', 'danger');
     } else if (comment === '') {
