@@ -1,54 +1,12 @@
 import React, { useState, useContext } from 'react';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import styles from './Login.module.scss';
 import AlertContext from '../../context/alert/alertContext';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/auth/authContext';
 import CarContext from '../../context/car/carContext';
-
-const SIGN_UP = gql`
-  mutation SignUp($input: SignUp!) {
-    signUp(input: $input) {
-      success
-      message
-      token
-      currentUser {
-        id
-        firstName
-        lastName
-        email
-        borrowedCars {
-          id
-          startDate
-          endDate
-          car {
-            id
-            carClass
-            benefits
-            model
-            brand {
-              name
-            }
-            year
-            property {
-              seats
-              doors
-              trunk
-              airConditioning
-              manualGearBox
-            }
-            location
-            price
-          }
-        }
-        avatar {
-          color
-        }
-      }
-    }
-  }
-`;
+import { SIGN_UP } from '../../mutations/mutations';
 
 const Registration = () => {
   const authContext = useContext(AuthContext);
