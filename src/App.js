@@ -24,6 +24,7 @@ import {
 import AuthState from './context/auth/AuthState';
 import { loadUser } from './context/auth/AuthState';
 import AddCar from './components/pages/addCar/AddCar';
+import OrderCar from './components/pages/order/OrderCar';
 
 // const URL = 'https://desolate-spire-04068.herokuapp.com';
 const URL = 'http://localhost:5000';
@@ -67,6 +68,7 @@ const App = () => {
                 <Route path="/rentals" element={<Rentals />} />
                 <Route path="/users/:userId" element={<User />} />
                 <Route path="/users" element={<Users />} />
+                <Route path="/order-car" element={<OrderCar />} />
               </Routes>
             </div>
           </AlertState>
