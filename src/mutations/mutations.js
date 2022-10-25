@@ -51,8 +51,10 @@ const LOG_IN = gql`
         avatar {
           color
         }
-        borrowedCarCopies {
+        borrowedCars {
           id
+          startDate
+          endDate
           car {
             id
             carClass
@@ -71,12 +73,6 @@ const LOG_IN = gql`
             }
             location
             price
-            copies {
-              id
-              borrower {
-                id
-              }
-            }
           }
         }
       }
@@ -158,6 +154,72 @@ const CREATE_CAR = gql`
   }
 `;
 
+const SIGN_UP = gql`
+  mutation SignUp($input: SignUp!) {
+    signUp(input: $input) {
+      success
+      message
+      token
+      currentUser {
+        id
+        firstName
+        lastName
+        email
+        borrowedCars {
+          id
+          startDate
+          endDate
+          car {
+            id
+            carClass
+            benefits
+            model
+            brand {
+              name
+            }
+            year
+            property {
+              seats
+              doors
+              trunk
+              airConditioning
+              manualGearBox
+            }
+            location
+            price
+          }
+        }
+        avatar {
+          color
+        }
+      }
+    }
+  }
+`;
+const CREATE_COMMENT = gql`
+  mutation CreateComment($input: CreateCommentInput!) {
+    createComment(input: $input) {
+      success
+      message
+      comment {
+        id
+        text
+        user {
+          id
+          firstName
+          lastName
+        }
+        car {
+          id
+          model
+        }
+        rating
+        createdAt
+      }
+    }
+  }
+`;
+
 export {
   DELETE_USER,
   UPDATE_USER,
@@ -165,5 +227,7 @@ export {
   RETURN_CAR,
   BORROW_CAR,
   UPDATE_MY_PERSONAL_DATA,
-  CREATE_CAR
+  CREATE_CAR,
+  SIGN_UP,
+  CREATE_COMMENT
 };

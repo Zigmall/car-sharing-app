@@ -1,3 +1,13 @@
+.left__space {
+  margin-left: 12.9rem;
+}
+
+.error__message {
+  font-size: 2rem;
+  margin-top: 2rem;
+  text-align: center;
+}
+
 .carDetailsWrapper {
   display: flex;
   flex-direction: column;
@@ -70,4 +80,9 @@
   svg {
     margin-top: 10px;
   }
+}
+
+.review {
+  margin: 0 2rem 12rem 0;
+  align-items: center;
 }

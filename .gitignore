@@ -3,7 +3,8 @@ node_modules/
 dist/
 build/
 coverage/
-
+.prettierrc.js
+package-lock.json
 # Compiled Java class files
 *.class
 

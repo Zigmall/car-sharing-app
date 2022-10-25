@@ -4,57 +4,39 @@ import styles from './CarDetails.module.scss';
 import MiddleIcon from '../groupElement/MiddleIcon';
 import { GearBox, Luggage, OpenDoorCar, AirConditioner } from '../assets/SvgList';
 import Rating from '../rating/Rating';
-import { gql, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import ActionButtons from '../actionButton/ActionButtons';
-
-const GET_CAR = gql`
-  query GetCar($carId: ID!) {
-    car(id: $carId) {
-      id
-      carClass
-      benefits
-      model
-      brand {
-        name
-      }
-      year
-      property {
-        seats
-        doors
-        trunk
-        airConditioning
-        manualGearBox
-      }
-      location
-      price
-    }
-  }
-`;
+import Comment from '../comment/Comment';
+import { GET_CAR } from '../../queries/queries';
+import NewComment from '../comment/NewComment';
 
 const CarDetails = () => {
   const { carId } = useParams();
+  const voted = true;
   const { loading, error, data } = useQuery(GET_CAR, {
     variables: { carId }
   });
 
   if (loading) {
-    return <p>loading...</p>;
+    return (
+      <div className={styles.left__space}>
+        <div className={styles.error__message}>
+          <p>loading...</p>
+        </div>
+      </div>
+    );
   }
   if (error) {
     console.log('error:', error.message);
     return <p>Could not load car...</p>;
   }
   const { car } = data;
+  const sumOfAllPoints = car.comments.reduce((acc, curr) => acc + curr.rating, 0);
+  const numberOfComments = car.comments.length;
 
-  const sumOfAllPoints = 10;
-  const numberOfVoters = 3;
-  const overallRating = 3;
-  const voted = true;
-
-  const changeVoted = () => {};
-  const changeNumberOfVoters = () => {};
-  const changeOverallRating = () => {};
-  const changeSumOfAllPoints = () => {};
+  const overallRating = isNaN(Math.round((sumOfAllPoints / numberOfComments) * 10) / 10)
+    ? 0
+    : ((sumOfAllPoints / numberOfComments) * 10) / 10;
 
   return !loading && !error ? (
     <div className={styles.carDetailsWrapper}>
@@ -66,16 +48,7 @@ const CarDetails = () => {
           <label>
             {car.brand.name} {car.model} {car.year}
           </label>
-          <Rating
-            sumOfAllPoints={sumOfAllPoints}
-            voted={voted}
-            numberOfVoters={numberOfVoters}
-            overallRating={overallRating}
-            changeSumOfAllPoints={changeSumOfAllPoints}
-            changeVoted={changeVoted}
-            changeNumberOfVoters={changeNumberOfVoters}
-            changeOverallRating={changeOverallRating}
-          />
+          <Rating voted={voted} rating={overallRating} />
           <div className={styles.columns}>
             <div className={styles.lineOfIcons}>
               <div className={styles.informationElement}>
@@ -105,17 +78,22 @@ const CarDetails = () => {
           <ActionButtons car={car} returnCar={false} />
         </div>
       </div>
+      <div className={styles.review}>
+        <h3>RATINGS AND COMMENTS</h3>
+        <h3>{`${car.comments.length} ratings`}</h3>
+        {car.comments.map((comment) => (
+          <Comment
+            key={comment.id}
+            createdAt={comment.createdAt}
+            rating={comment.rating}
+            text={comment.text}
+            author={comment.user}
+          />
+        ))}
+        <NewComment comments={car.comments} carId={carId} />
+      </div>
     </div>
   ) : null;
 };
-
-// CarDetails.propTypes = {
-//   carClass: PropTypes.string,
-//   benefits: PropTypes.array,
-//   brand: PropTypes.string,
-//   property: PropTypes.array,
-//   location: PropTypes.string,
-//   price: PropTypes.string
-// };
 
 export default CarDetails;

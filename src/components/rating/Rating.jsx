@@ -1,22 +1,12 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import Star from './star/Star';
 import styles from './Rating.module.scss';
 import PropTypes from 'prop-types';
 import AlertContext from '../../context/alert/alertContext';
 
-const Rating = ({
-  sumOfAllPoints,
-  voted,
-  numberOfVoters,
-  overallRating,
-  changeSumOfAllPoints,
-  changeVoted,
-  changeNumberOfVoters,
-  changeOverallRating
-}) => {
+const Rating = ({ voted, rating, changeRating = () => {} }) => {
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
-
   const [hoveredNumber, setHoveredNumber] = useState(0);
 
   const onMouseEnter = (index) => {
@@ -29,22 +19,11 @@ const Rating = ({
 
   const onSave = (index) => {
     if (!voted) {
-      changeSumOfAllPoints(sumOfAllPoints + index);
-      changeNumberOfVoters(numberOfVoters + 1);
-      setAlert('Thank you for your vote.', 'info');
-      changeVoted(true);
+      changeRating(index);
     } else {
-      setAlert('You have already voted!', 'danger');
+      setAlert('Action not allowed!', 'danger');
     }
   };
-
-  useEffect(() => {
-    changeOverallRating(
-      isNaN(Math.round((sumOfAllPoints / numberOfVoters) * 10) / 10)
-        ? 0
-        : ((sumOfAllPoints / numberOfVoters) * 10) / 10
-    );
-  });
 
   return (
     <div className={styles.wrapper}>
@@ -53,7 +32,7 @@ const Rating = ({
           <Star
             key={index}
             index={index}
-            rating={overallRating}
+            rating={rating}
             hoveredNumber={hoveredNumber}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
@@ -62,7 +41,7 @@ const Rating = ({
         );
       })}
       <div className={styles.counter}>
-        <span>{overallRating.toFixed(1)}</span>
+        <span>{rating.toFixed(1)}</span>
       </div>
     </div>
   );
@@ -70,13 +49,8 @@ const Rating = ({
 
 Rating.propTypes = {
   voted: PropTypes.bool,
-  changeVoted: PropTypes.func,
-  sumOfAllPoints: PropTypes.number,
-  changeSumOfAllPoints: PropTypes.func,
-  numberOfVoters: PropTypes.number,
-  changeNumberOfVoters: PropTypes.func,
-  overallRating: PropTypes.number,
-  changeOverallRating: PropTypes.func
+  rating: PropTypes.number,
+  changeRating: PropTypes.func
 };
 
 export default Rating;
