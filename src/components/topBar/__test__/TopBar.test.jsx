@@ -3,39 +3,9 @@ import React from 'react';
 import '@testing-library/jest-dom';
 import Search from '../Search';
 import UserGroup from '../UserGroup';
-import CarState from '../../../context/car/CarState';
 import AlertState from '../../../context/alert/AlertState';
-import AuthState from '../../../context/auth/AuthState';
 import TopBar from '../TopBar';
-import {
-  ApolloClient,
-  InMemoryCache,
-  HttpLink,
-  ApolloProvider,
-  ApolloLink,
-  concat
-} from '@apollo/client';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-
-const URL = 'http://localhost:5000';
-
-const httpLink = new HttpLink({
-  uri: URL
-});
-const authenticationLink = new ApolloLink((operation, forward) => {
-  const token = loadUser();
-
-  operation.setContext({
-    headers: {
-      Authorization: token ? `Bearer ${token}` : null
-    }
-  });
-  return forward(operation);
-});
-const client = new ApolloClient({
-  link: concat(authenticationLink, httpLink),
-  cache: new InMemoryCache()
-});
 
 const logout = jest.fn();
 const user = {
