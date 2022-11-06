@@ -5,6 +5,7 @@ import { useQuery } from '@apollo/client';
 import AlertContext from '../../../context/alert/alertContext';
 import { CREATE_CAR } from '../../../mutations/mutations';
 import { useMutation } from '@apollo/client';
+import MiddleIcon from '../../groupElement/MiddleIcon';
 
 const AddCar = () => {
   const [brand, setBrand] = useState('');
@@ -145,6 +146,33 @@ const AddCar = () => {
               <div className={styles.car__form}>
                 <div className={styles.form__element}>
                   <div className={styles.brand__list}>
+                    <div className={styles.image__wrapper}>
+                      <div className={styles.main__image__container}>
+                        <MiddleIcon model={'Regular'} />
+                      </div>
+                      <div className={styles.small__images__container}>
+                        <div className={styles.small__image}>
+                          <MiddleIcon model={'Regular'} />
+                        </div>
+                        <div className={styles.small__image}>
+                          <MiddleIcon model={'Regular'} />
+                        </div>
+                        <div className={styles.small__image}>
+                          <MiddleIcon model={'Regular'} />
+                        </div>
+                        <div className={styles.small__image}>
+                          <MiddleIcon model={'Regular'} />
+                        </div>
+                      </div>
+                      <div className={styles.image__buttons}>
+                        <button className={styles.button__update} type="file">
+                          Add Main Picture
+                        </button>
+                        <button className={styles.button__update} type="file">
+                          Add small picture
+                        </button>
+                      </div>
+                    </div>
                     <label className={styles.form__label}>Brand</label>
                     <select
                       className={styles.form__select}
