@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import styles from './AddCar.module.scss';
 import { GET_BRANDS, ALL_CARS } from '../../../queries/queries';
 import { useQuery } from '@apollo/client';
@@ -29,6 +29,12 @@ const AddCar = () => {
   const [manualGearBox, setManualGearBox] = useState(false);
   const [location, setLocation] = useState('');
   const [description, setDescription] = useState('');
+  const [mainImage, setMainImage] = useState(null);
+  const [smallImages, setSmallImages] = useState([]);
+
+  const inputRef = useRef();
+  const inputRefSmall = useRef();
+  const triggerFileSelection = (inputRef) => inputRef.current.click();
 
   const resetForm = () => {
     setBrand('');
@@ -134,6 +140,31 @@ const AddCar = () => {
   }
   const brands = data.brands;
 
+  const onSelectMainImage = (event) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]);
+      reader.addEventListener('load', () => {
+        setMainImage(reader.result);
+      });
+    }
+  };
+
+  const onSelectSmallImage = (event) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]);
+      reader.addEventListener('load', () => {
+        setSmallImages([...smallImages, reader.result]);
+      });
+    }
+  };
+  const removeSmallImage = (index) => {
+    const newSmallImages = [...smallImages];
+    newSmallImages.splice(index, 1);
+    setSmallImages(newSmallImages);
+  };
+
   return (
     <>
       {brands && (
@@ -147,30 +178,55 @@ const AddCar = () => {
                 <div className={styles.form__element}>
                   <div className={styles.brand__list}>
                     <div className={styles.image__wrapper}>
-                      <div className={styles.main__image__container}>
-                        <MiddleIcon model={'Regular'} />
-                      </div>
+                      {mainImage ? (
+                        <div className={styles.main__image__container}>
+                          <img src={mainImage} alt="car" />
+                        </div>
+                      ) : (
+                        <div className={styles.main__image__container}>
+                          <MiddleIcon model={'Regular'} />
+                        </div>
+                      )}
                       <div className={styles.small__images__container}>
-                        <div className={styles.small__image}>
-                          <MiddleIcon model={'Regular'} />
-                        </div>
-                        <div className={styles.small__image}>
-                          <MiddleIcon model={'Regular'} />
-                        </div>
-                        <div className={styles.small__image}>
-                          <MiddleIcon model={'Regular'} />
-                        </div>
-                        <div className={styles.small__image}>
-                          <MiddleIcon model={'Regular'} />
-                        </div>
+                        {smallImages.map((image, index) =>
+                          image ? (
+                            <div className={styles.small__image} key={index}>
+                              <img src={image} alt="car" />
+                            </div>
+                          ) : (
+                            <div className={styles.small__image} key={index}>
+                              <MiddleIcon model={'Regular'} />
+                            </div>
+                          )
+                        )}
                       </div>
                       <div className={styles.image__buttons}>
-                        <button className={styles.button__update} type="file">
+                        <input
+                          type="file"
+                          accept="image/*"
+                          ref={inputRef}
+                          onChange={onSelectMainImage}
+                          style={{ display: 'none' }}
+                        />
+                        <button
+                          className={styles.button__update}
+                          type="button"
+                          onClick={() => triggerFileSelection(inputRef)}>
                           Add Main Picture
                         </button>
-                        <button className={styles.button__update} type="file">
+                        <button
+                          className={styles.button__update}
+                          type="button"
+                          onClick={() => triggerFileSelection(inputRefSmall)}>
                           Add small picture
                         </button>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          ref={inputRefSmall}
+                          onChange={onSelectSmallImage}
+                          style={{ display: 'none' }}
+                        />
                       </div>
                     </div>
                     <label className={styles.form__label}>Brand</label>
