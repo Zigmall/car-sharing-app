@@ -146,6 +146,8 @@ const AddCar = () => {
       reader.readAsDataURL(event.target.files[0]);
       reader.addEventListener('load', () => {
         setMainImage(reader.result);
+        uploadMainImage(reader.result);
+        // console.log('main image', reader.result.toDataURL('image/jpeg', 0.5));
       });
     }
   };
@@ -159,10 +161,34 @@ const AddCar = () => {
       });
     }
   };
-  const removeSmallImage = (index) => {
-    const newSmallImages = [...smallImages];
-    newSmallImages.splice(index, 1);
-    setSmallImages(newSmallImages);
+
+  const fromURLtoFile = (imagedataurl, imagename) => {
+    const arr = imagedataurl.split(',');
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+
+    while (n--) u8arr[n] = bstr.charCodeAt(n);
+
+    return new File([u8arr], imagename, { type: mime });
+  };
+  // const removeSmallImage = (index) => {
+  //   const newSmallImages = [...smallImages];
+  //   newSmallImages.splice(index, 1);
+  //   setSmallImages(newSmallImages);
+  // };
+
+  const uploadMainImage = async (image) => {
+    // ${new Date()}
+    const file = fromURLtoFile(image, `MainImage.jpg`);
+    try {
+      const formData = new FormData();
+      formData.append('mainPicture', file);
+      console.log(formData);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
