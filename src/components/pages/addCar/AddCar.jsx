@@ -4,8 +4,12 @@ import { GET_BRANDS, ALL_CARS } from '../../../queries/queries';
 import { useQuery } from '@apollo/client';
 import AlertContext from '../../../context/alert/alertContext';
 import { CREATE_CAR } from '../../../mutations/mutations';
-import { useMutation } from '@apollo/client';
+import { useMutation, gql } from '@apollo/client';
 import MiddleIcon from '../../groupElement/MiddleIcon';
+
+// import aws from 'aws-sdk';
+// import multer from 'multer';
+// import multerS3 from 'multer-s3';
 
 const AddCar = () => {
   const [brand, setBrand] = useState('');
@@ -107,6 +111,23 @@ const AddCar = () => {
     refetchQueries: [{ query: ALL_CARS }]
   });
 
+  const PICTURE_UPLOAD = gql`
+    mutation PictureUpload($input: ImageInput!) {
+      uploadImage(input: $input) {
+        message
+        success
+        image {
+          url
+        }
+      }
+    }
+  `;
+
+  const [uploadPicture] = useMutation(PICTURE_UPLOAD, {
+    onCompleted: (data) => console.log('mutation completed >>', data),
+    onError: (error) => console.log('mutation error >>', error)
+  });
+
   const handleCreateCar = (e) => {
     e.preventDefault();
     if (
@@ -140,17 +161,45 @@ const AddCar = () => {
   }
   const brands = data.brands;
 
-  const onSelectMainImage = (event) => {
-    if (event.target.files && event.target.files.length > 0) {
-      const reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]);
-      reader.addEventListener('load', () => {
+  const onSelectMainImage = (e) => {
+    const picture = e.target.files[0];
+    if (!picture) return;
+    try {
+      // convert file to base64 string
+      let reader = new FileReader();
+      let input = null;
+      reader.readAsDataURL(picture);
+      reader.onload = () => {
         setMainImage(reader.result);
-        uploadMainImage(reader.result);
-        // console.log('main image', reader.result.toDataURL('image/jpeg', 0.5));
-      });
+        input = {
+          url: reader.result
+        };
+        uploadPicture({ variables: { input } });
+      };
+      console.log('main picture uploaded (frontend)');
+    } catch (error) {
+      console.log('error (frontend)', error);
     }
+
+    // const reader = new FileReader();
+    // reader.readAsDataURL(file);
+    // reader.addEventListener('load', () => {
+    //   setMainImage(reader.result);
+
+    //   // uploadMainImage(reader.result);
+    //   // console.log('main image', reader.result.toDataURL('image/jpeg', 0.5));
+    // });
   };
+
+  // const onSelectMainPicture = ({ target: { validity, value } }) => {
+  //   if (validity.valid) {
+  //     setMainImage(value);
+  //     const file = new Blob([value], { type: 'image/jpeg' });
+
+  //     file.name = `MainImage${Date.now()}.jpg`;
+  //     uploadPicture({ variables: { file } });
+  //   }
+  // };
 
   const onSelectSmallImage = (event) => {
     if (event.target.files && event.target.files.length > 0) {
@@ -162,34 +211,56 @@ const AddCar = () => {
     }
   };
 
-  const fromURLtoFile = (imagedataurl, imagename) => {
-    const arr = imagedataurl.split(',');
-    const mime = arr[0].match(/:(.*?);/)[1];
-    const bstr = atob(arr[1]);
-    let n = bstr.length;
-    const u8arr = new Uint8Array(n);
+  // const fromURLtoFile = (imagedataurl, imagename) => {
+  //   const arr = imagedataurl.split(',');
+  //   const mime = arr[0].match(/:(.*?);/)[1];
+  //   const bstr = atob(arr[1]);
+  //   let n = bstr.length;
+  //   const u8arr = new Uint8Array(n);
 
-    while (n--) u8arr[n] = bstr.charCodeAt(n);
+  //   while (n--) u8arr[n] = bstr.charCodeAt(n);
 
-    return new File([u8arr], imagename, { type: mime });
-  };
+  //   return new File([u8arr], imagename, { type: mime });
+  // };
   // const removeSmallImage = (index) => {
   //   const newSmallImages = [...smallImages];
   //   newSmallImages.splice(index, 1);
   //   setSmallImages(newSmallImages);
   // };
 
-  const uploadMainImage = async (image) => {
-    // ${new Date()}
-    const file = fromURLtoFile(image, `MainImage.jpg`);
-    try {
-      const formData = new FormData();
-      formData.append('mainPicture', file);
-      console.log(formData);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const uploadMainImage = async (image) => {
+  //   // ${new Date()}
+  //   const file = fromURLtoFile(image, `MainImage.jpg`);
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append('mainPicture', file);
+  //     console.log(formData);
+
+  //     // const uploadSingleFile = uploadFile('car-rental-upload').single('mainPicture');
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // const uploadFile = (bucket) =>
+  //   multer({
+  //     storage: multerS3({
+  //       s3,
+  //       bucket,
+  //       metadata: function (req, file, cb) {
+  //         cb(null, { fieldName: file.fieldname });
+  //       },
+  //       key: function (req, file, cb) {
+  //         cb(null, Date.now().toString());
+  //       }
+  //     })
+  //   });
+
+  // const s3 = new aws.S3({
+  //   accessKeyId: process.env.S3_ACCESS_KEY,
+  //   secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+  //   region: process.env.S3_BUCKET_REGION
+  // });
 
   return (
     <>
@@ -229,7 +300,7 @@ const AddCar = () => {
                       <div className={styles.image__buttons}>
                         <input
                           type="file"
-                          accept="image/*"
+                          // accept="image/*"
                           ref={inputRef}
                           onChange={onSelectMainImage}
                           style={{ display: 'none' }}
