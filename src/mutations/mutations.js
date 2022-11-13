@@ -220,6 +220,16 @@ const CREATE_COMMENT = gql`
   }
 `;
 
+const UPLOAD_IMAGE = gql`
+  mutation UploadImage($input: UploadImageInput!) {
+    uploadImage(input: $input) {
+      success
+      message
+      imageUrl
+    }
+  }
+`;
+
 export {
   DELETE_USER,
   UPDATE_USER,
@@ -229,5 +239,6 @@ export {
   UPDATE_MY_PERSONAL_DATA,
   CREATE_CAR,
   SIGN_UP,
-  CREATE_COMMENT
+  CREATE_COMMENT,
+  UPLOAD_IMAGE
 };

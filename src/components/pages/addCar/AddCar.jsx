@@ -3,8 +3,8 @@ import styles from './AddCar.module.scss';
 import { GET_BRANDS, ALL_CARS } from '../../../queries/queries';
 import { useQuery } from '@apollo/client';
 import AlertContext from '../../../context/alert/alertContext';
-import { CREATE_CAR } from '../../../mutations/mutations';
-import { useMutation, gql } from '@apollo/client';
+import { CREATE_CAR, UPLOAD_IMAGE } from '../../../mutations/mutations';
+import { useMutation } from '@apollo/client';
 import MiddleIcon from '../../groupElement/MiddleIcon';
 
 // import aws from 'aws-sdk';
@@ -111,19 +111,7 @@ const AddCar = () => {
     refetchQueries: [{ query: ALL_CARS }]
   });
 
-  const PICTURE_UPLOAD = gql`
-    mutation PictureUpload($input: ImageInput!) {
-      uploadImage(input: $input) {
-        message
-        success
-        image {
-          url
-        }
-      }
-    }
-  `;
-
-  const [uploadPicture] = useMutation(PICTURE_UPLOAD, {
+  const [uploadFile] = useMutation(UPLOAD_IMAGE, {
     onCompleted: (data) => console.log('mutation completed >>', data),
     onError: (error) => console.log('mutation error >>', error)
   });
@@ -164,51 +152,26 @@ const AddCar = () => {
   const onSelectMainImage = (e) => {
     const picture = e.target.files[0];
     if (!picture) return;
-    try {
-      // convert file to base64 string
-      let reader = new FileReader();
-      let input = null;
-      reader.readAsDataURL(picture);
-      reader.onload = () => {
-        setMainImage(reader.result);
-        input = {
-          url: reader.result
-        };
-        uploadPicture({ variables: { input } });
+    // convert file to base64 string
+    let reader = new FileReader();
+    reader.readAsDataURL(picture);
+    reader.onload = () => {
+      setMainImage(reader.result);
+      const input = {
+        file: reader.result
       };
-      console.log('main picture uploaded (frontend)');
-    } catch (error) {
-      console.log('error (frontend)', error);
-    }
-
-    // const reader = new FileReader();
-    // reader.readAsDataURL(file);
-    // reader.addEventListener('load', () => {
-    //   setMainImage(reader.result);
-
-    //   // uploadMainImage(reader.result);
-    //   // console.log('main image', reader.result.toDataURL('image/jpeg', 0.5));
-    // });
+      uploadFile({ variables: { input } });
+    };
   };
 
-  // const onSelectMainPicture = ({ target: { validity, value } }) => {
-  //   if (validity.valid) {
-  //     setMainImage(value);
-  //     const file = new Blob([value], { type: 'image/jpeg' });
-
-  //     file.name = `MainImage${Date.now()}.jpg`;
-  //     uploadPicture({ variables: { file } });
-  //   }
-  // };
-
-  const onSelectSmallImage = (event) => {
-    if (event.target.files && event.target.files.length > 0) {
-      const reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]);
-      reader.addEventListener('load', () => {
-        setSmallImages([...smallImages, reader.result]);
-      });
-    }
+  const onSelectSmallImage = (e) => {
+    const picture = e.target.files[0];
+    if (!picture) return;
+    const reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+    reader.addEventListener('load', () => {
+      setSmallImages([...smallImages, reader.result]);
+    });
   };
 
   // const fromURLtoFile = (imagedataurl, imagename) => {
