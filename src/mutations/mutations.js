@@ -225,7 +225,9 @@ const UPLOAD_IMAGE = gql`
     uploadImage(input: $input) {
       success
       message
-      imageUrl
+      imageUrl {
+        url
+      }
     }
   }
 `;
