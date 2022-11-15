@@ -142,13 +142,32 @@ const CREATE_CAR = gql`
       success
       message
       car {
+        id
         model
         carClass
+        benefits
+        year
+        location
+        price
+        description
         brand {
           id
           name
         }
-        id
+        picturePath {
+          url
+        }
+        pictures {
+          url
+        }
+        property {
+          seats
+          doors
+          trunk
+          engine
+          airConditioning
+          manualGearBox
+        }
       }
     }
   }
