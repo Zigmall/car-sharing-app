@@ -100,28 +100,35 @@ const AddCar = () => {
         description,
         picturePath: {
           url: mainImageUrl
-        }
+        },
+        pictures: smallImagesUrlList
       }
-    },
-    onCompleted: () => {
-      setAlert('Car has been added', 'success');
-      resetForm();
-    },
-    onError: (error) => {
-      console.log(error.message);
     },
     refetchQueries: [{ query: ALL_CARS }]
   });
 
-  const [uploadFile] = useMutation(UPLOAD_IMAGE, {
+  const [uploadMainImage] = useMutation(UPLOAD_IMAGE, {
     onCompleted: ({ uploadImage }) => {
-      if (uploadImage.success) {
-        setMainImageUrl(uploadImage.imageUrl.url);
-      } else setAlert('Something went wrong with uploading image. Please try again.', 'danger');
-      console.log(uploadImage.message);
+      if (!uploadImage.success) {
+        setAlert('Something went wrong with uploading image. Please try again.', 'danger');
+        console.log(uploadImage.message);
+      }
     },
     onError: (error) => {
       console.log(error.message);
+    }
+  });
+
+  const [uploadSmallImage] = useMutation(UPLOAD_IMAGE, {
+    onCompleted: ({ uploadImage }) => {
+      if (!uploadImage.success) {
+        setAlert('Something went wrong with uploading image. Please try again.', 'danger');
+        console.log(uploadImage.message);
+      }
+    },
+    onError: (error) => {
+      console.log(error.message);
+      console.log('error8786');
     }
   });
 
@@ -142,10 +149,18 @@ const AddCar = () => {
       setAlert('Please fill out all fields', 'warning');
     } else if (mainImageUrl === '') {
       setAlert('Please upload main image', 'warning');
-    } else if (smallImagesUrlList.length < 2) {
+    } else if (smallImagesUrlList.length < 1) {
       setAlert('Please upload at least 2 small images', 'warning');
     } else {
-      createNewCar();
+      createNewCar().then((res) => {
+        if (res.data.createCar.success) {
+          setAlert('Car has been added', 'success');
+          resetForm();
+        } else {
+          setAlert('Something went wrong', 'danger');
+          console.log(res.data.createCar.message);
+        }
+      });
     }
   };
 
@@ -173,11 +188,15 @@ const AddCar = () => {
       const input = {
         file: reader.result
       };
-      uploadFile({ variables: { input } });
+      uploadMainImage({ variables: { input } }).then((res) => {
+        if (res.data.uploadImage.success) {
+          setMainImageUrl(res.data.uploadImage.imageUrl.url);
+        }
+      });
     });
   };
 
-  const onSelectSmallImage = (e) => {
+  const onSelectSmallImage = async (e) => {
     const picture = e.target.files[0];
     if (!picture) return;
     let reader = new FileReader();
@@ -187,7 +206,14 @@ const AddCar = () => {
       const input = {
         file: reader.result
       };
-      uploadFile({ variables: { input } });
+
+      uploadSmallImage({ variables: { input } }).then((res) => {
+        console.log(res.data.uploadImage.imageUrl.url);
+        if (res.data.uploadImage.success) {
+          let element = { url: res.data.uploadImage.imageUrl.url };
+          setSmallImagesUrlList([...smallImagesUrlList, element]);
+        }
+      });
     });
   };
 
