@@ -7,10 +7,6 @@ import { CREATE_CAR, UPLOAD_IMAGE } from '../../../mutations/mutations';
 import { useMutation } from '@apollo/client';
 import MiddleIcon from '../../groupElement/MiddleIcon';
 
-// import aws from 'aws-sdk';
-// import multer from 'multer';
-// import multerS3 from 'multer-s3';
-
 const AddCar = () => {
   const [brand, setBrand] = useState('');
   const { loading, error, data } = useQuery(GET_BRANDS);
@@ -35,6 +31,8 @@ const AddCar = () => {
   const [description, setDescription] = useState('');
   const [mainImage, setMainImage] = useState(null);
   const [smallImages, setSmallImages] = useState([]);
+  const [mainImageUrl, setMainImageUrl] = useState('');
+  const [smallImagesUrlList, setSmallImagesUrlList] = useState([]);
 
   const inputRef = useRef();
   const inputRefSmall = useRef();
@@ -58,6 +56,10 @@ const AddCar = () => {
     setManualGearBox(false);
     setLocation('');
     setDescription('');
+    setMainImage(null);
+    setSmallImages([]);
+    setMainImageUrl('');
+    setSmallImagesUrlList([]);
   };
 
   const checkBenefits = () => {
@@ -97,7 +99,7 @@ const AddCar = () => {
         location,
         description,
         picturePath: {
-          url: 'www'
+          url: mainImageUrl
         }
       }
     },
@@ -112,8 +114,15 @@ const AddCar = () => {
   });
 
   const [uploadFile] = useMutation(UPLOAD_IMAGE, {
-    onCompleted: (data) => console.log('mutation completed >>', data),
-    onError: (error) => console.log('mutation error >>', error)
+    onCompleted: ({ uploadImage }) => {
+      if (uploadImage.success) {
+        setMainImageUrl(uploadImage.imageUrl.url);
+      } else setAlert('Something went wrong with uploading image. Please try again.', 'danger');
+      console.log(uploadImage.message);
+    },
+    onError: (error) => {
+      console.log(error.message);
+    }
   });
 
   const handleCreateCar = (e) => {
@@ -131,6 +140,10 @@ const AddCar = () => {
       description === ''
     ) {
       setAlert('Please fill out all fields', 'warning');
+    } else if (mainImageUrl === '') {
+      setAlert('Please upload main image', 'warning');
+    } else if (smallImagesUrlList.length < 2) {
+      setAlert('Please upload at least 2 small images', 'warning');
     } else {
       createNewCar();
     }
@@ -155,22 +168,26 @@ const AddCar = () => {
     // convert file to base64 string
     let reader = new FileReader();
     reader.readAsDataURL(picture);
-    reader.onload = () => {
+    reader.addEventListener('load', () => {
       setMainImage(reader.result);
       const input = {
         file: reader.result
       };
       uploadFile({ variables: { input } });
-    };
+    });
   };
 
   const onSelectSmallImage = (e) => {
     const picture = e.target.files[0];
     if (!picture) return;
-    const reader = new FileReader();
-    reader.readAsDataURL(event.target.files[0]);
+    let reader = new FileReader();
+    reader.readAsDataURL(picture);
     reader.addEventListener('load', () => {
       setSmallImages([...smallImages, reader.result]);
+      const input = {
+        file: reader.result
+      };
+      uploadFile({ variables: { input } });
     });
   };
 
@@ -179,40 +196,6 @@ const AddCar = () => {
   //   newSmallImages.splice(index, 1);
   //   setSmallImages(newSmallImages);
   // };
-
-  // const uploadMainImage = async (image) => {
-  //   // ${new Date()}
-  //   const file = fromURLtoFile(image, `MainImage.jpg`);
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append('mainPicture', file);
-  //     console.log(formData);
-
-  //     // const uploadSingleFile = uploadFile('car-rental-upload').single('mainPicture');
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // const uploadFile = (bucket) =>
-  //   multer({
-  //     storage: multerS3({
-  //       s3,
-  //       bucket,
-  //       metadata: function (req, file, cb) {
-  //         cb(null, { fieldName: file.fieldname });
-  //       },
-  //       key: function (req, file, cb) {
-  //         cb(null, Date.now().toString());
-  //       }
-  //     })
-  //   });
-
-  // const s3 = new aws.S3({
-  //   accessKeyId: process.env.S3_ACCESS_KEY,
-  //   secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
-  //   region: process.env.S3_BUCKET_REGION
-  // });
 
   return (
     <>
