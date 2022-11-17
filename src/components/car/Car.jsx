@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import BenefitList from './BenefitList';
 import styles from './Car.module.scss';
 import PropTypes from 'prop-types';
-import MiddleIcon from '../groupElement/MiddleIcon';
+import MainPicture from './MainPicture';
+// import MiddleIcon from '../groupElement/MiddleIcon';
 import SvgIconBar from '../svgIconBar/SvgIconBar';
 import { GasStation, GpsDirection } from '../assets/SvgList';
 import ActionButtons from '../actionButton/ActionButtons';
@@ -14,6 +15,7 @@ const Car = ({
   benefits,
   brand,
   property,
+  picturePath,
   location,
   price,
   id,
@@ -25,8 +27,8 @@ const Car = ({
     <div className={styles.wrapper}>
       <div className={styles.topPart}>
         <div className={styles.pictureSide}>
-          <MiddleIcon model={'Regular'} />
-          {/* TODO  Needs to be changed to car photo when DB connected */}
+          {/* <MiddleIcon model={'Regular'} /> */}
+          <MainPicture picturePath={picturePath} />
         </div>
         <div className={styles.iconSide}>
           <div className={styles.carTypeAndName}>
@@ -88,6 +90,7 @@ Car.propTypes = {
   viewElement: PropTypes.func,
   carClass: PropTypes.string,
   benefits: PropTypes.array,
+  picturePath: PropTypes.object,
   brand: PropTypes.object,
   property: PropTypes.object,
   location: PropTypes.string,

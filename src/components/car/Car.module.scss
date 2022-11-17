@@ -98,3 +98,15 @@
     }
   }
 }
+
+.mainPictureWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  img {
+    height: 90%;
+    width: 90%;
+  }
+}

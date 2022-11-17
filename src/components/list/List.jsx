@@ -15,6 +15,7 @@ const List = ({ data, ...props }) => {
           benefits={car.benefits}
           model={car.model}
           brand={car.brand}
+          picturePath={car.picturePath}
           property={car.property}
           location={car.location}
           price={car.price}
