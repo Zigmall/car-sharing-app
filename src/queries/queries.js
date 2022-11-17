@@ -16,6 +16,9 @@ const GET_ALL_BORROWED_CARS = gql`
           brand {
             name
           }
+          picturePath {
+            url
+          }
           year
           property {
             seats
@@ -52,6 +55,9 @@ const GET_ALL_USERS = gql`
           model
           brand {
             name
+          }
+          picturePath {
+            url
           }
           year
           property {
@@ -99,6 +105,9 @@ const GET_USER = gql`
           brand {
             name
           }
+          picturePath {
+            url
+          }
           year
           property {
             seats
@@ -132,6 +141,9 @@ const ALL_CARS = gql`
         trunk
         airConditioning
         manualGearBox
+      }
+      picturePath {
+        url
       }
       location
       price
@@ -170,6 +182,9 @@ const GET_CURRENT_USER = gql`
           model
           brand {
             name
+          }
+          picturePath {
+            url
           }
           year
           property {
@@ -218,6 +233,9 @@ const GET_CAR = gql`
         trunk
         airConditioning
         manualGearBox
+      }
+      picturePath {
+        url
       }
       location
       price
