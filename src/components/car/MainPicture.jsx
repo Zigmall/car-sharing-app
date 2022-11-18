@@ -3,10 +3,9 @@ import styles from './Car.module.scss';
 import PropTypes from 'prop-types';
 
 const MainPicture = ({ picturePath: { url } }) => {
-  console.log(url);
   return (
     <div className={styles.mainPictureWrapper}>
-      <img src={url} alt="car 123" className={styles.mainPicture} />
+      <img src={url} alt="Car" className={styles.mainPicture} />
     </div>
   );
 };

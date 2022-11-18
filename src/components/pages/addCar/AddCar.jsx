@@ -150,7 +150,7 @@ const AddCar = () => {
     } else if (mainImageUrl === '') {
       setAlert('Please upload main image', 'warning');
     } else if (smallImagesUrlList.length < 1) {
-      setAlert('Please upload at least 2 small images', 'warning');
+      setAlert('Please upload at least 1 small image', 'warning');
     } else {
       createNewCar().then((res) => {
         if (res.data.createCar.success) {
@@ -180,7 +180,6 @@ const AddCar = () => {
   const onSelectMainImage = (e) => {
     const picture = e.target.files[0];
     if (!picture) return;
-    // convert file to base64 string
     let reader = new FileReader();
     reader.readAsDataURL(picture);
     reader.addEventListener('load', () => {
@@ -196,7 +195,7 @@ const AddCar = () => {
     });
   };
 
-  const onSelectSmallImage = async (e) => {
+  const onSelectSmallImage = (e) => {
     const picture = e.target.files[0];
     if (!picture) return;
     let reader = new FileReader();
@@ -206,9 +205,7 @@ const AddCar = () => {
       const input = {
         file: reader.result
       };
-
       uploadSmallImage({ variables: { input } }).then((res) => {
-        console.log(res.data.uploadImage.imageUrl.url);
         if (res.data.uploadImage.success) {
           let element = { url: res.data.uploadImage.imageUrl.url };
           setSmallImagesUrlList([...smallImagesUrlList, element]);
