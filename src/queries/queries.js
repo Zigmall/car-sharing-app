@@ -10,7 +10,9 @@ const GET_ALL_BORROWED_CARS = gql`
         endDate
         car {
           id
-          carClass
+          carClass {
+            name
+          }
           benefits
           model
           brand {
@@ -50,7 +52,9 @@ const GET_ALL_USERS = gql`
         endDate
         car {
           id
-          carClass
+          carClass {
+            name
+          }
           benefits
           model
           brand {
@@ -99,7 +103,9 @@ const GET_USER = gql`
         endDate
         car {
           id
-          carClass
+          carClass {
+            name
+          }
           benefits
           model
           brand {
@@ -128,7 +134,9 @@ const ALL_CARS = gql`
   query getCars {
     cars {
       id
-      carClass
+      carClass {
+        name
+      }
       benefits
       model
       brand {
@@ -177,7 +185,9 @@ const GET_CURRENT_USER = gql`
         endDate
         car {
           id
-          carClass
+          carClass {
+            name
+          }
           benefits
           model
           brand {
@@ -216,11 +226,27 @@ const GET_BRANDS = gql`
   }
 `;
 
+const GET_CAR_CLASSES = gql`
+  query CarClasses {
+    carClasses {
+      id
+      name
+      cars {
+        id
+        model
+        year
+      }
+    }
+  }
+`;
+
 const GET_CAR = gql`
   query GetCar($carId: ID!) {
     car(id: $carId) {
       id
-      carClass
+      carClass {
+        name
+      }
       benefits
       model
       brand {
@@ -265,5 +291,6 @@ export {
   ALL_CARS,
   GET_CURRENT_USER,
   GET_BRANDS,
-  GET_CAR
+  GET_CAR,
+  GET_CAR_CLASSES
 };

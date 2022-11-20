@@ -57,7 +57,9 @@ const LOG_IN = gql`
           endDate
           car {
             id
-            carClass
+            carClass {
+              name
+            }
             benefits
             model
             brand {
@@ -90,7 +92,9 @@ const RETURN_CAR = gql`
         startDate
         car {
           id
-          carClass
+          carClass {
+            name
+          }
           benefits
           model
           brand {
@@ -144,7 +148,9 @@ const CREATE_CAR = gql`
       car {
         id
         model
-        carClass
+        carClass {
+          name
+        }
         benefits
         year
         location
@@ -190,7 +196,9 @@ const SIGN_UP = gql`
           endDate
           car {
             id
-            carClass
+            carClass {
+              name
+            }
             benefits
             model
             brand {
