@@ -1,6 +1,6 @@
 import React, { useState, useContext, useRef } from 'react';
 import styles from './AddCar.module.scss';
-import { GET_BRANDS, ALL_CARS } from '../../../queries/queries';
+import { GET_BRANDS, ALL_CARS, GET_CAR_CLASSES } from '../../../queries/queries';
 import { useQuery } from '@apollo/client';
 import AlertContext from '../../../context/alert/alertContext';
 import { CREATE_CAR, UPLOAD_IMAGE } from '../../../mutations/mutations';
@@ -10,6 +10,11 @@ import MiddleIcon from '../../groupElement/MiddleIcon';
 const AddCar = () => {
   const [brand, setBrand] = useState('');
   const { loading, error, data } = useQuery(GET_BRANDS);
+  const {
+    loading: loadingClasses,
+    error: errorClasses,
+    data: dataClasses
+  } = useQuery(GET_CAR_CLASSES);
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
 
@@ -164,7 +169,7 @@ const AddCar = () => {
     }
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading || loadingClasses) return <p>Loading...</p>;
   if (error) {
     console.log(error);
     return (
@@ -174,8 +179,18 @@ const AddCar = () => {
         </div>
       </div>
     );
+  } else if (errorClasses) {
+    console.log(errorClasses);
+    return (
+      <div className={styles.left__space}>
+        <div className={styles.error__message}>
+          <p>Something went wrong</p>
+        </div>
+      </div>
+    );
   }
   const brands = data.brands;
+  const classes = dataClasses.carClasses;
 
   const onSelectMainImage = (e) => {
     const picture = e.target.files[0];
@@ -222,7 +237,7 @@ const AddCar = () => {
 
   return (
     <>
-      {brands && (
+      {brands && classes && (
         <div className={styles.left__space}>
           <div className={styles.car__wrapper}>
             <div className={styles.car__header}>
@@ -296,10 +311,23 @@ const AddCar = () => {
                         </option>
                       ))}
                     </select>
+
+                    <label className={styles.form__label}>Car Class</label>
+                    <select
+                      className={styles.form__select}
+                      value={carClass}
+                      onChange={(e) => setCarClass(e.target.value)}>
+                      <option value="">Select Class</option>
+                      {classes.map((element) => (
+                        <option key={element.id} value={element.id}>
+                          {element.name}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
 
-                <div className={styles.form__element}>
+                {/* <div className={styles.form__element}>
                   <label className={styles.form__label}>Car class</label>
                   <input
                     type="text"
@@ -308,7 +336,7 @@ const AddCar = () => {
                     value={carClass}
                     onChange={(e) => setCarClass(e.target.value)}
                   />
-                </div>
+                </div> */}
 
                 <div className={styles.form__line}>
                   <div className={styles.form__element}>
