@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router';
 import styles from './CarDetails.module.scss';
-import MiddleIcon from '../groupElement/MiddleIcon';
+import MainPicture from '../car/MainPicture';
 import { GearBox, Luggage, OpenDoorCar, AirConditioner } from '../assets/SvgList';
 import Rating from '../rating/Rating';
 import { useQuery } from '@apollo/client';
@@ -41,7 +41,7 @@ const CarDetails = () => {
   return !loading && !error ? (
     <div className={styles.carDetailsWrapper}>
       <div className={styles.topPicture}>
-        <MiddleIcon model={'Regular'} />
+        <MainPicture picturePath={car.picturePath.url} />
       </div>
       <div className={styles.bottomWrapper}>
         <div className={styles.leftColumn}>
