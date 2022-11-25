@@ -1,8 +1,6 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   margin: 40px 20px;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1), 0px 4px 10px 0px rgba(0, 0, 0, 0.015),
     0px 2px 4px 0px rgba(0, 0, 0, 0.1);
@@ -15,8 +13,8 @@
 }
 .pictureSide {
   margin-right: 20px;
-  height: 150px;
-  width: 250px;
+  height: 8rem;
+  width: 18rem;
 }
 .iconSide {
   align-items: baseline;
@@ -96,5 +94,15 @@
       background-color: rgb(46, 163, 46);
       cursor: pointer;
     }
+  }
+}
+
+.mainPictureWrapper {
+  display: flex;
+
+
+  img {
+    width: 80%;
+    margin: 1rem;
   }
 }

@@ -57,7 +57,9 @@ const LOG_IN = gql`
           endDate
           car {
             id
-            carClass
+            carClass {
+              name
+            }
             benefits
             model
             brand {
@@ -90,7 +92,9 @@ const RETURN_CAR = gql`
         startDate
         car {
           id
-          carClass
+          carClass {
+            name
+          }
           benefits
           model
           brand {
@@ -142,13 +146,34 @@ const CREATE_CAR = gql`
       success
       message
       car {
+        id
         model
-        carClass
+        carClass {
+          name
+        }
+        benefits
+        year
+        location
+        price
+        description
         brand {
           id
           name
         }
-        id
+        picturePath {
+          url
+        }
+        pictures {
+          url
+        }
+        property {
+          seats
+          doors
+          trunk
+          engine
+          airConditioning
+          manualGearBox
+        }
       }
     }
   }
@@ -171,7 +196,9 @@ const SIGN_UP = gql`
           endDate
           car {
             id
-            carClass
+            carClass {
+              name
+            }
             benefits
             model
             brand {
@@ -220,6 +247,18 @@ const CREATE_COMMENT = gql`
   }
 `;
 
+const UPLOAD_IMAGE = gql`
+  mutation UploadImage($input: UploadImageInput!) {
+    uploadImage(input: $input) {
+      success
+      message
+      imageUrl {
+        url
+      }
+    }
+  }
+`;
+
 export {
   DELETE_USER,
   UPDATE_USER,
@@ -229,5 +268,6 @@ export {
   UPDATE_MY_PERSONAL_DATA,
   CREATE_CAR,
   SIGN_UP,
-  CREATE_COMMENT
+  CREATE_COMMENT,
+  UPLOAD_IMAGE
 };

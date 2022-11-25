@@ -11,10 +11,11 @@ const List = ({ data, ...props }) => {
         <Car
           key={car.id}
           id={car.id}
-          carClass={car.carClass}
+          carClass={car.carClass.name}
           benefits={car.benefits}
           model={car.model}
           brand={car.brand}
+          picturePath={car.picturePath}
           property={car.property}
           location={car.location}
           price={car.price}

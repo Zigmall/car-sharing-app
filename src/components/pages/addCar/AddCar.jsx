@@ -1,14 +1,20 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import styles from './AddCar.module.scss';
-import { GET_BRANDS, ALL_CARS } from '../../../queries/queries';
+import { GET_BRANDS, ALL_CARS, GET_CAR_CLASSES } from '../../../queries/queries';
 import { useQuery } from '@apollo/client';
 import AlertContext from '../../../context/alert/alertContext';
-import { CREATE_CAR } from '../../../mutations/mutations';
+import { CREATE_CAR, UPLOAD_IMAGE } from '../../../mutations/mutations';
 import { useMutation } from '@apollo/client';
+import MiddleIcon from '../../groupElement/MiddleIcon';
 
 const AddCar = () => {
   const [brand, setBrand] = useState('');
   const { loading, error, data } = useQuery(GET_BRANDS);
+  const {
+    loading: loadingClasses,
+    error: errorClasses,
+    data: dataClasses
+  } = useQuery(GET_CAR_CLASSES);
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
 
@@ -28,6 +34,14 @@ const AddCar = () => {
   const [manualGearBox, setManualGearBox] = useState(false);
   const [location, setLocation] = useState('');
   const [description, setDescription] = useState('');
+  const [mainImage, setMainImage] = useState(null);
+  const [smallImages, setSmallImages] = useState([]);
+  const [mainImageUrl, setMainImageUrl] = useState('');
+  const [smallImagesUrlList, setSmallImagesUrlList] = useState([]);
+
+  const inputRef = useRef();
+  const inputRefSmall = useRef();
+  const triggerFileSelection = (inputRef) => inputRef.current.click();
 
   const resetForm = () => {
     setBrand('');
@@ -47,6 +61,10 @@ const AddCar = () => {
     setManualGearBox(false);
     setLocation('');
     setDescription('');
+    setMainImage(null);
+    setSmallImages([]);
+    setMainImageUrl('');
+    setSmallImagesUrlList([]);
   };
 
   const checkBenefits = () => {
@@ -86,18 +104,37 @@ const AddCar = () => {
         location,
         description,
         picturePath: {
-          url: 'www'
-        }
+          url: mainImageUrl
+        },
+        pictures: smallImagesUrlList
       }
     },
-    onCompleted: () => {
-      setAlert('Car has been added', 'success');
-      resetForm();
+    refetchQueries: [{ query: ALL_CARS }]
+  });
+
+  const [uploadMainImage] = useMutation(UPLOAD_IMAGE, {
+    onCompleted: ({ uploadImage }) => {
+      if (!uploadImage.success) {
+        setAlert('Something went wrong with uploading image. Please try again.', 'danger');
+        console.log(uploadImage.message);
+      }
     },
     onError: (error) => {
       console.log(error.message);
+    }
+  });
+
+  const [uploadSmallImage] = useMutation(UPLOAD_IMAGE, {
+    onCompleted: ({ uploadImage }) => {
+      if (!uploadImage.success) {
+        setAlert('Something went wrong with uploading image. Please try again.', 'danger');
+        console.log(uploadImage.message);
+      }
     },
-    refetchQueries: [{ query: ALL_CARS }]
+    onError: (error) => {
+      console.log(error.message);
+      console.log('error8786');
+    }
   });
 
   const handleCreateCar = (e) => {
@@ -115,12 +152,24 @@ const AddCar = () => {
       description === ''
     ) {
       setAlert('Please fill out all fields', 'warning');
+    } else if (mainImageUrl === '') {
+      setAlert('Please upload main image', 'warning');
+    } else if (smallImagesUrlList.length < 1) {
+      setAlert('Please upload at least 1 small image', 'warning');
     } else {
-      createNewCar();
+      createNewCar().then((res) => {
+        if (res.data.createCar.success) {
+          setAlert('Car has been added', 'success');
+          resetForm();
+        } else {
+          setAlert('Something went wrong', 'danger');
+          console.log(res.data.createCar.message);
+        }
+      });
     }
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading || loadingClasses) return <p>Loading...</p>;
   if (error) {
     console.log(error);
     return (
@@ -130,12 +179,65 @@ const AddCar = () => {
         </div>
       </div>
     );
+  } else if (errorClasses) {
+    console.log(errorClasses);
+    return (
+      <div className={styles.left__space}>
+        <div className={styles.error__message}>
+          <p>Something went wrong</p>
+        </div>
+      </div>
+    );
   }
   const brands = data.brands;
+  const classes = dataClasses.carClasses;
+
+  const onSelectMainImage = (e) => {
+    const picture = e.target.files[0];
+    if (!picture) return;
+    let reader = new FileReader();
+    reader.readAsDataURL(picture);
+    reader.addEventListener('load', () => {
+      setMainImage(reader.result);
+      const input = {
+        file: reader.result
+      };
+      uploadMainImage({ variables: { input } }).then((res) => {
+        if (res.data.uploadImage.success) {
+          setMainImageUrl(res.data.uploadImage.imageUrl.url);
+        }
+      });
+    });
+  };
+
+  const onSelectSmallImage = (e) => {
+    const picture = e.target.files[0];
+    if (!picture) return;
+    let reader = new FileReader();
+    reader.readAsDataURL(picture);
+    reader.addEventListener('load', () => {
+      setSmallImages([...smallImages, reader.result]);
+      const input = {
+        file: reader.result
+      };
+      uploadSmallImage({ variables: { input } }).then((res) => {
+        if (res.data.uploadImage.success) {
+          let element = { url: res.data.uploadImage.imageUrl.url };
+          setSmallImagesUrlList([...smallImagesUrlList, element]);
+        }
+      });
+    });
+  };
+
+  // const removeSmallImage = (index) => {
+  //   const newSmallImages = [...smallImages];
+  //   newSmallImages.splice(index, 1);
+  //   setSmallImages(newSmallImages);
+  // };
 
   return (
     <>
-      {brands && (
+      {brands && classes && (
         <div className={styles.left__space}>
           <div className={styles.car__wrapper}>
             <div className={styles.car__header}>
@@ -145,6 +247,58 @@ const AddCar = () => {
               <div className={styles.car__form}>
                 <div className={styles.form__element}>
                   <div className={styles.brand__list}>
+                    <div className={styles.image__wrapper}>
+                      {mainImage ? (
+                        <div className={styles.main__image__container}>
+                          <img src={mainImage} alt="car" />
+                        </div>
+                      ) : (
+                        <div className={styles.main__image__container}>
+                          <MiddleIcon model={'Regular'} />
+                        </div>
+                      )}
+                      <div className={styles.small__images__container}>
+                        {smallImages.map((image, index) =>
+                          image ? (
+                            <div className={styles.small__image} key={index}>
+                              <img src={image} alt="car" />
+                            </div>
+                          ) : (
+                            <div className={styles.small__image} key={index}>
+                              <MiddleIcon model={'Regular'} />
+                            </div>
+                          )
+                        )}
+                      </div>
+                      <div className={styles.image__buttons}>
+                        <input
+                          type="file"
+                          // accept="image/*"
+                          ref={inputRef}
+                          onChange={onSelectMainImage}
+                          style={{ display: 'none' }}
+                        />
+                        <button
+                          className={styles.button__update}
+                          type="button"
+                          onClick={() => triggerFileSelection(inputRef)}>
+                          Add Main Picture
+                        </button>
+                        <button
+                          className={styles.button__update}
+                          type="button"
+                          onClick={() => triggerFileSelection(inputRefSmall)}>
+                          Add small picture
+                        </button>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          ref={inputRefSmall}
+                          onChange={onSelectSmallImage}
+                          style={{ display: 'none' }}
+                        />
+                      </div>
+                    </div>
                     <label className={styles.form__label}>Brand</label>
                     <select
                       className={styles.form__select}
@@ -157,10 +311,23 @@ const AddCar = () => {
                         </option>
                       ))}
                     </select>
+
+                    <label className={styles.form__label}>Car Class</label>
+                    <select
+                      className={styles.form__select}
+                      value={carClass}
+                      onChange={(e) => setCarClass(e.target.value)}>
+                      <option value="">Select Class</option>
+                      {classes.map((element) => (
+                        <option key={element.id} value={element.id}>
+                          {element.name}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
 
-                <div className={styles.form__element}>
+                {/* <div className={styles.form__element}>
                   <label className={styles.form__label}>Car class</label>
                   <input
                     type="text"
@@ -169,7 +336,7 @@ const AddCar = () => {
                     value={carClass}
                     onChange={(e) => setCarClass(e.target.value)}
                   />
-                </div>
+                </div> */}
 
                 <div className={styles.form__line}>
                   <div className={styles.form__element}>

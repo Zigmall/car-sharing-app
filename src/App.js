@@ -13,21 +13,25 @@ import AlertState from './context/alert/AlertState';
 import Alerts from './components/alerts/Alerts';
 import Login from './components/auth/Login';
 import ReturnCars from './components/pages/returnCars/ReturnCars';
+import { createUploadLink } from 'apollo-upload-client';
 import {
   ApolloClient,
   InMemoryCache,
-  HttpLink,
+  // HttpLink,
   ApolloProvider,
-  ApolloLink,
-  concat
+  ApolloLink
+  // concat
 } from '@apollo/client';
 import AuthState from './context/auth/AuthState';
 import { loadUser } from './context/auth/AuthState';
 import AddCar from './components/pages/addCar/AddCar';
 import OrderCar from './components/pages/order/OrderCar';
 
+const uploadLink = createUploadLink({
+  uri: 'http://localhost:5000/'
+});
 // const URL = 'https://desolate-spire-04068.herokuapp.com';
-const URL = 'http://localhost:5000';
+// const URL = 'http://localhost:5000';
 
 const authenticationLink = new ApolloLink((operation, forward) => {
   const token = loadUser();
@@ -39,12 +43,18 @@ const authenticationLink = new ApolloLink((operation, forward) => {
   });
   return forward(operation);
 });
-const httpLink = new HttpLink({
-  uri: URL
-});
+
+// const httpLink = new HttpLink({
+//   uri: URL
+// });
+
+// const client = new ApolloClient({
+//   link: concat(authenticationLink, httpLink),
+//   cache: new InMemoryCache()
+// });
 
 const client = new ApolloClient({
-  link: concat(authenticationLink, httpLink),
+  link: ApolloLink.from([authenticationLink, uploadLink]),
   cache: new InMemoryCache()
 });
 

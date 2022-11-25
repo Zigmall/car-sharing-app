@@ -2,8 +2,6 @@
   margin-left: 9rem;
 }
 
-
-
 .error__message {
   font-size: 2rem;
   margin-top: 2rem;
@@ -55,6 +53,7 @@
 .form__element {
   display: inline-block;
   margin-right: 1rem;
+  margin-top: 1rem;
 }
 
 .form__input {
@@ -65,7 +64,6 @@
   border-radius: 0.3rem;
   border: 1px solid black;
 }
-
 
 .button__wrapper {
   display: flex;
@@ -110,10 +108,10 @@
   border: 1px solid black;
 }
 
-
 .button__update {
   display: inline-block;
   margin-top: 1rem;
+  margin-right: 1rem;
   padding: 0.5rem 2rem;
   border-radius: 0.3rem;
   background-color: #0074ef;
@@ -125,4 +123,68 @@
   display: inline-block;
   margin-right: 1rem;
   width: 100%;
+}
+
+.image__wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto 1rem auto;
+  width: 100%;
+  border-radius: 0.3rem;
+  justify-content: center;
+  align-items: center;
+  svg {
+    height: 100%;
+    width: 100%;
+    opacity: 0.8;
+  }
+}
+
+.main__image__container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem;
+  border: black 1px solid;
+  border-radius: 0.3rem;
+  height: 12rem;
+  width: 28rem;
+  img {
+    height: 100%;
+    width: 100%;
+  }
+}
+.small__images__container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 0.5rem;
+  // border: black 1px solid;
+  border-radius: 0.3rem;
+}
+
+.small__image {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 0.3rem;
+  border: black 1px solid;
+  border-radius: 0.3rem;
+  height: 5rem;
+  width: 10rem;
+  img {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.image__buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem;
 }
