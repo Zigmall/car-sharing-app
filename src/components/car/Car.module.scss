@@ -84,14 +84,14 @@
     margin-right: 25px;
   }
   button {
-    background-color: green;
+    background-color: #0074ef;
     height: 50px;
     min-width: 200px;
     color: white;
     font-size: 20px;
     border-radius: 10px;
     &:hover {
-      background-color: rgb(46, 163, 46);
+      background-color: #3690f0;
       cursor: pointer;
     }
   }
