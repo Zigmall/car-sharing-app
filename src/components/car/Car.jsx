@@ -4,7 +4,6 @@ import BenefitList from './BenefitList';
 import styles from './Car.module.scss';
 import PropTypes from 'prop-types';
 import MainPicture from './MainPicture';
-// import MiddleIcon from '../groupElement/MiddleIcon';
 import SvgIconBar from '../svgIconBar/SvgIconBar';
 import { GasStation, GpsDirection } from '../assets/SvgList';
 import ActionButtons from '../actionButton/ActionButtons';
@@ -27,8 +26,7 @@ const Car = ({
     <div className={styles.wrapper}>
       <div className={styles.topPart}>
         <div className={styles.pictureSide}>
-          {/* <MiddleIcon model={'Regular'} /> */}
-          <MainPicture picturePath={picturePath} />
+          <MainPicture picturePath={picturePath.url} />
         </div>
         <div className={styles.iconSide}>
           <div className={styles.carTypeAndName}>
