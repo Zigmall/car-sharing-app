@@ -35,9 +35,10 @@ const ReturnCars = () => {
           <Car
             key={index}
             id={car.car.id}
-            carClass={car.car.carClass}
+            carClass={car.car.carClass.name}
             benefits={car.car.benefits}
             model={car.car.model}
+            picturePath={car.car.picturePath}
             brand={car.car.brand}
             property={car.car.property}
             location={car.car.location}
