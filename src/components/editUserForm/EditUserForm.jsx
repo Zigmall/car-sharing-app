@@ -10,6 +10,7 @@ import AuthContext from '../../context/auth/authContext';
 const EditUserForm = ({ completeForBooking }) => {
   const authContext = useContext(AuthContext);
   const { user } = authContext;
+  // console.log('User:', user);
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
   const [firstName, setFirstName] = useState(user.firstName || '');
@@ -38,7 +39,9 @@ const EditUserForm = ({ completeForBooking }) => {
           }
         },
         onCompleted: () => {
-          setAlert('User has been updated', 'success');
+          completeForBooking
+            ? setAlert('You can now book a car', 'success')
+            : setAlert('User has been updated', 'success');
         },
         refetchQueries: [{ query: GET_ALL_USERS }]
       })
@@ -54,8 +57,9 @@ const EditUserForm = ({ completeForBooking }) => {
           }
         },
         onCompleted: () => {
-          setAlert('Your data has been updated', 'success');
-          // authContext.setUser(currentUser);
+          completeForBooking
+            ? setAlert('You can now book a car', 'success')
+            : setAlert('User has been updated', 'success');
         },
         refetchQueries: [{ query: GET_CURRENT_USER }]
       });
@@ -82,8 +86,7 @@ const EditUserForm = ({ completeForBooking }) => {
       } else {
         setAlert('Please fill all required fields', 'danger');
       }
-    }
-    if (firstName === '' || lastName === '' || email === '') {
+    } else if (firstName === '' || lastName === '' || email === '') {
       setAlert('Please fill out all fields', 'warning');
     } else {
       updateUser();
@@ -93,8 +96,6 @@ const EditUserForm = ({ completeForBooking }) => {
   return (
     <>
       <div className={styles.edit__user__wrapper}>
-        <h3>Update User Details</h3>
-        <h4>* Mandatory field</h4>
         <div className={styles.edit__user__form}>
           <form onSubmit={handleUpdateUser}>
             <div className={styles.name__group}>
