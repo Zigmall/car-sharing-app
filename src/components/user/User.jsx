@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { GET_ALL_USERS } from '../../queries/queries';
 import EditUserForm from '../editUserForm/EditUserForm';
-// import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import CarContext from '../../context/car/carContext';
@@ -54,9 +53,7 @@ const User = () => {
                 Back
               </button>
             </div>
-            <h1>
-              {user[0].firstName} {user[0].lastName}
-            </h1>
+            <h1>Update personal data</h1>
             <div className={styles.user__form}>
               <EditUserForm completeForBooking={false} />
             </div>
