@@ -7,15 +7,14 @@ import { GET_ALL_USERS, GET_CURRENT_USER } from '../../queries/queries';
 import AlertContext from '../../context/alert/alertContext';
 import AuthContext from '../../context/auth/authContext';
 
-const EditUserForm = ({ user, completeForBooking }) => {
-  // console.log('user', user);
+const EditUserForm = ({ completeForBooking }) => {
   const authContext = useContext(AuthContext);
-  const { user: currentUser } = authContext;
+  const { user } = authContext;
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
-  const [firstName, setFirstName] = useState(user.firstName);
-  const [lastName, setLastName] = useState(user.lastName);
-  const [email, setEmail] = useState(user.email);
+  const [firstName, setFirstName] = useState(user.firstName || '');
+  const [lastName, setLastName] = useState(user.lastName || '');
+  const [email, setEmail] = useState(user.email || '');
   const [mobile, setMobile] = useState(user.mobile || '');
   const [isAdmin, setIsAdmin] = useState(user.isAdmin || false);
   const [country, setCountry] = useState(user.address.country || '');
@@ -25,10 +24,7 @@ const EditUserForm = ({ user, completeForBooking }) => {
   const [flatNumber, setFlatNumber] = useState(user.address.flatNumber || '');
   const [postCode, setPostCode] = useState(user.address.postCode || '');
 
-  console.log('user', user);
-  console.log('currentUser', currentUser);
-
-  const [updateUser] = currentUser.isAdmin
+  const [updateUser] = user.isAdmin
     ? useMutation(UPDATE_USER, {
         variables: {
           input: {
@@ -149,7 +145,7 @@ const EditUserForm = ({ user, completeForBooking }) => {
               </div>
             </div>
 
-            {currentUser && currentUser.isAdmin && (
+            {user && user.isAdmin && (
               <div className={styles.admin__wrapper}>
                 <input
                   type="checkbox"

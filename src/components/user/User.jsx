@@ -58,7 +58,7 @@ const User = () => {
               {user[0].firstName} {user[0].lastName}
             </h1>
             <div className={styles.user__form}>
-              <EditUserForm userIs={userId} user={user[0]} />
+              <EditUserForm completeForBooking={false} />
             </div>
           </div>
         </div>
