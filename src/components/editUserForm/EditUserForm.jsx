@@ -7,7 +7,7 @@ import { GET_ALL_USERS, GET_CURRENT_USER } from '../../queries/queries';
 import AlertContext from '../../context/alert/alertContext';
 import AuthContext from '../../context/auth/authContext';
 
-const EditUserForm = ({ user }) => {
+const EditUserForm = ({ user, completeForBooking }) => {
   // console.log('user', user);
   const authContext = useContext(AuthContext);
   const { user: currentUser } = authContext;
@@ -16,14 +16,17 @@ const EditUserForm = ({ user }) => {
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [email, setEmail] = useState(user.email);
-  const [mobile, setMobile] = useState(user.mobile);
-  const [isAdmin, setIsAdmin] = useState(user.isAdmin);
-  const [country, setCountry] = useState(user.address.country);
-  const [city, setCity] = useState(user.address.city);
-  const [street, setStreet] = useState(user.address.street);
-  const [houseNumber, setHouseNumber] = useState(user.address.houseNumber);
-  const [flatNumber, setFlatNumber] = useState(user.address.flatNumber);
-  const [postCode, setPostCode] = useState(user.address.postCode);
+  const [mobile, setMobile] = useState(user.mobile || '');
+  const [isAdmin, setIsAdmin] = useState(user.isAdmin || false);
+  const [country, setCountry] = useState(user.address.country || '');
+  const [city, setCity] = useState(user.address.city || '');
+  const [street, setStreet] = useState(user.address.street || '');
+  const [houseNumber, setHouseNumber] = useState(user.address.houseNumber || '');
+  const [flatNumber, setFlatNumber] = useState(user.address.flatNumber || '');
+  const [postCode, setPostCode] = useState(user.address.postCode || '');
+
+  console.log('user', user);
+  console.log('currentUser', currentUser);
 
   const [updateUser] = currentUser.isAdmin
     ? useMutation(UPDATE_USER, {
@@ -67,6 +70,23 @@ const EditUserForm = ({ user }) => {
 
   const handleUpdateUser = (e) => {
     e.preventDefault();
+    if (completeForBooking) {
+      if (
+        firstName &&
+        lastName &&
+        email &&
+        mobile &&
+        country &&
+        city &&
+        street &&
+        houseNumber &&
+        postCode
+      ) {
+        updateUser();
+      } else {
+        setAlert('Please fill all required fields', 'danger');
+      }
+    }
     if (firstName === '' || lastName === '' || email === '') {
       setAlert('Please fill out all fields', 'warning');
     } else {
@@ -83,7 +103,7 @@ const EditUserForm = ({ user }) => {
           <form onSubmit={handleUpdateUser}>
             <div className={styles.name__group}>
               <div className={styles.form__element}>
-                <label className={styles.form__label}>* First Name </label>
+                <label className={styles.form__label}>First Name </label>
                 <input
                   type="text"
                   className={styles.form__input}
@@ -94,7 +114,7 @@ const EditUserForm = ({ user }) => {
               </div>
 
               <div className={styles.form__element}>
-                <label className={styles.form__label}>* Last Name</label>
+                <label className={styles.form__label}>Last Name</label>
                 <input
                   type="text"
                   className={styles.form__input}
@@ -107,7 +127,7 @@ const EditUserForm = ({ user }) => {
 
             <div className={styles.name__group}>
               <div className={styles.form__element}>
-                <label className={styles.form__label}>* Email</label>
+                <label className={styles.form__label}>Email</label>
                 <input
                   type="text"
                   className={styles.form__input}
@@ -193,7 +213,7 @@ const EditUserForm = ({ user }) => {
 
             <div className={styles.name__group}>
               <div className={styles.form__element}>
-                <label className={styles.form__label}>Flat number</label>
+                <label className={styles.form__label}>*optional* Flat number</label>
                 <input
                   type="text"
                   className={styles.form__input}
@@ -226,7 +246,8 @@ const EditUserForm = ({ user }) => {
 };
 
 EditUserForm.propTypes = {
-  user: PropTypes.object
+  user: PropTypes.object,
+  completeForBooking: PropTypes.bool
 };
 
 export default EditUserForm;
