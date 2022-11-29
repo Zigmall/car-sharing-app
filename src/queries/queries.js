@@ -46,6 +46,17 @@ const GET_ALL_USERS = gql`
       email
       isAdmin
       mobile
+      address {
+        city
+        country
+        street
+        houseNumber
+        flatNumber
+        postCode
+      }
+      avatar {
+        color
+      }
       borrowedCars {
         id
         startDate
@@ -75,14 +86,6 @@ const GET_ALL_USERS = gql`
           price
         }
       }
-      address {
-        city
-        country
-        street
-        houseNumber
-        flatNumber
-        postCode
-      }
     }
   }
 `;
@@ -91,12 +94,22 @@ const GET_USER = gql`
   query User($userId: ID!) {
     user(id: $userId) {
       id
-      avatar {
-        color
-      }
       firstName
       lastName
       isAdmin
+      email
+      mobile
+      address {
+        city
+        country
+        street
+        houseNumber
+        flatNumber
+        postCode
+      }
+      avatar {
+        color
+      }
       borrowedCars {
         id
         startDate

@@ -14,8 +14,23 @@ const UPDATE_USER = gql`
   mutation ($input: UpdateUserInput!) {
     updateUser(input: $input) {
       user {
+        id
         firstName
         lastName
+        isAdmin
+        email
+        mobile
+        address {
+          city
+          country
+          street
+          houseNumber
+          flatNumber
+          postCode
+        }
+        avatar {
+          color
+        }
       }
       message
       success
@@ -27,8 +42,23 @@ const UPDATE_MY_PERSONAL_DATA = gql`
   mutation ($input: UpdateMyPersonalDataInput!) {
     updateMyPersonalData(input: $input) {
       user {
+        id
         firstName
         lastName
+        isAdmin
+        email
+        mobile
+        address {
+          city
+          country
+          street
+          houseNumber
+          flatNumber
+          postCode
+        }
+        avatar {
+          color
+        }
       }
       message
       success
@@ -46,8 +76,17 @@ const LOG_IN = gql`
         id
         firstName
         lastName
-        email
         isAdmin
+        email
+        mobile
+        address {
+          city
+          country
+          street
+          houseNumber
+          flatNumber
+          postCode
+        }
         avatar {
           color
         }
