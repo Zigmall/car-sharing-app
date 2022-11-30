@@ -5,21 +5,24 @@ import { useMutation } from '@apollo/client';
 import { UPDATE_USER, UPDATE_MY_PERSONAL_DATA } from '../../mutations/mutations';
 import { GET_ALL_USERS, GET_CURRENT_USER } from '../../queries/queries';
 import AlertContext from '../../context/alert/alertContext';
+import { useEffect } from 'react';
 
-const EditUserForm = ({ user, completeForBooking }) => {
+const EditUserForm = (props) => {
+  const { user, completeForBooking } = props;
+  const { checkIfUserHasAllData } = props;
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
-  const [firstName, setFirstName] = useState(user ? user.firstName : '');
-  const [lastName, setLastName] = useState(user ? user.lastName : '');
-  const [email, setEmail] = useState(user ? user.email : '');
-  const [mobile, setMobile] = useState(user ? user.mobile : '');
-  const [isAdmin, setIsAdmin] = useState(user ? user.isAdmin : false);
-  const [country, setCountry] = useState(user ? user.address.country : '');
-  const [city, setCity] = useState(user ? user.address.city : '');
-  const [street, setStreet] = useState(user ? user.address.street : '');
-  const [houseNumber, setHouseNumber] = useState(user ? user.address.houseNumber : '');
-  const [flatNumber, setFlatNumber] = useState(user ? user.address.flatNumber : '');
-  const [postCode, setPostCode] = useState(user ? user.address.postCode : '');
+  const [firstName, setFirstName] = useState(user.firstName);
+  const [lastName, setLastName] = useState(user.lastName);
+  const [email, setEmail] = useState(user.email);
+  const [mobile, setMobile] = useState(user.mobile);
+  const [isAdmin, setIsAdmin] = useState(user.isAdmin);
+  const [country, setCountry] = useState(user.address.country);
+  const [city, setCity] = useState(user.address.city);
+  const [street, setStreet] = useState(user.address.street);
+  const [houseNumber, setHouseNumber] = useState(user.address.houseNumber);
+  const [flatNumber, setFlatNumber] = useState(user.address.flatNumber);
+  const [postCode, setPostCode] = useState(user.address.postCode);
 
   const [updateUser] = user.isAdmin
     ? useMutation(UPDATE_USER, {
@@ -79,8 +82,10 @@ const EditUserForm = ({ user, completeForBooking }) => {
         postCode
       ) {
         updateUser();
+        checkIfUserHasAllData(true);
       } else {
         setAlert('Please fill all required fields', 'danger');
+        checkIfUserHasAllData(false);
       }
     } else if (firstName === '' || lastName === '' || email === '') {
       setAlert('Please fill out all fields', 'warning');
@@ -88,6 +93,24 @@ const EditUserForm = ({ user, completeForBooking }) => {
       updateUser();
     }
   };
+
+  useEffect(() => {
+    if (
+      user.firstName &&
+      user.lastName &&
+      user.email &&
+      user.mobile &&
+      user.address.country &&
+      user.address.city &&
+      user.address.street &&
+      user.address.houseNumber &&
+      user.address.postCode
+    ) {
+      checkIfUserHasAllData(true);
+    } else {
+      checkIfUserHasAllData(false);
+    }
+  });
 
   return (
     <>
@@ -243,7 +266,8 @@ const EditUserForm = ({ user, completeForBooking }) => {
 
 EditUserForm.propTypes = {
   user: PropTypes.object,
-  completeForBooking: PropTypes.bool
+  completeForBooking: PropTypes.bool,
+  checkIfUserHasAllData: PropTypes.func
 };
 
 export default EditUserForm;
