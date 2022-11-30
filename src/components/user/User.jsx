@@ -15,7 +15,6 @@ const User = () => {
   const { changeTab } = carContext;
   const authContext = useContext(AuthContext);
   const { user } = authContext;
-
   const goBack = () => {
     if (user.isAdmin) {
       navigate('/users');
@@ -39,7 +38,11 @@ const User = () => {
             </div>
             <h1>Update personal data</h1>
             <div className={styles.user__form}>
-              <EditUserForm user={user} completeForBooking={false} />
+              <EditUserForm
+                user={user}
+                completeForBooking={false}
+                checkIfUserHasAllData={() => {}}
+              />
             </div>
           </div>
         </div>
