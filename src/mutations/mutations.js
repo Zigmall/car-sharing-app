@@ -179,6 +179,27 @@ const BORROW_CAR = gql`
   }
 `;
 
+const BOOK_CAR = gql`
+  mutation BookCar($input: BookCarInput!) {
+    bookCar(input: $input) {
+      bookedCar {
+        booker {
+          firstName
+          lastName
+        }
+        id
+        startDate
+        endDate
+        car {
+          model
+        }
+      }
+      success
+      message
+    }
+  }
+`;
+
 const CREATE_CAR = gql`
   mutation CreateCar($input: CreateCarInput!) {
     createCar(input: $input) {
@@ -308,5 +329,6 @@ export {
   CREATE_CAR,
   SIGN_UP,
   CREATE_COMMENT,
-  UPLOAD_IMAGE
+  UPLOAD_IMAGE,
+  BOOK_CAR
 };
