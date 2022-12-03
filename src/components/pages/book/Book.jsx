@@ -8,10 +8,12 @@ import { useParams } from 'react-router';
 import { useQuery } from '@apollo/client';
 import { GET_CAR } from '../../../queries/queries';
 import { CheckIcon, DropDownArrow } from '../../assets/SvgList';
+import { useEffect } from 'react';
 
 const Book = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [userDataCompleted, setUserDataCompleted] = useState(false);
   const [showEditUserForm, setShowEditUserForm] = useState(true);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showInsuranceOptions, setShowInsuranceOptions] = useState(false);
@@ -22,6 +24,11 @@ const Book = () => {
   const { loading, error, data } = useQuery(GET_CAR, {
     variables: { carId }
   });
+
+  useEffect(() => {
+    userDataCompleted && setShowEditUserForm(!userDataCompleted);
+  }, [userDataCompleted]);
+
   // const navigate = useNavigate();
   // const carContext = useContext(CarContext);
   // const { changeTab } = carContext;
@@ -47,7 +54,7 @@ const Book = () => {
   const handleSummaryButton = () => {};
 
   const checkIfUserHasAllData = (completed) => {
-    setShowEditUserForm(!completed);
+    setUserDataCompleted(completed);
     setShowDatePicker(completed);
   };
 
@@ -77,9 +84,9 @@ const Book = () => {
               <DropDownArrow iconHeight={'25'} iconWidth={'25'} />
             </div>
             <h2>{`Step 1: Your personal data: ${
-              showEditUserForm ? 'INCOMPLETE' : 'COMPLETED'
+              userDataCompleted ? 'COMPLETED' : 'INCOMPLETE'
             }`}</h2>
-            {!showEditUserForm && (
+            {userDataCompleted && (
               <div className={styles.checkIconStyles}>
                 <CheckIcon iconHeight={'25'} iconWidth={'25'} />
               </div>
