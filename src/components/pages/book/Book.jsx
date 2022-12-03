@@ -102,9 +102,19 @@ const Book = () => {
             </div>
           )}
 
-          {(showDatePicker || showPaymentSummary) && (
+          {(showDatePicker || (startDate && endDate)) && (
             <div className={styles.userData__steps}>
-              <h2>{`Step 2: Start and end dates ${startDate && endDate ? 'COMPLETED' : ''}`}</h2>
+              <div
+                className={styles.dropDownArrow}
+                onClick={() => setShowDatePicker(!showDatePicker)}>
+                <DropDownArrow iconHeight={'25'} iconWidth={'25'} />
+              </div>
+              <h2>{`Step 2: Start and End Dates ${startDate && endDate ? 'COMPLETED' : ''}`}</h2>
+              {startDate && endDate && (
+                <div className={styles.checkIconStyles}>
+                  <CheckIcon iconHeight={'25'} iconWidth={'25'} />
+                </div>
+              )}
             </div>
           )}
 
@@ -124,7 +134,6 @@ const Book = () => {
                       setShowInsuranceOptions(startDate && endDate ? true : false);
                     }}
                     selectsStart
-                    isClearable
                     startDate={startDate}
                     endDate={endDate}
                     minDate={new Date()}
@@ -143,7 +152,6 @@ const Book = () => {
                       setShowInsuranceOptions(startDate && endDate ? true : false);
                     }}
                     selectsEnd
-                    isClearable
                     startDate={startDate}
                     endDate={endDate}
                     minDate={startDate}
