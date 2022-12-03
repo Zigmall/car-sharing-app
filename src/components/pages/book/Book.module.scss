@@ -214,3 +214,18 @@
   margin-right: 1.5rem;
 }
 
+.checkIconStyles {
+  margin: 1.3rem 0.5rem;
+  // font-size: 1.5rem;
+  // margin-right: 0.5rem;
+}
+
+.dropDownArrow {
+  margin: 1.3rem 1rem 0 0;
+  cursor: pointer;
+  :hover {
+    fill: #0074ef;
+  }
+  
+}
+

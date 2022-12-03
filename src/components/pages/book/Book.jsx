@@ -7,6 +7,7 @@ import AuthContext from '../../../context/auth/authContext';
 import { useParams } from 'react-router';
 import { useQuery } from '@apollo/client';
 import { GET_CAR } from '../../../queries/queries';
+import { CheckIcon, DropDownArrow } from '../../assets/SvgList';
 
 const Book = () => {
   const [startDate, setStartDate] = useState(null);
@@ -15,7 +16,7 @@ const Book = () => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showInsuranceOptions, setShowInsuranceOptions] = useState(false);
   const [showPaymentSummary, setShowPaymentSummary] = useState(false);
-  const [insuranceRate, setInsuranceRate] = useState(0.8);
+  // const [insuranceRate, setInsuranceRate] = useState(0.8);
   // const [insuranceType, setInsuranceType] = useState('Basic');
   const { carId } = useParams();
   const { loading, error, data } = useQuery(GET_CAR, {
@@ -41,6 +42,7 @@ const Book = () => {
     return <p>Could not load car...</p>;
   }
   const { car } = data;
+  const insuranceRate = 0.8;
 
   const handleSummaryButton = () => {};
 
@@ -69,9 +71,19 @@ const Book = () => {
             <h1>Car booking</h1>
           </div>
           <div className={styles.userData__steps}>
+            <div
+              className={styles.dropDownArrow}
+              onClick={() => setShowEditUserForm(!showEditUserForm)}>
+              <DropDownArrow iconHeight={'25'} iconWidth={'25'} />
+            </div>
             <h2>{`Step 1: Your personal data: ${
               showEditUserForm ? 'INCOMPLETE' : 'COMPLETED'
             }`}</h2>
+            {!showEditUserForm && (
+              <div className={styles.checkIconStyles}>
+                <CheckIcon iconHeight={'25'} iconWidth={'25'} />
+              </div>
+            )}
           </div>
           {showEditUserForm && (
             <div className={styles.userData__wrapper}>
@@ -100,10 +112,9 @@ const Book = () => {
                     selected={startDate}
                     onChange={(date) => {
                       setStartDate(date);
-                      setShowPaymentSummary(startDate && endDate ? true : false);
                       setShowDatePicker(startDate && endDate ? false : true);
+                      setShowPaymentSummary(startDate && endDate ? true : false);
                       setShowInsuranceOptions(startDate && endDate ? true : false);
-                      console.log(startDate && endDate ? true : false);
                     }}
                     selectsStart
                     isClearable
@@ -123,7 +134,6 @@ const Book = () => {
                       setShowPaymentSummary(startDate && endDate ? true : false);
                       setShowDatePicker(startDate && endDate ? false : true);
                       setShowInsuranceOptions(startDate && endDate ? true : false);
-                      console.log(startDate && endDate ? true : false);
                     }}
                     selectsEnd
                     isClearable
