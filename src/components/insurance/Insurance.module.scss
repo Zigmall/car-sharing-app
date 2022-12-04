@@ -1,0 +1,43 @@
+.insurance__wrapper {
+  display: flex;
+  margin: 0 auto;
+  width: 68%;
+  margin-top: 1rem;
+  border-radius: 0.3rem;
+  border: 1px solid black;
+}
+
+.option__header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+  h4 {
+    margin: 0;
+  }
+}
+.subtitle {
+  color: blue;
+}
+
+.option__header__button {
+  //   margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  input {
+    margin-left: 0;
+  }
+}
+
+.option__wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 0.5rem auto;
+  width: 20%;
+  border-radius: 0.3rem;
+  border: 1px solid black;
+  padding: 0.5rem;
+  background-color: #f3f6f9;
+  cursor: pointer;
+}
