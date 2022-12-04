@@ -9,6 +9,7 @@ import { useQuery } from '@apollo/client';
 import { GET_CAR } from '../../../queries/queries';
 import { CheckIcon, DropDownArrow } from '../../assets/SvgList';
 import { useEffect } from 'react';
+import Insurance from '../../insurance/Insurance';
 
 const Book = () => {
   const [startDate, setStartDate] = useState(null);
@@ -18,8 +19,7 @@ const Book = () => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showInsuranceOptions, setShowInsuranceOptions] = useState(false);
   const [showPaymentSummary, setShowPaymentSummary] = useState(false);
-  // const [insuranceRate, setInsuranceRate] = useState(0.8);
-  // const [insuranceType, setInsuranceType] = useState('Basic');
+  const [insuranceType, setInsuranceType] = useState('Silver');
   const { carId } = useParams();
   const { loading, error, data } = useQuery(GET_CAR, {
     variables: { carId }
@@ -35,6 +35,20 @@ const Book = () => {
   const authContext = useContext(AuthContext);
   const { user } = authContext;
 
+  const insuranceTable = {
+    Silver: 0.6,
+    Premium: 0.8,
+    EU: 1.5
+  };
+  const [insuranceRate, setInsuranceRate] = useState(insuranceTable.Silver);
+
+  const setInsurance = (insuranceType) => {
+    console.log(insuranceTable[insuranceType]);
+    setInsuranceRate(insuranceTable[insuranceType]);
+    setInsuranceType(insuranceType);
+  };
+  console.log('insuranceType', insuranceType);
+
   if (loading) {
     return (
       <div className={styles.left__space}>
@@ -49,7 +63,7 @@ const Book = () => {
     return <p>Could not load car...</p>;
   }
   const { car } = data;
-  const insuranceRate = 0.8;
+  // const insuranceRate = 0.8;
 
   const handleSummaryButton = () => {};
 
@@ -83,9 +97,11 @@ const Book = () => {
               onClick={() => setShowEditUserForm(!showEditUserForm)}>
               <DropDownArrow iconHeight={'25'} iconWidth={'25'} />
             </div>
+
             <h2>{`Step 1: Your personal data: ${
               userDataCompleted ? 'COMPLETED' : 'INCOMPLETE'
             }`}</h2>
+
             {userDataCompleted && (
               <div className={styles.checkIconStyles}>
                 <CheckIcon iconHeight={'25'} iconWidth={'25'} />
@@ -161,15 +177,24 @@ const Book = () => {
               </div>
             </>
           )}
-          {showInsuranceOptions && (
+          {(showInsuranceOptions || (startDate && endDate)) && (
             <div className={styles.userData__steps}>
+              <div
+                className={styles.dropDownArrow}
+                onClick={() => setShowInsuranceOptions(!showInsuranceOptions)}>
+                <DropDownArrow iconHeight={'25'} iconWidth={'25'} />
+              </div>
               <h2>Step 3: Insurance options</h2>
+              <div className={styles.checkIconStyles}>
+                <CheckIcon iconHeight={'25'} iconWidth={'25'} />
+              </div>
             </div>
           )}
+          {showInsuranceOptions && <Insurance setInsurance={setInsurance} />}
           {showPaymentSummary && (
             <>
               <div className={styles.userData__steps}>
-                <h2>Step 4: Payment</h2>
+                <h2>Step 4: Summary and payment</h2>
               </div>
               <div className={styles.payment__summary}>
                 <div className={styles.payment__summary__left}>
