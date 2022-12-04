@@ -16,7 +16,7 @@
   border-radius: 0.3rem;
   border: 1px solid black;
   padding: 3rem;
-  background-color: #f3f6f9;
+  background-color: #e0ebf7;
   transition: height 2s;
   input {
     width: 15.5rem;
@@ -72,7 +72,7 @@
   border-radius: 0.3rem;
   border: 1px solid black;
   padding: 3rem;
-  background-color: #f3f6f9;
+  background-color: #e0ebf7;
 }
 
 .userData__steps {
@@ -90,15 +90,10 @@
   justify-content: center;
   margin: 0 auto;
   width: 68%;
-  // height: 5rem;
-  // border-radius: 0.3rem;
-  // border: 1px solid black;
   margin-bottom: 5rem;
-  // background-color: rgb(36, 249, 93);
 }
 
 .summary__button {
-  // display: flex;
   padding: 0.8rem 4rem;
   border-radius: 0.3rem;
   background-color: #0074ef;
@@ -122,8 +117,6 @@
 .payment__summary__left {
   display: flex;
   flex-direction: column;
-  // align-items: center;
-  // justify-content: center;
   margin-left: 1.5rem;
   margin-right: 1.5rem;
 }
@@ -131,7 +124,6 @@
   font-size: 1.3rem;
   font-weight: 500;
   color: #000000;
-  // align-items: center;
   justify-content: center;
   display: flex;
 }
@@ -139,8 +131,6 @@
 .payment__summary__left__car{
   display: flex;
   flex-direction: column;
-  // align-items: center;
-  // justify-content: center;
   margin-left: 1.5rem;
   margin-right: 1.5rem;
 }
@@ -153,7 +143,6 @@
   img {
     width: 24rem;
     height: 10rem;
-    // object-fit: cover;
     border-radius: 0.3rem;
   }
 }
@@ -170,10 +159,6 @@
 .payment__summary__right {
   display: flex;
   flex-direction: column;
-  // align-items: center;
-  // justify-content: center;
-  // margin-left: 1.5rem;
-  // margin-right: 1.5rem;
 }
 
 .payment__summary__right__title {
@@ -199,7 +184,6 @@
 .payment__summary__right__info__left {
   display: flex;
   flex-direction: column;
-  // align-items: center;
   justify-content: center;
   margin-left: 1.5rem;
   margin-right: 1.5rem;
@@ -208,7 +192,6 @@
 .payment__summary__right__info__right {
   display: flex;
   flex-direction: column;
-  // align-items: center;
   justify-content: center;
   margin-left: 1.5rem;
   margin-right: 1.5rem;
@@ -216,8 +199,6 @@
 
 .checkIconStyles {
   margin: 1.3rem 0.5rem;
-  // font-size: 1.5rem;
-  // margin-right: 0.5rem;
 }
 
 .dropDownArrow {
