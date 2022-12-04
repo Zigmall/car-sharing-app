@@ -2,8 +2,9 @@ import styles from './Insurance.module.scss';
 import PropTypes from 'prop-types';
 
 const EU = (props) => {
-  const { handleEU } = props;
+  const { handleEU, calculateInsurancePrice } = props;
   const { value } = props;
+  const price = calculateInsurancePrice(1.5);
 
   return (
     <div
@@ -20,7 +21,7 @@ const EU = (props) => {
         <h4>EU Disclaimer Package</h4>
       </div>
       <div className={styles.option__body}>
-        <br />
+        <h5 className={styles.subtitle}>Price €{price}</h5>
         <p>EU option guarantee, the own contribution is €0.</p>
         <br />
         <p>As part of the insurance, you get protection for windows and tires.</p>
@@ -35,7 +36,8 @@ const EU = (props) => {
 
 EU.propTypes = {
   handleEU: PropTypes.func.isRequired,
-  value: PropTypes.bool.isRequired
+  value: PropTypes.bool.isRequired,
+  calculateInsurancePrice: PropTypes.func.isRequired
 };
 
 export default EU;

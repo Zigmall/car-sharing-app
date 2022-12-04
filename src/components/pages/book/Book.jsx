@@ -36,7 +36,7 @@ const Book = () => {
   const { user } = authContext;
 
   const insuranceTable = {
-    Silver: 0.6,
+    Silver: 0.3,
     Premium: 0.8,
     EU: 1.5
   };
@@ -72,11 +72,11 @@ const Book = () => {
     setShowDatePicker(completed);
   };
 
-  const calculateInsurancePrice = () => {
+  const calculateInsurancePrice = (insuranceRate) => {
     return Math.round(Math.ceil((car.price * (endDate - startDate)) / 86400000) * insuranceRate, 2);
   };
 
-  const calculateTotalPrice = () => {
+  const calculateTotalPrice = (insuranceRate) => {
     return Math.round(
       Math.ceil((car.price * (endDate - startDate)) / 86400000) +
         calculateInsurancePrice(insuranceRate),
@@ -190,7 +190,12 @@ const Book = () => {
               </div>
             </div>
           )}
-          {showInsuranceOptions && <Insurance setInsurance={setInsurance} />}
+          {showInsuranceOptions && (
+            <Insurance
+              setInsurance={setInsurance}
+              calculateInsurancePrice={calculateInsurancePrice}
+            />
+          )}
           {showPaymentSummary && (
             <>
               <div className={styles.userData__steps}>
@@ -235,8 +240,8 @@ const Book = () => {
                       <p>{startDate && startDate.toLocaleString()}</p>
                       <p>{endDate && endDate.toLocaleString()}</p>
                       <p>€{car.price}</p>
-                      <p>€{calculateInsurancePrice()}</p>
-                      <p>€{calculateTotalPrice()}</p>
+                      <p>€{calculateInsurancePrice(insuranceRate)}</p>
+                      <p>€{calculateTotalPrice(insuranceRate)}</p>
                     </div>
                   </div>
                 </div>

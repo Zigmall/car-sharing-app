@@ -5,7 +5,7 @@ import Premium from './Premium';
 import EU from './EU';
 import PropTypes from 'prop-types';
 
-const Insurance = ({ setInsurance }) => {
+const Insurance = ({ setInsurance, calculateInsurancePrice }) => {
   const [silverIsSelected, setSilverIsSelected] = useState(true);
   const [premiumIsSelected, setPremiumIsSelected] = useState(false);
   const [euIsSelected, setEuIsSelected] = useState(false);
@@ -33,15 +33,28 @@ const Insurance = ({ setInsurance }) => {
 
   return (
     <div className={styles.insurance__wrapper}>
-      <Silver handleSilver={handleSilver} value={silverIsSelected} />
-      <Premium handlePremium={handlePremium} value={premiumIsSelected} />
-      <EU handleEU={handleEU} value={euIsSelected} />
+      <Silver
+        handleSilver={handleSilver}
+        value={silverIsSelected}
+        calculateInsurancePrice={calculateInsurancePrice}
+      />
+      <Premium
+        handlePremium={handlePremium}
+        value={premiumIsSelected}
+        calculateInsurancePrice={calculateInsurancePrice}
+      />
+      <EU
+        handleEU={handleEU}
+        value={euIsSelected}
+        calculateInsurancePrice={calculateInsurancePrice}
+      />
     </div>
   );
 };
 
 Insurance.propTypes = {
-  setInsurance: PropTypes.func.isRequired
+  setInsurance: PropTypes.func.isRequired,
+  calculateInsurancePrice: PropTypes.func.isRequired
 };
 
 export default Insurance;

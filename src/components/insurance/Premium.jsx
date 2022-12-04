@@ -2,8 +2,9 @@ import styles from './Insurance.module.scss';
 import PropTypes from 'prop-types';
 
 const Premium = (props) => {
-  const { handlePremium } = props;
+  const { handlePremium, calculateInsurancePrice } = props;
   const { value } = props;
+  const price = calculateInsurancePrice(0.8);
 
   return (
     <div
@@ -20,7 +21,7 @@ const Premium = (props) => {
         <h4>Premium Disclaimer Package</h4>
       </div>
       <div className={styles.option__body}>
-        <br />
+        <h5 className={styles.subtitle}>Price €{price}</h5>
         <p>PREMIUM option guarantee, the own contribution is €0.</p>
         <br />
         <p>As part of the insurance, you get protection for windows and tires.</p>
@@ -35,7 +36,8 @@ const Premium = (props) => {
 
 Premium.propTypes = {
   handlePremium: PropTypes.func.isRequired,
-  value: PropTypes.bool.isRequired
+  value: PropTypes.bool.isRequired,
+  calculateInsurancePrice: PropTypes.func.isRequired
 };
 
 export default Premium;

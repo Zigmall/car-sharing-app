@@ -2,8 +2,9 @@ import styles from './Insurance.module.scss';
 import PropTypes from 'prop-types';
 
 const Silver = (props) => {
-  const { handleSilver } = props;
+  const { handleSilver, calculateInsurancePrice } = props;
   const { value } = props;
+  const price = calculateInsurancePrice(0.3);
 
   return (
     <div
@@ -20,7 +21,7 @@ const Silver = (props) => {
         <h4>Silver Disclaimer Package</h4>
       </div>
       <div className={styles.option__body}>
-        <h5 className={styles.subtitle}>Included in price</h5>
+        <h5 className={styles.subtitle}>Price €{price}</h5>
         <p>Basic insurance</p>
         <br />
         <p>When choosing the SILVER option, the own contribution is €500.</p>
@@ -31,7 +32,8 @@ const Silver = (props) => {
 
 Silver.propTypes = {
   handleSilver: PropTypes.func.isRequired,
-  value: PropTypes.bool.isRequired
+  value: PropTypes.bool.isRequired,
+  calculateInsurancePrice: PropTypes.func.isRequired
 };
 
 export default Silver;
