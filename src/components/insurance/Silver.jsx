@@ -2,28 +2,19 @@ import styles from './Insurance.module.scss';
 import PropTypes from 'prop-types';
 
 const Silver = (props) => {
-  const { handleSilverOption } = props;
+  const { handleSilver } = props;
   const { value } = props;
-
-  const handleSilverClick = () => {
-    const selected = value ? true : true;
-    handleSilverOption(selected);
-  };
 
   return (
     <div
-      className={styles.option__wrapper}
-      onClick={() => {
-        handleSilverClick();
-      }}>
+      className={[styles.option__wrapper, value ? styles.option__blue : null].join(' ')}
+      onClick={() => handleSilver()}>
       <div className={styles.option__header}>
         <input
           type="checkbox"
           className={styles.option__header__button}
           checked={value}
-          onChange={() => {
-            handleSilverClick();
-          }}
+          onChange={() => handleSilver()}
         />
 
         <h4>Silver Disclaimer Package</h4>
@@ -39,7 +30,7 @@ const Silver = (props) => {
 };
 
 Silver.propTypes = {
-  handleSilverOption: PropTypes.func.isRequired,
+  handleSilver: PropTypes.func.isRequired,
   value: PropTypes.bool.isRequired
 };
 

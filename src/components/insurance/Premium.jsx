@@ -2,44 +2,39 @@ import styles from './Insurance.module.scss';
 import PropTypes from 'prop-types';
 
 const Premium = (props) => {
-  const { handlePremiumOption } = props;
+  const { handlePremium } = props;
   const { value } = props;
-
-  const handlePremiumClick = () => {
-    const selected = value ? true : true;
-    handlePremiumOption(selected);
-  };
 
   return (
     <div
-      className={styles.option__wrapper}
-      onClick={() => {
-        handlePremiumClick();
-      }}>
+      className={[styles.option__wrapper, value ? styles.option__blue : null].join(' ')}
+      onClick={() => handlePremium()}>
       <div className={styles.option__header}>
         <input
           type="checkbox"
           className={styles.option__header__button}
           checked={value}
-          onChange={() => {
-            handlePremiumClick();
-          }}
+          onChange={() => handlePremium()}
         />
 
         <h4>Premium Disclaimer Package</h4>
       </div>
       <div className={styles.option__body}>
         <br />
-        <p>Basic insurance</p>
+        <p>PREMIUM option guarantee, the own contribution is €0.</p>
         <br />
-        <p>When choosing the SILVER option, the own contribution is €500.</p>
+        <p>As part of the insurance, you get protection for windows and tires.</p>
+        <br />
+        <p>Safety package - courtesy car and towing included in the price.</p>
+        <br />
+        <p>The insurance covers rental only in Poland</p>
       </div>
     </div>
   );
 };
 
 Premium.propTypes = {
-  handlePremiumOption: PropTypes.func.isRequired,
+  handlePremium: PropTypes.func.isRequired,
   value: PropTypes.bool.isRequired
 };
 
