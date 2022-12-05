@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const EU = (props) => {
   const { handleEU, calculateInsurancePrice } = props;
   const { value } = props;
-  const price = calculateInsurancePrice(1.5);
+  const price = calculateInsurancePrice(1.1);
 
   return (
     <div

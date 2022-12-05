@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const Premium = (props) => {
   const { handlePremium, calculateInsurancePrice } = props;
   const { value } = props;
-  const price = calculateInsurancePrice(0.8);
+  const price = calculateInsurancePrice(0.6);
 
   return (
     <div
