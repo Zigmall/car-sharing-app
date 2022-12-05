@@ -34,20 +34,18 @@ const Book = () => {
   // const { changeTab } = carContext;
   const authContext = useContext(AuthContext);
   const { user } = authContext;
-
+  const deposit = 200;
   const insuranceTable = {
     Silver: 0.3,
-    Premium: 0.8,
-    EU: 1.5
+    Premium: 0.6,
+    EU: 1.1
   };
   const [insuranceRate, setInsuranceRate] = useState(insuranceTable.Silver);
-
+  console.log(insuranceType);
   const setInsurance = (insuranceType) => {
-    console.log(insuranceTable[insuranceType]);
     setInsuranceRate(insuranceTable[insuranceType]);
     setInsuranceType(insuranceType);
   };
-  console.log('insuranceType', insuranceType);
 
   if (loading) {
     return (
@@ -63,8 +61,7 @@ const Book = () => {
     return <p>Could not load car...</p>;
   }
   const { car } = data;
-  // const insuranceRate = 0.8;
-
+  // const { brand, model, price, year, fuel, transmission, image } = car;
   const handleSummaryButton = () => {};
 
   const checkIfUserHasAllData = (completed) => {
@@ -72,15 +69,19 @@ const Book = () => {
     setShowDatePicker(completed);
   };
 
+  // const calculateInsurancePrice = (insuranceRate) => {
+  //   return Math.round(Math.ceil((car.price * (endDate - startDate)) / 86400000) * insuranceRate, 2);
+  // };
+
   const calculateInsurancePrice = (insuranceRate) => {
-    return Math.round(Math.ceil((car.price * (endDate - startDate)) / 86400000) * insuranceRate, 2);
+    return Math.round(Math.ceil((endDate - startDate) / 86400000) * car.price * insuranceRate, 2);
   };
 
   const calculateTotalPrice = (insuranceRate) => {
-    return Math.round(
-      Math.ceil((car.price * (endDate - startDate)) / 86400000) +
-        calculateInsurancePrice(insuranceRate),
-      2
+    return (
+      Math.ceil((endDate - startDate) / 86400000) * car.price +
+      calculateInsurancePrice(insuranceRate) +
+      deposit
     );
   };
 
@@ -118,7 +119,7 @@ const Book = () => {
             </div>
           )}
 
-          {(showDatePicker || (startDate && endDate)) && (
+          {(showDatePicker || userDataCompleted) && (
             <div className={styles.userData__steps}>
               <div
                 className={styles.dropDownArrow}
@@ -204,7 +205,7 @@ const Book = () => {
               <div className={styles.payment__summary}>
                 <div className={styles.payment__summary__left}>
                   <div className={styles.payment__summary__left__title}>
-                    <h3>Car</h3>
+                    <h3>{`${car.brand.name} ${car.model}`}</h3>
                   </div>
                   <div className={styles.payment__summary__left__car}>
                     <div className={styles.payment__summary__left__car__image}>
@@ -212,14 +213,12 @@ const Book = () => {
                         src={
                           car.picturePath.url
                             ? car.picturePath.url
-                            : 'https://via.placeholder.com/150'
+                            : 'https://via.placeholder.com/400X200'
                         }
                         alt="car"
                       />
                     </div>
                     <div className={styles.payment__summary__left__car__info}>
-                      <p>{car.brand.name}</p>
-                      <h3>{car.model}</h3>
                       <p>{car.description}</p>
                     </div>
                   </div>
@@ -234,6 +233,7 @@ const Book = () => {
                       <p>End Date</p>
                       <p>Price per day</p>
                       <p>Insurance</p>
+                      <p>Deposit</p>
                       <p>Total price</p>
                     </div>
                     <div className={styles.payment__summary__right__info__right}>
@@ -241,6 +241,7 @@ const Book = () => {
                       <p>{endDate && endDate.toLocaleString()}</p>
                       <p>€{car.price}</p>
                       <p>€{calculateInsurancePrice(insuranceRate)}</p>
+                      <p>€{deposit}</p>
                       <p>€{calculateTotalPrice(insuranceRate)}</p>
                     </div>
                   </div>
@@ -249,11 +250,13 @@ const Book = () => {
             </>
           )}
 
-          <div className={styles.summary__wrapper}>
-            <button onClick={() => handleSummaryButton()} className={styles.summary__button}>
-              BOOK
-            </button>
-          </div>
+          {userDataCompleted && startDate && endDate && (
+            <div className={styles.summary__wrapper}>
+              <button onClick={() => handleSummaryButton()} className={styles.summary__button}>
+                PAY AND BOOK
+              </button>
+            </div>
+          )}
         </div>
       )}
     </>
