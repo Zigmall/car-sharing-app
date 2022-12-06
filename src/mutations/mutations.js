@@ -179,27 +179,6 @@ const BORROW_CAR = gql`
   }
 `;
 
-const BOOK_CAR = gql`
-  mutation BookCar($input: BookCarInput!) {
-    bookCar(input: $input) {
-      bookedCar {
-        booker {
-          firstName
-          lastName
-        }
-        id
-        startDate
-        endDate
-        car {
-          model
-        }
-      }
-      success
-      message
-    }
-  }
-`;
-
 const CREATE_CAR = gql`
   mutation CreateCar($input: CreateCarInput!) {
     createCar(input: $input) {
@@ -233,6 +212,32 @@ const CREATE_CAR = gql`
           engine
           airConditioning
           manualGearBox
+        }
+      }
+    }
+  }
+`;
+
+const BOOK_CAR = gql`
+  mutation BookCar($input: BookCarInput!) {
+    bookCar(input: $input) {
+      success
+      message
+      bookedCar {
+        id
+        startDate
+        endDate
+        insuranceType
+        booker {
+          id
+          firstName
+        }
+        car {
+          id
+          model
+          brand {
+            name
+          }
         }
       }
     }
