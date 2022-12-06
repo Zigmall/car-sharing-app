@@ -4,12 +4,17 @@ import styles from './Book.module.scss';
 import 'react-datepicker/dist/react-datepicker.css';
 import EditUserForm from '../../editUserForm/EditUserForm';
 import AuthContext from '../../../context/auth/authContext';
+import CarContext from '../../../context/car/carContext';
+import AlertContext from '../../../context/alert/alertContext';
 import { useParams } from 'react-router';
 import { useQuery } from '@apollo/client';
 import { GET_CAR } from '../../../queries/queries';
 import { CheckIcon, DropDownArrow } from '../../assets/SvgList';
 import { useEffect } from 'react';
+import { useMutation } from '@apollo/client';
+import { BOOK_CAR } from '../../../mutations/mutations';
 import Insurance from '../../insurance/Insurance';
+import { useNavigate } from 'react-router-dom';
 
 const Book = () => {
   const [startDate, setStartDate] = useState(null);
@@ -25,13 +30,26 @@ const Book = () => {
     variables: { carId }
   });
 
+  const [bookCar] = useMutation(BOOK_CAR, {
+    onCompleted: ({ bookCar: { success, message } }) => {
+      setAlert(message, success ? 'success' : 'danger');
+      success && navigate('/');
+      success && changeTab(1);
+    },
+    onError: (error) => {
+      console.log('error:', error.message);
+    }
+  });
+
   useEffect(() => {
     userDataCompleted && setShowEditUserForm(!userDataCompleted);
   }, [userDataCompleted]);
 
-  // const navigate = useNavigate();
-  // const carContext = useContext(CarContext);
-  // const { changeTab } = carContext;
+  const alertContext = useContext(AlertContext);
+  const { setAlert } = alertContext;
+  const navigate = useNavigate();
+  const carContext = useContext(CarContext);
+  const { changeTab } = carContext;
   const authContext = useContext(AuthContext);
   const { user } = authContext;
   const deposit = 200;
@@ -41,7 +59,6 @@ const Book = () => {
     EU: 1.1
   };
   const [insuranceRate, setInsuranceRate] = useState(insuranceTable.Silver);
-  console.log(insuranceType);
   const setInsurance = (insuranceType) => {
     setInsuranceRate(insuranceTable[insuranceType]);
     setInsuranceType(insuranceType);
@@ -62,16 +79,22 @@ const Book = () => {
   }
   const { car } = data;
   // const { brand, model, price, year, fuel, transmission, image } = car;
-  const handleSummaryButton = () => {};
+
+  const handlePayAndBookButton = () => {
+    const input = {
+      carId,
+      bookerId: user.id,
+      startDate,
+      endDate,
+      insuranceType
+    };
+    bookCar({ variables: { input } });
+  };
 
   const checkIfUserHasAllData = (completed) => {
     setUserDataCompleted(completed);
     setShowDatePicker(completed);
   };
-
-  // const calculateInsurancePrice = (insuranceRate) => {
-  //   return Math.round(Math.ceil((car.price * (endDate - startDate)) / 86400000) * insuranceRate, 2);
-  // };
 
   const calculateInsurancePrice = (insuranceRate) => {
     return Math.round(Math.ceil((endDate - startDate) / 86400000) * car.price * insuranceRate, 2);
@@ -252,7 +275,7 @@ const Book = () => {
 
           {userDataCompleted && startDate && endDate && (
             <div className={styles.summary__wrapper}>
-              <button onClick={() => handleSummaryButton()} className={styles.summary__button}>
+              <button onClick={() => handlePayAndBookButton()} className={styles.summary__button}>
                 PAY AND BOOK
               </button>
             </div>
