@@ -5,6 +5,7 @@ import { useMutation } from '@apollo/client';
 import { UPDATE_USER, UPDATE_MY_PERSONAL_DATA } from '../../mutations/mutations';
 import { GET_ALL_USERS, GET_CURRENT_USER } from '../../queries/queries';
 import AlertContext from '../../context/alert/alertContext';
+import AuthContext from '../../context/auth/authContext';
 import { useEffect } from 'react';
 
 const EditUserForm = (props) => {
@@ -12,19 +13,21 @@ const EditUserForm = (props) => {
   const { checkIfUserHasAllData } = props;
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
-  const [firstName, setFirstName] = useState(user.firstName);
-  const [lastName, setLastName] = useState(user.lastName);
-  const [email, setEmail] = useState(user.email);
-  const [mobile, setMobile] = useState(user.mobile);
-  const [isAdmin, setIsAdmin] = useState(user.isAdmin);
-  const [country, setCountry] = useState(user.address.country);
-  const [city, setCity] = useState(user.address.city);
-  const [street, setStreet] = useState(user.address.street);
-  const [houseNumber, setHouseNumber] = useState(user.address.houseNumber);
-  const [flatNumber, setFlatNumber] = useState(user.address.flatNumber);
-  const [postCode, setPostCode] = useState(user.address.postCode);
+  const authContext = useContext(AuthContext);
+  const { user: currentUser } = authContext;
+  const [firstName, setFirstName] = useState(user.firstName || '');
+  const [lastName, setLastName] = useState(user.lastName || '');
+  const [email, setEmail] = useState(user.email || '');
+  const [mobile, setMobile] = useState(user.mobile || '');
+  const [isAdmin, setIsAdmin] = useState(user.isAdmin ? true : false);
+  const [country, setCountry] = useState(user.address.country || '');
+  const [city, setCity] = useState(user.address.city || '');
+  const [street, setStreet] = useState(user.address.street || '');
+  const [houseNumber, setHouseNumber] = useState(user.address.houseNumber || '');
+  const [flatNumber, setFlatNumber] = useState(user.address.flatNumber || '');
+  const [postCode, setPostCode] = useState(user.address.postCode || '');
 
-  const [updateUser] = user.isAdmin
+  const [updateUser] = currentUser.isAdmin
     ? useMutation(UPDATE_USER, {
         variables: {
           input: {
@@ -166,7 +169,7 @@ const EditUserForm = (props) => {
                 </div>
               </div>
 
-              {user && user.isAdmin && (
+              {user && currentUser.isAdmin && (
                 <div className={styles.admin__wrapper}>
                   <input
                     type="checkbox"
