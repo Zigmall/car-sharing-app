@@ -14,8 +14,23 @@ const UPDATE_USER = gql`
   mutation ($input: UpdateUserInput!) {
     updateUser(input: $input) {
       user {
+        id
         firstName
         lastName
+        isAdmin
+        email
+        mobile
+        address {
+          city
+          country
+          street
+          houseNumber
+          flatNumber
+          postCode
+        }
+        avatar {
+          color
+        }
       }
       message
       success
@@ -27,8 +42,23 @@ const UPDATE_MY_PERSONAL_DATA = gql`
   mutation ($input: UpdateMyPersonalDataInput!) {
     updateMyPersonalData(input: $input) {
       user {
+        id
         firstName
         lastName
+        isAdmin
+        email
+        mobile
+        address {
+          city
+          country
+          street
+          houseNumber
+          flatNumber
+          postCode
+        }
+        avatar {
+          color
+        }
       }
       message
       success
@@ -46,8 +76,17 @@ const LOG_IN = gql`
         id
         firstName
         lastName
-        email
         isAdmin
+        email
+        mobile
+        address {
+          city
+          country
+          street
+          houseNumber
+          flatNumber
+          postCode
+        }
         avatar {
           color
         }
@@ -179,6 +218,32 @@ const CREATE_CAR = gql`
   }
 `;
 
+const BOOK_CAR = gql`
+  mutation BookCar($input: BookCarInput!) {
+    bookCar(input: $input) {
+      success
+      message
+      bookedCar {
+        id
+        startDate
+        endDate
+        insuranceType
+        booker {
+          id
+          firstName
+        }
+        car {
+          id
+          model
+          brand {
+            name
+          }
+        }
+      }
+    }
+  }
+`;
+
 const SIGN_UP = gql`
   mutation SignUp($input: SignUp!) {
     signUp(input: $input) {
@@ -269,5 +334,6 @@ export {
   CREATE_CAR,
   SIGN_UP,
   CREATE_COMMENT,
-  UPLOAD_IMAGE
+  UPLOAD_IMAGE,
+  BOOK_CAR
 };

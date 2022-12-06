@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useParams } from 'react-router';
 import styles from './CarDetails.module.scss';
 import MainPicture from '../car/MainPicture';
 import { GearBox, Luggage, OpenDoorCar, AirConditioner } from '../assets/SvgList';
 import Rating from '../rating/Rating';
 import { useQuery } from '@apollo/client';
-import ActionButtons from '../actionButton/ActionButtons';
+import { useNavigate } from 'react-router-dom';
 import Comment from '../comment/Comment';
 import { GET_CAR } from '../../queries/queries';
 import NewComment from '../comment/NewComment';
+import AlertContext from '../../context/alert/alertContext';
+import AuthContext from '../../context/auth/authContext';
 
 const CarDetails = () => {
   const { carId } = useParams();
@@ -16,6 +18,20 @@ const CarDetails = () => {
   const { loading, error, data } = useQuery(GET_CAR, {
     variables: { carId }
   });
+  const alertContext = useContext(AlertContext);
+  const { setAlert } = alertContext;
+  const navigate = useNavigate();
+  const authContext = useContext(AuthContext);
+  const { user } = authContext;
+
+  const handleBorrow = () => {
+    if (!user) {
+      setAlert('You need to be logged in to borrow a car', 'danger');
+      navigate('/login');
+    } else {
+      navigate(`/book-car/${car.id}`);
+    }
+  };
 
   if (loading) {
     return (
@@ -75,7 +91,9 @@ const CarDetails = () => {
         <div className={styles.rightColumn}>
           <h3>Price €{car.price}</h3>
           <p>Location: {car.location}</p>
-          <ActionButtons car={car} returnCar={false} />
+          <button onClick={() => handleBorrow()} className={styles.button}>
+            Book
+          </button>
         </div>
       </div>
       <div className={styles.review}>
