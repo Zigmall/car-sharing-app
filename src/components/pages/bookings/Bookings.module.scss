@@ -5,11 +5,9 @@
 .bookings__table {
   display: flex;
   flex-direction: column;
-  margin: 2rem 2rem 2rem 0;
-  width: 90%;
-  tbody {
-    text-align: center;
-  }
+  margin: 2rem auto;
+  width: 100%;
+
 }
 
 .error__message {
