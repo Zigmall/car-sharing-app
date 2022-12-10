@@ -19,6 +19,23 @@
   text-align: center;
 }
 
+.button__wrapper {
+    padding: 0.4rem 1rem;
+    border-radius: 0.3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.5rem auto;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid black;
+  }
+  
+  .button__wrapper:hover {
+    cursor: pointer;
+    border: 1px solid;
+    color: black;
+  }
+
 .button__rent {
   color: #0074ef;
 }
