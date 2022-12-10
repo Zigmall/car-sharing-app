@@ -25,9 +25,9 @@ import {
 import AuthState from './context/auth/AuthState';
 import { loadUser } from './context/auth/AuthState';
 import AddCar from './components/pages/addCar/AddCar';
-import OrderCar from './components/pages/order/OrderCar';
 import Book from './components/pages/book/Book';
 import Bookings from './components/pages/bookings/Bookings';
+import Rent from './components/pages/rent/Rent';
 
 const uploadLink = createUploadLink({
   uri: 'http://localhost:5000/'
@@ -77,12 +77,12 @@ const App = () => {
                 <Route path="/cars/:carId" element={<CarDetails />} />
                 <Route path="/return-car" element={<ReturnCars />} />
                 <Route path="/return-car/:userId" element={<ReturnCars />} />
+                <Route path="/bookings" element={<Bookings />} />
+                <Route path="/bookings/:userId" element={<Rent />} />
                 <Route path="/rentals" element={<Rentals />} />
                 <Route path="/users/:userId" element={<User />} />
                 <Route path="/users" element={<Users />} />
-                <Route path="/order-car" element={<OrderCar />} />
-                <Route path="book-car/:carId" element={<Book />} />
-                <Route path="bookings" element={<Bookings />} />
+                <Route path="/book-car/:carId" element={<Book />} />
               </Routes>
             </div>
           </AlertState>
