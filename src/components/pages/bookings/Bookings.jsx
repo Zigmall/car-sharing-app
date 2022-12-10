@@ -34,27 +34,31 @@ const Bookings = () => {
   }
 
   return (
-    <div className={styles.bookings__wrapper}>
-      <div className={styles.bookings__table}>
-        <table>
-          <thead>
-            <tr>
-              <th>Client Name</th>
-              <th>Start Date</th>
-              <th>End Date</th>
-              <th>Car</th>
-              <th>Rent</th>
-              <th>Cancel</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.bookedCars.map((booking) => (
-              <UserLine key={booking.id} booking={booking} />
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <>
+      {data && (
+        <div className={styles.bookings__wrapper}>
+          <div className={styles.bookings__table}>
+            <table>
+              <thead>
+                <tr>
+                  <th>Client Name</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Car</th>
+                  <th>Rent</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.bookedCars.map((booking) => (
+                  <UserLine key={booking.id} booking={booking} />
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
