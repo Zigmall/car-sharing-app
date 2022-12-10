@@ -1,5 +1,5 @@
 import React from 'react';
-import style from './Bookings.module.scss';
+import styles from './Bookings.module.scss';
 import PropTypes from 'prop-types';
 // import { GET_ALL_USERS } from '../../queries/queries';
 // import { DELETE_USER } from '../../mutations/mutations';
@@ -15,25 +15,40 @@ const UserLine = ({ booking: { id, booker, startDate, endDate, car } }) => {
   const cancelBooking = () => {
     console.log('cancel booking');
   };
+  const start = new Date(startDate).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric'
+  });
+
+  const end = new Date(endDate).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric'
+  });
 
   return (
     <>
       <tr>
         <td>{`${booker.firstName} ${booker.lastName}`}</td>
-        <td>{startDate}</td>
-        <td>{endDate}</td>
+        <td>{start}</td>
+        <td>{end}</td>
         <td>{`${car.brand.name} ${car.model}`}</td>
         <td>
           <button
             onClick={() => handleRent()}
-            className={[style.button__wrapper, style.button__rent].join(' ')}>
+            className={[styles.button__wrapper, styles.button__rent].join(' ')}>
             Proceed Rent
           </button>
         </td>
         <td>
           <button
             onClick={() => cancelBooking()}
-            className={[style.button__wrapper, style.button__cancelBooking].join(' ')}>
+            className={[styles.button__wrapper, styles.button__cancelBooking].join(' ')}>
             Cancel Booking
           </button>
         </td>
@@ -43,11 +58,7 @@ const UserLine = ({ booking: { id, booker, startDate, endDate, car } }) => {
 };
 
 UserLine.propTypes = {
-  booking: PropTypes.object.isRequired,
-  booker: PropTypes.object.isRequired,
-  startDate: PropTypes.string.isRequired,
-  endDate: PropTypes.string.isRequired,
-  car: PropTypes.object.isRequired
+  booking: PropTypes.object.isRequired
 };
 
 export default UserLine;
