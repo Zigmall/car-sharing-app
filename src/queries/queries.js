@@ -297,6 +297,26 @@ const GET_CAR = gql`
   }
 `;
 
+const GET_ALL_BOOKERS = gql`
+  query Bookers {
+    bookedCars {
+      id
+      booker {
+        firstName
+        lastName
+      }
+      startDate
+      endDate
+      car {
+        brand {
+          name
+        }
+        model
+      }
+    }
+  }
+`;
+
 export {
   GET_ALL_BORROWED_CARS,
   GET_ALL_USERS,
@@ -305,5 +325,6 @@ export {
   GET_CURRENT_USER,
   GET_BRANDS,
   GET_CAR,
-  GET_CAR_CLASSES
+  GET_CAR_CLASSES,
+  GET_ALL_BOOKERS
 };
