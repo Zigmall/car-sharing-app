@@ -297,7 +297,7 @@ const GET_CAR = gql`
   }
 `;
 
-const GET_ALL_BOOKERS = gql`
+const GET_ALL_BOOKINGS = gql`
   query Bookers {
     bookedCars {
       id
@@ -317,6 +317,54 @@ const GET_ALL_BOOKERS = gql`
   }
 `;
 
+const GET_BOOKING_BY_ID = gql`
+  query BookingById($bookedCarId: ID!) {
+    bookedCar(id: $bookedCarId) {
+      id
+      startDate
+      endDate
+      insuranceType
+      booker {
+        id
+        firstName
+        lastName
+        email
+        mobile
+        address {
+          country
+          city
+          street
+          houseNumber
+          flatNumber
+          postCode
+        }
+      }
+      car {
+        id
+
+        brand {
+          id
+          name
+        }
+        model
+        carClass {
+          id
+          name
+        }
+        picturePath {
+          url
+        }
+        pictures {
+          url
+        }
+        price
+        year
+        location
+      }
+    }
+  }
+`;
+
 export {
   GET_ALL_BORROWED_CARS,
   GET_ALL_USERS,
@@ -326,5 +374,6 @@ export {
   GET_BRANDS,
   GET_CAR,
   GET_CAR_CLASSES,
-  GET_ALL_BOOKERS
+  GET_ALL_BOOKINGS,
+  GET_BOOKING_BY_ID
 };

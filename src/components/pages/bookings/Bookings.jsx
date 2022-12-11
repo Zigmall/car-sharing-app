@@ -1,12 +1,12 @@
 import { useContext } from 'react';
 import { useQuery } from '@apollo/client';
-import { GET_ALL_BOOKERS } from '../../../queries/queries';
+import { GET_ALL_BOOKINGS } from '../../../queries/queries';
 import AuthContext from '../../../context/auth/authContext';
 import UserLine from './UserLine';
 import styles from './Bookings.module.scss';
 
 const Bookings = () => {
-  const { loading, error, data } = useQuery(GET_ALL_BOOKERS);
+  const { loading, error, data } = useQuery(GET_ALL_BOOKINGS);
   const authContext = useContext(AuthContext);
   const { user } = authContext;
 
@@ -32,7 +32,6 @@ const Bookings = () => {
     }
     return <p>Something went wrong error</p>;
   }
-
   return (
     <>
       {data && (
