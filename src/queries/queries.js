@@ -330,6 +330,7 @@ const GET_BOOKING_BY_ID = gql`
         lastName
         email
         mobile
+        isAdmin
         address {
           country
           city
