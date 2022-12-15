@@ -86,7 +86,8 @@ const Book = () => {
       bookerId: user.id,
       startDate,
       endDate,
-      insuranceType
+      insuranceType,
+      amountPaid: calculateTotalPrice(insuranceRate)
     };
     bookCar({ variables: { input } });
   };

@@ -324,6 +324,7 @@ const GET_BOOKING_BY_ID = gql`
       startDate
       endDate
       insuranceType
+      amountPaid
       booker {
         id
         firstName
@@ -342,7 +343,6 @@ const GET_BOOKING_BY_ID = gql`
       }
       car {
         id
-
         brand {
           id
           name
