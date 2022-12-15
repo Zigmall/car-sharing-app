@@ -255,14 +255,18 @@ const Book = () => {
                       <p>End Date</p>
                       <p>Price per day</p>
                       <p>Insurance</p>
-                      <p>Total price</p>
+                      <p>
+                        <strong>Total price</strong>
+                      </p>
                     </div>
                     <div className={styles.payment__summary__right__info__right}>
                       <p>{startDate && startDate.toLocaleString()}</p>
                       <p>{endDate && endDate.toLocaleString()}</p>
                       <p>€{car.price}</p>
                       <p>€{calculateInsurancePrice(insuranceRate)}</p>
-                      <p>€{calculateTotalPrice(insuranceRate)}</p>
+                      <p>
+                        <strong>€{calculateTotalPrice(insuranceRate)}</strong>
+                      </p>
                     </div>
                   </div>
                 </div>
