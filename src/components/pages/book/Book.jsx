@@ -52,7 +52,6 @@ const Book = () => {
   const { changeTab } = carContext;
   const authContext = useContext(AuthContext);
   const { user } = authContext;
-  const deposit = 200;
   const insuranceTable = {
     Silver: 0.3,
     Premium: 0.6,
@@ -104,8 +103,7 @@ const Book = () => {
   const calculateTotalPrice = (insuranceRate) => {
     return (
       Math.ceil((endDate - startDate) / 86400000) * car.price +
-      calculateInsurancePrice(insuranceRate) +
-      deposit
+      calculateInsurancePrice(insuranceRate)
     );
   };
 
@@ -257,7 +255,6 @@ const Book = () => {
                       <p>End Date</p>
                       <p>Price per day</p>
                       <p>Insurance</p>
-                      <p>Deposit</p>
                       <p>Total price</p>
                     </div>
                     <div className={styles.payment__summary__right__info__right}>
@@ -265,7 +262,6 @@ const Book = () => {
                       <p>{endDate && endDate.toLocaleString()}</p>
                       <p>€{car.price}</p>
                       <p>€{calculateInsurancePrice(insuranceRate)}</p>
-                      <p>€{deposit}</p>
                       <p>€{calculateTotalPrice(insuranceRate)}</p>
                     </div>
                   </div>
