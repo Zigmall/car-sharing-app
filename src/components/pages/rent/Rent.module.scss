@@ -3,7 +3,6 @@
   display: flex;
   flex-direction: column;
   margin-top: 1.5rem;
-  // background-color: #e0e7f7;
   justify-content: center;
   align-items: center;
 }
@@ -20,7 +19,7 @@
 
 .userData__wrapper {
   display: flex;
-  margin: 0.5rem 2rem;
+  // margin: 0.5rem 2rem;
   width: 100%;
   border-radius: 0.3rem;
   border: 1px solid black;
@@ -31,7 +30,7 @@
 .carData__wrapper {
   display: flex;
   flex-direction: column;
-  margin: 3rem;
+  margin: 2rem;
   width: 100%;
 }
 
@@ -49,7 +48,7 @@
 .payment__summary {
   display: flex;
   flex-direction: column;
-  margin: 3rem auto;
+  margin-top: 2rem;
   width: 100%;
   border-radius: 0.3rem;
   border: 1px solid black;
@@ -113,3 +112,70 @@
   
 }
 
+.datePicker__container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3rem;
+  // width: 60%;
+  border-radius: 0.3rem;
+  border: 1px solid black;
+  padding: 1rem;
+  background-color: #e0ebf7;
+  transition: height 2s;
+  input {
+    width: 10rem;
+    height: 2rem;
+    border: 1px solid black;
+    border-radius: 0.5rem;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #000000;
+    margin-bottom: 0.5rem;
+  }
+  label {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #000000;
+    padding: 0.5rem;
+  }
+}
+
+.datePicker__container__left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+.datePicker__container__right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+.button__update {
+  display: flex;
+  width: 90%;
+  margin-top: 3rem;
+  padding: 0.5rem 2rem;
+  border-radius: 0.3rem;
+  background-color: #0074ef;
+  color: white;
+  cursor: pointer;
+}
+
+.form__button {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  color: white;
+ 
+}
