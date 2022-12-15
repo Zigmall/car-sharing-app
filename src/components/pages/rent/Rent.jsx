@@ -2,6 +2,8 @@ import { useContext, useState } from 'react';
 import styles from './Rent.module.scss';
 import { useParams } from 'react-router';
 import { useQuery } from '@apollo/client';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import { GET_BOOKING_BY_ID } from '../../../queries/queries';
 import AuthContext from '../../../context/auth/authContext';
 import EditUserForm from '../../editUserForm/EditUserForm';
@@ -25,7 +27,6 @@ const Rent = () => {
   });
 
   useEffect(() => {
-    console.log('data', data);
     if (data) {
       const {
         bookedCar: { startDate: sd, endDate: ed }
@@ -61,8 +62,6 @@ const Rent = () => {
     bookedCar: { id, insuranceType, booker, car }
   } = data;
 
-  console.log('id', id);
-
   const checkIfUserHasAllData = () => {};
 
   const insuranceRate = insuranceTable[insuranceType];
@@ -79,8 +78,7 @@ const Rent = () => {
     );
   };
 
-  startDate !== '' && console.log('startDate:', startDate);
-
+  console.log('id', id);
   return (
     <>
       {data && car && (
@@ -106,6 +104,42 @@ const Rent = () => {
                 />
               </div>
 
+              <>
+                <div className={styles.datePicker__container}>
+                  <div className={styles.datePicker__container__left}>
+                    <label>Start Date</label>
+
+                    <DatePicker
+                      showTimeSelect
+                      selected={startDate}
+                      onChange={(date) => {
+                        setStartDate(date);
+                      }}
+                      selectsStart
+                      startDate={startDate}
+                      endDate={endDate}
+                      minDate={new Date()}
+                      dateFormat="d/M/yyyy - HH:mm"
+                    />
+                  </div>
+                  <div className={styles.datePicker__container__right}>
+                    <label>End Date</label>
+                    <DatePicker
+                      showTimeSelect
+                      selected={endDate}
+                      onChange={(date) => {
+                        setEndDate(date);
+                      }}
+                      selectsEnd
+                      startDate={startDate}
+                      endDate={endDate}
+                      minDate={startDate}
+                      dateFormat="d/M/yyyy - HH:mm"
+                    />
+                  </div>
+                </div>
+              </>
+
               <div className={styles.payment__summary}>
                 <div className={styles.payment__summary__title}>
                   <h3>Summary</h3>
@@ -128,6 +162,9 @@ const Rent = () => {
                     <p>€{calculateTotalPrice(insuranceRate)}</p>
                   </div>
                 </div>
+              </div>
+              <div className={styles.form__button}>
+                <button className={styles.button__update}>Rent Car</button>
               </div>
             </div>
           </div>
