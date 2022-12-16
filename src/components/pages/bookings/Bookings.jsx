@@ -45,6 +45,7 @@ const Bookings = () => {
                   <th>End Date</th>
                   <th>Car</th>
                   <th>Rent</th>
+                  <th>Update</th>
                   <th>Action</th>
                 </tr>
               </thead>

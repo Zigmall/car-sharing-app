@@ -214,10 +214,13 @@ const Book = () => {
             </div>
           )}
           {showInsuranceOptions && (
-            <Insurance
-              setInsurance={setInsurance}
-              calculateInsurancePrice={calculateInsurancePrice}
-            />
+            <div className={styles.insurance__options}>
+              <Insurance
+                setInsurance={setInsurance}
+                calculateInsurancePrice={calculateInsurancePrice}
+                active={insuranceType}
+              />
+            </div>
           )}
           {showPaymentSummary && (
             <>
