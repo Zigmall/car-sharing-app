@@ -28,6 +28,7 @@ import AddCar from './components/pages/addCar/AddCar';
 import Book from './components/pages/book/Book';
 import Bookings from './components/pages/bookings/Bookings';
 import Rent from './components/pages/rent/Rent';
+import UpdateBooking from './components/pages/updateBooking/UpdateBooking';
 
 const uploadLink = createUploadLink({
   uri: 'http://localhost:5000/'
@@ -79,6 +80,7 @@ const App = () => {
                 <Route path="/return-car/:userId" element={<ReturnCars />} />
                 <Route path="/bookings" element={<Bookings />} />
                 <Route path="/bookings/:userId" element={<Rent />} />
+                <Route path="/update-booking/:userId" element={<UpdateBooking />} />
                 <Route path="/rentals" element={<Rentals />} />
                 <Route path="/users/:userId" element={<User />} />
                 <Route path="/users" element={<Users />} />
