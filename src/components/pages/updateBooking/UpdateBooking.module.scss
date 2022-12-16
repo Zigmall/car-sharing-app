@@ -1,0 +1,188 @@
+.updateBooking__wrapper {
+    margin-left: 12.9rem;
+    display: flex;
+    flex-direction: column;
+    margin-top: 1.5rem;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+.updateBooking__data__wrapper {
+    display: flex;
+    flex-direction: row;
+    margin:  2rem;
+    justify-content: center;
+    width: 70%;
+    border-radius: 0.3rem;
+    
+  }
+  
+  .userData__wrapper {
+    display: flex;
+    // margin: 0.5rem 2rem;
+    width: 100%;
+    border-radius: 0.3rem;
+    border: 1px solid black;
+    background-color: #e0ebf7;
+    padding: 3rem;
+  }
+  
+  .carData__wrapper {
+    display: flex;
+    flex-direction: column;
+    margin: 2rem;
+    width: 100%;
+  }
+  
+  .carData__image {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    img {
+      width: 24rem;
+      height: 10rem;
+      border-radius: 0.3rem;
+    }
+  }
+  
+  .payment__summary {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+    width: 100%;
+    border-radius: 0.3rem;
+    border: 1px solid black;
+    background-color: #e0ebf7;
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  .payment__summary__title {
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: #000000;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+  }
+  
+  .payment__summary__info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 0.2rem;
+    }
+  }
+  
+  .payment__summary__info__left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+  }
+  
+  .payment__summary__info__right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+  }
+  
+  .checkIconStyles {
+    margin: 1.3rem 0.5rem;
+  }
+  
+  .dropDownArrow {
+    margin: 1.3rem 1rem 0 0;
+    cursor: pointer;
+    :hover {
+      fill: #0074ef;
+    }
+    
+  }
+  
+  .datePicker__container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3rem;
+    // width: 60%;
+    border-radius: 0.3rem;
+    border: 1px solid black;
+    padding: 1rem;
+    background-color: #e0ebf7;
+    transition: height 2s;
+    input {
+      width: 10rem;
+      height: 2rem;
+      border: 1px solid black;
+      border-radius: 0.5rem;
+      text-align: center;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #000000;
+      margin-bottom: 0.5rem;
+    }
+    label {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #000000;
+      padding: 0.5rem;
+    }
+  }
+  
+  .datePicker__container__left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+  }
+  
+  .datePicker__container__right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+  }
+  
+  .button_wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    color: white;
+   
+  }
+  
+  .button__update {
+    display: flex;
+    width: 70%;
+    margin-top: 3rem;
+    padding: 0.5rem 2rem;
+    border-radius: 0.3rem;
+    justify-content: center;
+    background-color: #0074ef;
+    color: white;
+    cursor: pointer;
+  }
+
+  .insurance__container {
+    display: flex;
+    align-items: stretch;
+  }
