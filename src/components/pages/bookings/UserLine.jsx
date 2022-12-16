@@ -11,6 +11,9 @@ const UserLine = ({ booking: { id, booker, startDate, endDate, car } }) => {
   const handleRent = () => {
     navigate(`/bookings/${id}`);
   };
+  const handleEdit = () => {
+    navigate(`/update-booking/${id}`);
+  };
 
   const cancelBooking = () => {
     console.log('cancel booking');
@@ -43,6 +46,13 @@ const UserLine = ({ booking: { id, booker, startDate, endDate, car } }) => {
             onClick={() => handleRent()}
             className={[styles.button__wrapper, styles.button__rent].join(' ')}>
             Proceed Rent
+          </button>
+        </td>
+        <td>
+          <button
+            onClick={() => handleEdit()}
+            className={[styles.button__wrapper, styles.button__update].join(' ')}>
+            Update Booking
           </button>
         </td>
         <td>
