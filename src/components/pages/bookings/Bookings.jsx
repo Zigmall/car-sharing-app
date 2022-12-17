@@ -4,11 +4,44 @@ import { GET_ALL_BOOKINGS } from '../../../queries/queries';
 import AuthContext from '../../../context/auth/authContext';
 import UserLine from './UserLine';
 import styles from './Bookings.module.scss';
+import { useMutation } from '@apollo/client';
+import { UPDATE_BOOKING } from '../../../mutations/mutations';
+import AlertContext from '../../../context/alert/alertContext';
 
 const Bookings = () => {
   const { loading, error, data } = useQuery(GET_ALL_BOOKINGS);
   const authContext = useContext(AuthContext);
   const { user } = authContext;
+  const alertContext = useContext(AlertContext);
+  const { setAlert } = alertContext;
+
+  const handleCancelBooking = (id) => {
+    const input = {
+      id,
+      bookingChanges: {
+        cancelled: true,
+        moneyReturned: true,
+        newBookingId: null
+      }
+    };
+    const txt = 'Are you sure you want to cancel this booking?';
+    confirm(txt) && cancelBooking({ variables: { input } });
+  };
+
+  const [cancelBooking] = useMutation(UPDATE_BOOKING, {
+    onCompleted: ({ updateBookedCar: { success, message } }) => {
+      if (success) {
+        setAlert('Booking canceled successfully', 'success');
+      } else {
+        setAlert('Something went wrong', 'danger');
+        console.log('error:', message);
+      }
+    },
+    onError: (error) => {
+      console.log('error:', error.message);
+    },
+    refetchQueries: [{ query: GET_ALL_BOOKINGS }]
+  });
 
   if (loading)
     return (
@@ -53,7 +86,11 @@ const Bookings = () => {
                 {data.bookedCars.map((booking) =>
                   booking.bookingChanges.cancelled === null &&
                   booking.bookingChanges.newBookingId === null ? (
-                    <UserLine key={booking.id} booking={booking} />
+                    <UserLine
+                      key={booking.id}
+                      booking={booking}
+                      handleCancelBooking={() => handleCancelBooking(booking.id)}
+                    />
                   ) : null
                 )}
               </tbody>

@@ -10,7 +10,6 @@ const Insurance = ({ setInsurance, calculateInsurancePrice, active }) => {
   const [silverIsSelected, setSilverIsSelected] = useState(false);
   const [premiumIsSelected, setPremiumIsSelected] = useState(false);
   const [euIsSelected, setEuIsSelected] = useState(false);
-  console.log('active', active);
 
   const handleSilver = () => {
     setSilverIsSelected(true);
