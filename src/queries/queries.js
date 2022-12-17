@@ -324,7 +324,9 @@ const GET_BOOKING_BY_ID = gql`
       startDate
       endDate
       insuranceType
-      amountPaid
+      currentPaid
+      previousTotalPayment
+      totalPayment
       booker {
         id
         firstName

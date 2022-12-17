@@ -228,7 +228,9 @@ const BOOK_CAR = gql`
         startDate
         endDate
         insuranceType
-        amountPaid
+        currentPaid
+        previousTotalPayment
+        totalPayment
         booker {
           id
           firstName
