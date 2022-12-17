@@ -307,6 +307,13 @@ const GET_ALL_BOOKINGS = gql`
       }
       startDate
       endDate
+      bookingChanges {
+        cancelled
+        moneyReturned
+        newBookingId {
+          id
+        }
+      }
       car {
         brand {
           name
