@@ -218,35 +218,6 @@ const CREATE_CAR = gql`
   }
 `;
 
-const BOOK_CAR = gql`
-  mutation BookCar($input: BookCarInput!) {
-    bookCar(input: $input) {
-      success
-      message
-      bookedCar {
-        id
-        startDate
-        endDate
-        insuranceType
-        currentPaid
-        previousTotalPayment
-        totalPayment
-        booker {
-          id
-          firstName
-        }
-        car {
-          id
-          model
-          brand {
-            name
-          }
-        }
-      }
-    }
-  }
-`;
-
 const SIGN_UP = gql`
   mutation SignUp($input: SignUp!) {
     signUp(input: $input) {
@@ -327,6 +298,54 @@ const UPLOAD_IMAGE = gql`
   }
 `;
 
+const BOOK_CAR = gql`
+  mutation BookCar($input: BookCarInput!) {
+    bookCar(input: $input) {
+      success
+      message
+      bookedCar {
+        id
+        startDate
+        endDate
+        insuranceType
+        currentPaid
+        previousTotalPayment
+        totalPayment
+        booker {
+          id
+          firstName
+        }
+        car {
+          id
+          model
+          brand {
+            name
+          }
+        }
+      }
+    }
+  }
+`;
+
+const UPDATE_BOOKING = gql`
+  mutation UpdateBookedCar($input: UpdateBookedCarInput!) {
+    updateBookedCar(input: $input) {
+      success
+      message
+      bookedCar {
+        id
+        bookingChanges {
+          cancelled
+          moneyReturned
+          newBookingId {
+            id
+          }
+        }
+      }
+    }
+  }
+`;
+
 export {
   DELETE_USER,
   UPDATE_USER,
@@ -338,5 +357,6 @@ export {
   SIGN_UP,
   CREATE_COMMENT,
   UPLOAD_IMAGE,
-  BOOK_CAR
+  BOOK_CAR,
+  UPDATE_BOOKING
 };
