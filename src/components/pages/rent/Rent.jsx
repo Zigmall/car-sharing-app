@@ -23,7 +23,7 @@ const Rent = () => {
   };
 
   const { loading, error, data } = useQuery(GET_BOOKING_BY_ID, {
-    variables: { bookedCarId: userId }
+    variables: { bookingId: userId }
   });
 
   useEffect(() => {

@@ -5,7 +5,7 @@ import { useQuery } from '@apollo/client';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { GET_BOOKING_BY_ID } from '../../../queries/queries';
-import { BOOK_CAR } from '../../../mutations/mutations';
+import { BOOK_CAR, UPDATE_BOOKING } from '../../../mutations/mutations';
 import AuthContext from '../../../context/auth/authContext';
 import AlertContext from '../../../context/alert/alertContext';
 import { useEffect } from 'react';
@@ -18,7 +18,7 @@ const UpdateBooking = () => {
   const { user } = authContext;
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
-  const { userId } = useParams();
+  const { userId: bookingId } = useParams();
   const navigate = useNavigate();
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
@@ -31,7 +31,7 @@ const UpdateBooking = () => {
   };
 
   const { loading, error, data } = useQuery(GET_BOOKING_BY_ID, {
-    variables: { bookedCarId: userId }
+    variables: { bookingId }
   });
 
   useEffect(() => {
@@ -47,15 +47,43 @@ const UpdateBooking = () => {
   }, [data]);
 
   const [bookCar] = useMutation(BOOK_CAR, {
-    onCompleted: ({ bookCar: { success, message } }) => {
-      setAlert(message, success ? 'success' : 'danger');
-      success && navigate('/bookings');
-      // success && changeTab(1); TODO
+    onCompleted: ({ bookCar: { success, message, bookedCar } }) => {
+      if (!success) {
+        setAlert(message, 'danger');
+      } else {
+        updatePreviousBooking(bookedCar.id);
+        console.log('bookedCar', bookedCar);
+        success && navigate('/bookings');
+        // success && changeTab(1); TODO
+      }
     },
     onError: (error) => {
       console.log('error:', error.message);
     }
   });
+
+  const [updateBooking] = useMutation(UPDATE_BOOKING, {
+    onCompleted: ({ updateBooking: { success, message } }) => {
+      setAlert(message, success ? 'success' : 'danger');
+      success && navigate('/bookings');
+    },
+    onError: (error) => {
+      console.log('error:', error.message);
+    },
+    refetchQueries: [{ query: GET_BOOKING_BY_ID, variables: { bookingId } }]
+  });
+
+  const updatePreviousBooking = (id) => {
+    const input = {
+      id: bookingId,
+      bookingChanges: {
+        cancelled: false,
+        moneyReturned: false,
+        newBookingId: id
+      }
+    };
+    updateBooking({ variables: { input } });
+  };
 
   if (loading)
     return (
