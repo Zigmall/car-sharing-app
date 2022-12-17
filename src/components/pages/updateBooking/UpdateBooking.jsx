@@ -52,7 +52,6 @@ const UpdateBooking = () => {
         setAlert(message, 'danger');
       } else {
         updatePreviousBooking(bookedCar.id);
-        console.log('bookedCar', bookedCar);
         success && navigate('/bookings');
         // success && changeTab(1); TODO
       }
@@ -64,9 +63,8 @@ const UpdateBooking = () => {
   });
 
   const [updateBooking] = useMutation(UPDATE_BOOKING, {
-    onCompleted: ({ updateBooking: { success, message } }) => {
+    onCompleted: ({ updateBookedCar: { success, message } }) => {
       setAlert(message, success ? 'success' : 'danger');
-      success && navigate('/bookings');
     },
     onError: (error) => {
       console.log('error:', error.message);
@@ -112,8 +110,6 @@ const UpdateBooking = () => {
   const {
     bookedCar: { car, totalPayment: previousTotalPayment, booker }
   } = data;
-
-  console.log('data', data);
 
   const handUpdateButton = () => {
     const input = {
