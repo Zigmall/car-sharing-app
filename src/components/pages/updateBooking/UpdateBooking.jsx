@@ -5,14 +5,21 @@ import { useQuery } from '@apollo/client';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { GET_BOOKING_BY_ID } from '../../../queries/queries';
+import { BOOK_CAR } from '../../../mutations/mutations';
 import AuthContext from '../../../context/auth/authContext';
+import AlertContext from '../../../context/alert/alertContext';
 import { useEffect } from 'react';
+import { useMutation } from '@apollo/client';
+import { useNavigate } from 'react-router-dom';
 import Insurance from '../../insurance/Insurance';
 
 const UpdateBooking = () => {
   const authContext = useContext(AuthContext);
   const { user } = authContext;
+  const alertContext = useContext(AlertContext);
+  const { setAlert } = alertContext;
   const { userId } = useParams();
+  const navigate = useNavigate();
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [insuranceType, setInsuranceType] = useState('');
@@ -39,6 +46,17 @@ const UpdateBooking = () => {
     }
   }, [data]);
 
+  const [bookCar] = useMutation(BOOK_CAR, {
+    onCompleted: ({ bookCar: { success, message } }) => {
+      setAlert(message, success ? 'success' : 'danger');
+      success && navigate('/bookings');
+      // success && changeTab(1); TODO
+    },
+    onError: (error) => {
+      console.log('error:', error.message);
+    }
+  });
+
   if (loading)
     return (
       <div className={styles.updateBooking__wrapper}>
@@ -63,8 +81,24 @@ const UpdateBooking = () => {
   }
 
   const {
-    bookedCar: { id, car, amountPaid }
+    bookedCar: { car, totalPayment: previousTotalPayment, booker }
   } = data;
+
+  console.log('data', data);
+
+  const handUpdateButton = () => {
+    const input = {
+      carId: car.id,
+      bookerId: booker.id,
+      startDate,
+      endDate,
+      insuranceType,
+      previousTotalPayment,
+      currentPaid: calculateTotalPrice(insuranceRate) - previousTotalPayment,
+      totalPayment: calculateTotalPrice(insuranceRate)
+    };
+    bookCar({ variables: { input } });
+  };
 
   //   const insuranceRate = insuranceTable[insuranceType];
   const calculateInsurancePrice = (insuranceRate) => {
@@ -83,8 +117,6 @@ const UpdateBooking = () => {
     setInsuranceType(insuranceType);
   };
 
-  console.log('id', id);
-
   return (
     <>
       {user && !user.isAdmin ? (
@@ -95,7 +127,7 @@ const UpdateBooking = () => {
         data &&
         car && (
           <div className={styles.updateBooking__wrapper}>
-            <h1>Update Car</h1>
+            <h1>Update Booking</h1>
             <div className={styles.updateBooking__data__wrapper}>
               <div className={styles.carData__wrapper}>
                 <div className={styles.carData__image}>
@@ -161,6 +193,7 @@ const UpdateBooking = () => {
                     <div className={styles.payment__summary__info__left}>
                       <p>Start Date</p>
                       <p>End Date</p>
+                      <p>Total price</p>
                       <p>Already paid</p>
                       <br />
                       <p>
@@ -170,16 +203,21 @@ const UpdateBooking = () => {
                     <div className={styles.payment__summary__info__right}>
                       <p>{startDate && startDate.toLocaleString()}</p>
                       <p>{endDate && endDate.toLocaleString()}</p>
-                      <p>€{amountPaid}</p>
+                      <p>€{calculateTotalPrice(insuranceRate)}</p>
+                      <p>€{previousTotalPayment}</p>
                       <br />
                       <p>
-                        <strong>€{calculateTotalPrice(insuranceRate) - amountPaid}</strong>
+                        <strong>
+                          €{calculateTotalPrice(insuranceRate) - previousTotalPayment}
+                        </strong>
                       </p>
                     </div>
                   </div>
                 </div>
                 <div className={styles.button_wrapper}>
-                  <button className={styles.button__update}>Update</button>
+                  <button className={styles.button__update} onClick={() => handUpdateButton()}>
+                    Update
+                  </button>
                 </div>
               </div>
             </div>

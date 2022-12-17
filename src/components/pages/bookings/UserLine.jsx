@@ -1,9 +1,6 @@
 import React from 'react';
 import styles from './Bookings.module.scss';
 import PropTypes from 'prop-types';
-// import { GET_ALL_USERS } from '../../queries/queries';
-// import { DELETE_USER } from '../../mutations/mutations';
-// import { useMutation } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 
 const UserLine = ({ booking: { id, booker, startDate, endDate, car } }) => {
