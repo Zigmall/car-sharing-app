@@ -2,8 +2,6 @@ import { useContext, useState } from 'react';
 import styles from './Rent.module.scss';
 import { useParams } from 'react-router';
 import { useQuery } from '@apollo/client';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import { GET_BOOKING_BY_ID } from '../../../queries/queries';
 import AuthContext from '../../../context/auth/authContext';
 import EditUserForm from '../../editUserForm/EditUserForm';
@@ -12,9 +10,13 @@ import { useEffect } from 'react';
 const Rent = () => {
   const authContext = useContext(AuthContext);
   const { user } = authContext;
-  const { userId } = useParams();
+  // const alertContext = useContext(AlertContext);
+  // const { setAlert } = alertContext;
+  const { userId: bookingId } = useParams();
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
+  // const navigate = useNavigate();
+  const [insuranceRate, setInsuranceRate] = useState(0);
   const deposit = 200;
   const insuranceTable = {
     Silver: 0.3,
@@ -23,16 +25,17 @@ const Rent = () => {
   };
 
   const { loading, error, data } = useQuery(GET_BOOKING_BY_ID, {
-    variables: { bookingId: userId }
+    variables: { bookingId }
   });
 
   useEffect(() => {
     if (data) {
       const {
-        bookedCar: { startDate: sd, endDate: ed }
+        bookedCar: { startDate, endDate, insuranceType }
       } = data;
-      setStartDate(new Date(sd));
-      setEndDate(new Date(ed));
+      setStartDate(new Date(startDate));
+      setEndDate(new Date(endDate));
+      setInsuranceRate(insuranceTable[insuranceType]);
     }
   }, [data]);
 
@@ -58,13 +61,13 @@ const Rent = () => {
     }
     return <p>Something went wrong error</p>;
   }
+
   const {
-    bookedCar: { id, insuranceType, booker, car, amountPaid }
+    bookedCar: { car, totalPayment: previousTotalPayment, booker }
   } = data;
 
   const checkIfUserHasAllData = () => {};
 
-  const insuranceRate = insuranceTable[insuranceType];
   const calculateInsurancePrice = (insuranceRate) => {
     return Math.round(Math.ceil((endDate - startDate) / 86400000) * car.price * insuranceRate, 2);
   };
@@ -75,8 +78,6 @@ const Rent = () => {
       calculateInsurancePrice(insuranceRate)
     );
   };
-
-  console.log('id', id);
 
   return (
     <>
@@ -109,43 +110,6 @@ const Rent = () => {
                   />
                 </div>
 
-                <>
-                  <div className={styles.datePicker__container}>
-                    <div className={styles.datePicker__container__left}>
-                      <label>Start Date</label>
-
-                      <DatePicker
-                        showTimeSelect
-                        selected={startDate}
-                        onChange={(date) => {
-                          setStartDate(date);
-                        }}
-                        selectsStart
-                        startDate={startDate}
-                        endDate={endDate}
-                        minDate={new Date()}
-                        dateFormat="d/M/yyyy - HH:mm"
-                        readOnly
-                      />
-                    </div>
-                    <div className={styles.datePicker__container__right}>
-                      <label>End Date</label>
-                      <DatePicker
-                        showTimeSelect
-                        selected={endDate}
-                        onChange={(date) => {
-                          setEndDate(date);
-                        }}
-                        selectsEnd
-                        startDate={startDate}
-                        endDate={endDate}
-                        minDate={startDate}
-                        dateFormat="d/M/yyyy - HH:mm"
-                      />
-                    </div>
-                  </div>
-                </>
-
                 <div className={styles.payment__summary}>
                   <div className={styles.payment__summary__title}>
                     <h3>Summary</h3>
@@ -154,6 +118,7 @@ const Rent = () => {
                     <div className={styles.payment__summary__info__left}>
                       <p>Start Date</p>
                       <p>End Date</p>
+                      <p>Total price</p>
                       <p>Already paid</p>
                       <br />
                       <p>Deposit</p>
@@ -164,11 +129,14 @@ const Rent = () => {
                     <div className={styles.payment__summary__info__right}>
                       <p>{startDate && startDate.toLocaleString()}</p>
                       <p>{endDate && endDate.toLocaleString()}</p>
-                      <p>€{amountPaid}</p>
+                      <p>€{calculateTotalPrice(insuranceRate)}</p>
+                      <p>{previousTotalPayment}</p>
                       <br />
                       <p>€{deposit}</p>
                       <p>
-                        <strong>€{calculateTotalPrice(insuranceRate) - amountPaid}</strong>
+                        <strong>
+                          €{calculateTotalPrice(insuranceRate) - previousTotalPayment}
+                        </strong>
                       </p>
                     </div>
                   </div>
