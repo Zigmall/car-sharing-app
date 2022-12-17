@@ -50,9 +50,12 @@ const Bookings = () => {
                 </tr>
               </thead>
               <tbody>
-                {data.bookedCars.map((booking) => (
-                  <UserLine key={booking.id} booking={booking} />
-                ))}
+                {data.bookedCars.map((booking) =>
+                  booking.bookingChanges.cancelled === null &&
+                  booking.bookingChanges.newBookingId === null ? (
+                    <UserLine key={booking.id} booking={booking} />
+                  ) : null
+                )}
               </tbody>
             </table>
           </div>
