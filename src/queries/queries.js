@@ -318,8 +318,8 @@ const GET_ALL_BOOKINGS = gql`
 `;
 
 const GET_BOOKING_BY_ID = gql`
-  query BookingById($bookedCarId: ID!) {
-    bookedCar(id: $bookedCarId) {
+  query BookingById($bookingId: ID!) {
+    bookedCar(id: $bookingId) {
       id
       startDate
       endDate
@@ -327,6 +327,13 @@ const GET_BOOKING_BY_ID = gql`
       currentPaid
       previousTotalPayment
       totalPayment
+      bookingChanges {
+        cancelled
+        moneyReturned
+        newBookingId {
+          id
+        }
+      }
       booker {
         id
         firstName
