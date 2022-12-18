@@ -307,6 +307,12 @@ const GET_ALL_BOOKINGS = gql`
       }
       startDate
       endDate
+      newBooking
+      totalPayment
+      previousTotalPayment
+      insuranceType
+      firstBookingId
+      currentPaid
       bookingChanges {
         cancelled
         moneyReturned
@@ -330,7 +336,9 @@ const GET_BOOKING_BY_ID = gql`
       id
       startDate
       endDate
+      newBooking
       insuranceType
+      firstBookingId
       currentPaid
       previousTotalPayment
       totalPayment

@@ -311,6 +311,7 @@ const BOOK_CAR = gql`
         currentPaid
         previousTotalPayment
         totalPayment
+        newBooking
         booker {
           id
           firstName
@@ -334,6 +335,18 @@ const UPDATE_BOOKING = gql`
       message
       bookedCar {
         id
+        booker {
+          firstName
+          lastName
+        }
+        startDate
+        endDate
+        newBooking
+        totalPayment
+        previousTotalPayment
+        insuranceType
+        firstBookingId
+        currentPaid
         bookingChanges {
           cancelled
           moneyReturned
@@ -341,6 +354,40 @@ const UPDATE_BOOKING = gql`
             id
           }
         }
+        car {
+          brand {
+            name
+          }
+          model
+        }
+      }
+    }
+  }
+`;
+
+const RENT_CAR = gql`
+  mutation Rent($input: CreateRentInput!) {
+    createRent(input: $input) {
+      success
+      message
+      rent {
+        id
+        car {
+          id
+        }
+        renter {
+          id
+          firstName
+          lastName
+        }
+        pickupDate
+        rated
+        rentPrice
+        deposit
+        additionalCosts
+        depositCollected
+        allFinancialSorted
+        depositReturned
       }
     }
   }
@@ -358,5 +405,6 @@ export {
   CREATE_COMMENT,
   UPLOAD_IMAGE,
   BOOK_CAR,
-  UPDATE_BOOKING
+  UPDATE_BOOKING,
+  RENT_CAR
 };
