@@ -4,18 +4,22 @@ import { useParams } from 'react-router';
 import { useQuery } from '@apollo/client';
 import { GET_BOOKING_BY_ID } from '../../../queries/queries';
 import AuthContext from '../../../context/auth/authContext';
+import AlertContext from '../../../context/alert/alertContext';
 import EditUserForm from '../../editUserForm/EditUserForm';
 import { useEffect } from 'react';
+import { useMutation } from '@apollo/client';
+import { RENT_CAR } from '../../../mutations/mutations';
+import { useNavigate } from 'react-router-dom';
 
 const Rent = () => {
   const authContext = useContext(AuthContext);
   const { user } = authContext;
-  // const alertContext = useContext(AlertContext);
-  // const { setAlert } = alertContext;
+  const alertContext = useContext(AlertContext);
+  const { setAlert } = alertContext;
   const { userId: bookingId } = useParams();
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [insuranceRate, setInsuranceRate] = useState(0);
   const deposit = 200;
   const insuranceTable = {
@@ -23,6 +27,18 @@ const Rent = () => {
     Premium: 0.6,
     EU: 1.1
   };
+
+  const [rentCar] = useMutation(RENT_CAR, {
+    onCompleted: ({ createRent: { success, message } }) => {
+      setAlert(message, success ? 'success' : 'error');
+      navigate('/bookings');
+    },
+    onError: (error) => {
+      console.log(error);
+      setAlert('Something went wrong', 'error');
+    }
+    // refetchQueries: ['GET_RENTS_BY_ID']
+  });
 
   const { loading, error, data } = useQuery(GET_BOOKING_BY_ID, {
     variables: { bookingId }
@@ -77,6 +93,25 @@ const Rent = () => {
       Math.ceil((endDate - startDate) / 86400000) * car.price +
       calculateInsurancePrice(insuranceRate)
     );
+  };
+
+  const handleRentCar = () => {
+    const firstBookingId =
+      data && data.bookedCar.newBooking ? bookingId : data.bookedCar.firstBookingId;
+    const input = {
+      carId: car.id,
+      renterId: booker.id,
+      firstBookingId,
+      pickupDate: startDate,
+      rated: false,
+      rentPrice: calculateTotalPrice(insuranceRate),
+      deposit,
+      additionalCosts: 0,
+      depositCollected: true, // check if user has
+      allFinancialSorted: false,
+      depositReturned: false
+    };
+    rentCar({ variables: { input } });
   };
 
   return (
@@ -146,7 +181,9 @@ const Rent = () => {
                   </div>
                 </div>
                 <div className={styles.button_wrapper}>
-                  <button className={styles.button__update}>Rent Car</button>
+                  <button className={styles.button__update} onClick={() => handleRentCar()}>
+                    Rent Car
+                  </button>
                 </div>
               </div>
             </div>
