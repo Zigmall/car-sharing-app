@@ -63,7 +63,7 @@ const Rent = () => {
   }
 
   const {
-    bookedCar: { car, totalPayment: previousTotalPayment, booker }
+    bookedCar: { car, totalPayment: previousTotalPayment, booker, insuranceType }
   } = data;
 
   const checkIfUserHasAllData = () => {};
@@ -116,21 +116,25 @@ const Rent = () => {
                   </div>
                   <div className={styles.payment__summary__info}>
                     <div className={styles.payment__summary__info__left}>
+                      <p>Car</p>
                       <p>Start Date</p>
                       <p>End Date</p>
-                      <p>Total price</p>
-                      <p>Already paid</p>
+                      <p>Insurance Type</p>
+                      <p>Total Price</p>
+                      <p>Already Paid</p>
                       <br />
                       <p>Deposit</p>
                       <p>
-                        <strong>Amount to pay</strong>
+                        <strong>Amount To Pay</strong>
                       </p>
                     </div>
                     <div className={styles.payment__summary__info__right}>
+                      <p>{`${car.brand.name} ${car.model}`}</p>
                       <p>{startDate && startDate.toLocaleString()}</p>
                       <p>{endDate && endDate.toLocaleString()}</p>
+                      <p>{insuranceType}</p>
                       <p>€{calculateTotalPrice(insuranceRate)}</p>
-                      <p>{previousTotalPayment}</p>
+                      <p>€{previousTotalPayment}</p>
                       <br />
                       <p>€{deposit}</p>
                       <p>
