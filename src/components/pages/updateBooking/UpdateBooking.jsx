@@ -115,6 +115,7 @@ const UpdateBooking = () => {
   } = data;
 
   const handUpdateButton = () => {
+    const firstBookingId = data.bookedCar.newBooking ? bookingId : data.bookedCar.firstBookingId;
     const input = {
       carId: car.id,
       bookerId: booker.id,
@@ -125,7 +126,7 @@ const UpdateBooking = () => {
       currentPaid: calculateTotalPrice(insuranceRate) - previousTotalPayment,
       totalPayment: calculateTotalPrice(insuranceRate),
       newBooking: false,
-      firstBookingId: bookingId
+      firstBookingId
     };
     bookCar({ variables: { input } });
   };

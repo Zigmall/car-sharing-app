@@ -80,11 +80,11 @@ const App = () => {
                 <Route path="/return-car/:userId" element={<ReturnCars />} />
                 <Route path="/bookings" element={<Bookings />} />
                 <Route path="/bookings/:userId" element={<Rent />} />
+                <Route path="/book-car/:carId" element={<Book />} />
                 <Route path="/update-booking/:userId" element={<UpdateBooking />} />
                 <Route path="/rentals" element={<Rentals />} />
                 <Route path="/users/:userId" element={<User />} />
                 <Route path="/users" element={<Users />} />
-                <Route path="/book-car/:carId" element={<Book />} />
               </Routes>
             </div>
           </AlertState>
