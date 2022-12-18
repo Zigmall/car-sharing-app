@@ -88,7 +88,8 @@ const Book = () => {
       insuranceType,
       currentPaid: calculateTotalPrice(insuranceRate),
       previousTotalPayment: 0,
-      totalPayment: calculateTotalPrice(insuranceRate)
+      totalPayment: calculateTotalPrice(insuranceRate),
+      newBooking: true
     };
     bookCar({ variables: { input } });
   };
