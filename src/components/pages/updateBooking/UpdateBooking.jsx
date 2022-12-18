@@ -125,7 +125,6 @@ const UpdateBooking = () => {
     bookCar({ variables: { input } });
   };
 
-  //   const insuranceRate = insuranceTable[insuranceType];
   const calculateInsurancePrice = (insuranceRate) => {
     return Math.round(Math.ceil((endDate - startDate) / 86400000) * car.price * insuranceRate, 2);
   };
