@@ -69,7 +69,10 @@ const UpdateBooking = () => {
     onError: (error) => {
       console.log('error:', error.message);
     },
-    refetchQueries: [{ query: GET_BOOKING_BY_ID, variables: { bookingId } }]
+    refetchQueries: [
+      { query: GET_BOOKING_BY_ID, variables: { bookingId } },
+      { query: GET_ALL_BOOKINGS }
+    ]
   });
 
   const updatePreviousBooking = (id) => {
@@ -120,7 +123,9 @@ const UpdateBooking = () => {
       insuranceType,
       previousTotalPayment,
       currentPaid: calculateTotalPrice(insuranceRate) - previousTotalPayment,
-      totalPayment: calculateTotalPrice(insuranceRate)
+      totalPayment: calculateTotalPrice(insuranceRate),
+      newBooking: false,
+      firstBookingId: bookingId
     };
     bookCar({ variables: { input } });
   };
