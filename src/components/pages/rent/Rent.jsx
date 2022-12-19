@@ -2,13 +2,13 @@ import { useContext, useState } from 'react';
 import styles from './Rent.module.scss';
 import { useParams } from 'react-router';
 import { useQuery } from '@apollo/client';
-import { GET_BOOKING_BY_ID } from '../../../queries/queries';
 import AuthContext from '../../../context/auth/authContext';
 import AlertContext from '../../../context/alert/alertContext';
 import EditUserForm from '../../editUserForm/EditUserForm';
 import { useEffect } from 'react';
 import { useMutation } from '@apollo/client';
-import { RENT_CAR } from '../../../mutations/mutations';
+import { GET_BOOKING_BY_ID, GET_ALL_BOOKINGS } from '../../../queries/queries';
+import { RENT_CAR, UPDATE_BOOKING } from '../../../mutations/mutations';
 import { useNavigate } from 'react-router-dom';
 
 const Rent = () => {
@@ -29,9 +29,14 @@ const Rent = () => {
   };
 
   const [rentCar] = useMutation(RENT_CAR, {
-    onCompleted: ({ createRent: { success, message } }) => {
-      setAlert(message, success ? 'success' : 'error');
-      navigate('/bookings');
+    onCompleted: ({ createRent: { success, message, rent } }) => {
+      if (!success) {
+        setAlert(message, 'danger');
+      } else {
+        // setAlert(message, 'success');
+        updatePreviousBooking(rent.id);
+        navigate('/bookings');
+      }
     },
     onError: (error) => {
       console.log(error);
@@ -54,6 +59,35 @@ const Rent = () => {
       setInsuranceRate(insuranceTable[insuranceType]);
     }
   }, [data]);
+
+  const [updateBooking] = useMutation(UPDATE_BOOKING, {
+    onCompleted: ({ updateBookedCar: { success, message } }) => {
+      if (!success) {
+        setAlert(message, 'danger');
+      } else {
+        setAlert('Car rented successfully', 'success');
+      }
+    },
+    onError: (error) => {
+      console.log('error:', error.message);
+    },
+    refetchQueries: [
+      { query: GET_BOOKING_BY_ID, variables: { bookingId } },
+      { query: GET_ALL_BOOKINGS }
+    ]
+  });
+
+  const updatePreviousBooking = (id) => {
+    const input = {
+      id: bookingId,
+      bookingChanges: {
+        cancelled: false,
+        moneyReturned: false,
+        rentId: id
+      }
+    };
+    updateBooking({ variables: { input } });
+  };
 
   if (loading)
     return (
