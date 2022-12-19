@@ -350,6 +350,9 @@ const UPDATE_BOOKING = gql`
         bookingChanges {
           cancelled
           moneyReturned
+          rentId {
+            id
+          }
           newBookingId {
             id
           }

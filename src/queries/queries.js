@@ -316,6 +316,9 @@ const GET_ALL_BOOKINGS = gql`
       bookingChanges {
         cancelled
         moneyReturned
+        rentId {
+          id
+        }
         newBookingId {
           id
         }
@@ -345,6 +348,9 @@ const GET_BOOKING_BY_ID = gql`
       bookingChanges {
         cancelled
         moneyReturned
+        rentId {
+          id
+        }
         newBookingId {
           id
         }
