@@ -54,17 +54,17 @@ const Bookings = () => {
 
   if (error) {
     console.log(error);
-    if (user === null) {
-      return (
-        <div className={styles.bookings__wrapper}>
-          <div className={styles.error__message}>
-            <p>You need to be log in to see this page</p>
-          </div>
-        </div>
-      );
-    }
-    return <p>Something went wrong error</p>;
   }
+  if (user === null) {
+    return (
+      <div className={styles.bookings__wrapper}>
+        <div className={styles.error__message}>
+          <p>You need to be log in to see this page</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       {data && (
