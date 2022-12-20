@@ -13,6 +13,8 @@ import AlertState from './context/alert/AlertState';
 import Alerts from './components/alerts/Alerts';
 import Login from './components/auth/Login';
 import ReturnCars from './components/pages/returnCars/ReturnCars';
+import Rents from './components/pages/rents/Rents';
+import CheckAndReturn from './components/pages/checkAndReturn/CheckAndReturn';
 import { createUploadLink } from 'apollo-upload-client';
 import {
   ApolloClient,
@@ -85,6 +87,8 @@ const App = () => {
                 <Route path="/all-cars" element={<Rentals />} />
                 <Route path="/users/:userId" element={<User />} />
                 <Route path="/users" element={<Users />} />
+                <Route path="/rents/" element={<Rents />} />
+                <Route path="/rents/:rentId" element={<CheckAndReturn />} />
               </Routes>
             </div>
           </AlertState>
