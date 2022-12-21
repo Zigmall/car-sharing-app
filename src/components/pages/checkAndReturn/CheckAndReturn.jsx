@@ -15,6 +15,8 @@ const CheckAndReturn = () => {
   const spareWheelBefore = true;
   const additionalGPSBefore = true;
   const userManualBefore = true;
+  const fuelLevelBefore = 100;
+  const milageBefore = 0;
 
   const [regDocAfter, setRegDocAfter] = useState(false);
   const [ocInsAfter, setOcInsAfter] = useState(false);
@@ -25,6 +27,8 @@ const CheckAndReturn = () => {
   const [spareWheelAfter, setSpareWheelAfter] = useState(false);
   const [additionalGPSAfter, setAdditionalGPSAfter] = useState(false);
   const [userManualAfter, setUserManualAfter] = useState(false);
+  const [fuelLevelAfter, setFuelLevelAfter] = useState(100);
+  const [milageAfter, setMilageAfter] = useState(0);
 
   return (
     <div className={styles.return__wrapper}>
@@ -34,6 +38,9 @@ const CheckAndReturn = () => {
         </div>
         <div className={styles.return__form}>
           <div className={styles.return__form__leftColumn}>
+            <div className={styles.return__form__milage}>
+              <p>{`Milage before: ${milageBefore}`}</p>
+            </div>
             <div className={styles.return__form__leftColumn__element}>
               <input type="radio" name="damages-before" value="no-damages" />
               No damages
@@ -176,8 +183,32 @@ const CheckAndReturn = () => {
                 onChange={() => handleCheckboxChange(setUserManualAfter)}
               />
             </div>
+
+            <div className={styles.return__form__middleColumn__element}>
+              <input
+                type="checkbox"
+                id="fuelLevelBefore"
+                checked={fuelLevelBefore}
+                readOnly={true}
+              />
+              <h4>Full fuel level</h4>
+              <input
+                type="checkbox"
+                id="fuelLevelAfter"
+                checked={fuelLevelAfter}
+                onChange={() => handleCheckboxChange(setFuelLevelAfter)}
+              />
+            </div>
           </div>
           <div className={styles.return__form__rightColumn}>
+            <div className={styles.return__form__milageAfter}>
+              <input
+                type="number"
+                id="milageAfter"
+                onChange={() => setMilageAfter()}
+                defaultValue={milageAfter}
+              />
+            </div>
             <div className={styles.return__form__leftColumn__element}>
               <input type="radio" name="damages-after" value="no-damages" />
               No new damages
@@ -192,9 +223,7 @@ const CheckAndReturn = () => {
           </div>
         </div>
         <div className={styles.return__footer}>
-          <div className={styles.return__footer__element}>
-            <h4>Return date</h4>
-          </div>
+          <div className={styles.return__footer__element}></div>
           <button className={styles.return__footer__button}>Confirm return</button>
         </div>
       </div>
