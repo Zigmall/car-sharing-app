@@ -17,7 +17,6 @@ const RentLine = ({ rent: { id, renter, pickupDate, returnDate, car, booking } }
     const currentBooking = booking.find(
       (b) => b.bookingChanges.newBookingId === null && b.bookingChanges.rentId !== null
     );
-    console.log('currentBooking', currentBooking);
     return currentBooking;
   };
   const currentBooking = getCurrentBooking();
