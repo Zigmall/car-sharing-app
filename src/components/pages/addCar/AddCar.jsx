@@ -21,8 +21,10 @@ const AddCar = () => {
   const [model, setModel] = useState('');
   const [carClass, setCarClass] = useState('');
   const [year, setYear] = useState(0);
+  const [milage, setMilage] = useState(0);
+  const [deposit, setDeposit] = useState(0);
   const [price, setPrice] = useState(0);
-  const [mileage, setMileage] = useState(false);
+  const [unlimitedMileage, setUnlimitedMileage] = useState(false);
   const [collision, setCollision] = useState(false);
   const [theftProtection, setTheftProtection] = useState(false);
   const [roadsideAssistance, setRoadsideAssistance] = useState(false);
@@ -49,7 +51,9 @@ const AddCar = () => {
     setCarClass('');
     setYear(0);
     setPrice(0);
-    setMileage(false);
+    setUnlimitedMileage(false);
+    setMilage(0);
+    setDeposit(0);
     setCollision(false);
     setTheftProtection(false);
     setRoadsideAssistance(false);
@@ -69,7 +73,7 @@ const AddCar = () => {
 
   const checkBenefits = () => {
     let array = new Array();
-    if (mileage) {
+    if (unlimitedMileage) {
       array.push('Unlimited mileage');
     }
     if (collision) {
@@ -92,6 +96,8 @@ const AddCar = () => {
         carClass,
         year: parseInt(year),
         price: parseInt(price),
+        milage: parseInt(milage),
+        deposit: parseInt(deposit),
         benefits: checkBenefits(),
         property: {
           seats,
@@ -143,6 +149,8 @@ const AddCar = () => {
       brand === '' ||
       model === '' ||
       year === 0 ||
+      milage === 0 ||
+      deposit === 0 ||
       price === 0 ||
       seats === 0 ||
       doors === 0 ||
@@ -169,7 +177,14 @@ const AddCar = () => {
     }
   };
 
-  if (loading || loadingClasses) return <p>Loading...</p>;
+  if (loading || loadingClasses)
+    return (
+      <div className={styles.left__space}>
+        <div className={styles.error__message}>
+          <p>Loading...</p>
+        </div>
+      </div>
+    );
   if (error) {
     console.log(error);
     return (
@@ -327,17 +342,6 @@ const AddCar = () => {
                   </div>
                 </div>
 
-                {/* <div className={styles.form__element}>
-                  <label className={styles.form__label}>Car class</label>
-                  <input
-                    type="text"
-                    className={styles.form__input}
-                    id="carClass"
-                    value={carClass}
-                    onChange={(e) => setCarClass(e.target.value)}
-                  />
-                </div> */}
-
                 <div className={styles.form__line}>
                   <div className={styles.form__element}>
                     <label className={styles.form__label}>Model</label>
@@ -362,17 +366,6 @@ const AddCar = () => {
                   </div>
 
                   <div className={styles.form__element}>
-                    <label className={styles.form__label}>Pick Up Location</label>
-                    <input
-                      type="text"
-                      className={styles.form__input}
-                      id="location"
-                      value={location}
-                      onChange={(e) => setLocation(e.target.value)}
-                    />
-                  </div>
-
-                  <div className={styles.form__element}>
                     <label className={styles.form__label}>Price</label>
                     <input
                       type="number"
@@ -383,6 +376,40 @@ const AddCar = () => {
                     />
                   </div>
                 </div>
+
+                <div className={styles.form__line}>
+                  <div className={styles.form__element}>
+                    <label className={styles.form__label}>Milage</label>
+                    <input
+                      type="number"
+                      className={styles.form__input}
+                      id="milage"
+                      value={milage}
+                      onChange={(e) => setMilage(e.target.value)}
+                    />
+                  </div>
+                  <div className={styles.form__element}>
+                    <label className={styles.form__label}>Deposit</label>
+                    <input
+                      type="number"
+                      className={styles.form__input}
+                      id="deposit"
+                      value={deposit}
+                      onChange={(e) => setDeposit(e.target.value)}
+                    />
+                  </div>
+
+                  <div className={styles.form__element}>
+                    <label className={styles.form__label}>Pick Up Location</label>
+                    <input
+                      type="text"
+                      className={styles.form__input}
+                      id="location"
+                      value={location}
+                      onChange={(e) => setLocation(e.target.value)}
+                    />
+                  </div>
+                </div>
                 <h2>Car benefits</h2>
                 <div className={styles.form__line}>
                   <div className={styles.benefit__line}>
@@ -390,11 +417,11 @@ const AddCar = () => {
                       <input
                         type="checkbox"
                         className={styles.benefit__checkbox}
-                        id="mileage"
-                        checked={mileage}
-                        onChange={() => setMileage(!mileage)}
+                        id="unlimitedMileage"
+                        checked={unlimitedMileage}
+                        onChange={() => setUnlimitedMileage(!unlimitedMileage)}
                       />
-                      <label className={styles.form__label}>Unlimited Mileage</label>
+                      <label className={styles.form__label}>Unlimited unlimitedMileage</label>
                     </div>
 
                     <div className={styles.benefit__wrapper}>

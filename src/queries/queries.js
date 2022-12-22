@@ -156,6 +156,8 @@ const ALL_CARS = gql`
         name
       }
       year
+      milage
+      deposit
       property {
         seats
         doors
@@ -266,6 +268,8 @@ const GET_CAR = gql`
         name
       }
       year
+      milage
+      deposit
       property {
         seats
         doors
