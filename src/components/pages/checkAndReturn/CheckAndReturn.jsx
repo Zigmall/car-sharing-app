@@ -1,10 +1,27 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import styles from './CheckAndReturn.module.scss';
+import { useParams } from 'react-router';
+
+import { useQuery } from '@apollo/client';
+import AuthContext from '../../../context/auth/authContext';
+import { GET_RENT_BY_ID } from '../../../queries/queries';
+// import AlertContext from '../../../context/alert/alertContext';
+// import { useEffect } from 'react';
+// import { useMutation } from '@apollo/client';
+// import { RENT_CAR, UPDATE_BOOKING } from '../../../mutations/mutations';
+// import { useNavigate } from 'react-router-dom';
 
 const CheckAndReturn = () => {
   const handleCheckboxChange = (setFunction) => {
     setFunction((prevState) => !prevState);
   };
+
+  const { rentId } = useParams();
+  const authContext = useContext(AuthContext);
+  const { user } = authContext;
+  // const alertContext = useContext(AlertContext);
+  // const { setAlert } = alertContext;
+  // const navigate = useNavigate();
 
   const milageBefore = 0;
   const fuelLevelBefore = 100;
@@ -39,6 +56,25 @@ const CheckAndReturn = () => {
   const [gpsAfter, setGpsAfter] = useState(false);
   const [userManualAfter, setUserManualAfter] = useState(false);
 
+  const { loading, error, data } = useQuery(GET_RENT_BY_ID, {
+    variables: { rentId }
+  });
+
+  if (user && user === null) {
+    return (
+      <div className={styles.page__wrapper}>
+        <div className={styles.error__message}>
+          <p>You are not authorized to perform this action</p>
+        </div>
+      </div>
+    );
+  }
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error </p>;
+
+  const { rent } = data;
+  console.log('rent: ', rent);
+
   fuelCost && console.log('fuelCost: ', fuelCost);
   return (
     <div className={styles.return__wrapper}>
@@ -58,7 +94,7 @@ const CheckAndReturn = () => {
               <input
                 type="checkbox"
                 id="dmgBefore"
-                checked={dmgBefore}
+                checked={!dmgBefore}
                 onChange={() => handleCheckboxChange(setDmgBefore)}
               />
               No old damages
@@ -67,7 +103,7 @@ const CheckAndReturn = () => {
               <input
                 type="checkbox"
                 id="dmgBefore"
-                checked={!dmgBefore}
+                checked={dmgBefore}
                 onChange={() => handleCheckboxChange(setDmgBefore)}
               />
               New damages
@@ -254,7 +290,7 @@ const CheckAndReturn = () => {
               <input
                 type="checkbox"
                 id="dmgAfter"
-                checked={dmgAfter}
+                checked={!dmgAfter}
                 onChange={() => handleCheckboxChange(setDmgAfter)}
               />
               No new damages
@@ -263,7 +299,7 @@ const CheckAndReturn = () => {
               <input
                 type="checkbox"
                 id="dmgAfter"
-                checked={!dmgAfter}
+                checked={dmgAfter}
                 onChange={() => handleCheckboxChange(setDmgAfter)}
               />
               New damages
