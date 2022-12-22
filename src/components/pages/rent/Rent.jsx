@@ -22,7 +22,6 @@ const Rent = () => {
   const navigate = useNavigate();
   const [insuranceRate, setInsuranceRate] = useState(0);
   const [deposit, setDeposit] = useState(0);
-  // const deposit = 200;
   const insuranceTable = {
     Silver: 0.3,
     Premium: 0.6,
