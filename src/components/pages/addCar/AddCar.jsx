@@ -8,6 +8,9 @@ import { useMutation } from '@apollo/client';
 import MiddleIcon from '../../groupElement/MiddleIcon';
 
 const AddCar = () => {
+  const handleCheckboxChange = (setFunction) => {
+    setFunction((prevState) => !prevState);
+  };
   const [brand, setBrand] = useState('');
   const { loading, error, data } = useQuery(GET_BRANDS);
   const {
@@ -23,6 +26,8 @@ const AddCar = () => {
   const [year, setYear] = useState(0);
   const [milage, setMilage] = useState(0);
   const [deposit, setDeposit] = useState(0);
+  const [damaged, setDamaged] = useState(false);
+  const [dmgDescription, setDmgDescription] = useState('Damage description');
   const [price, setPrice] = useState(0);
   const [unlimitedMileage, setUnlimitedMileage] = useState(false);
   const [collision, setCollision] = useState(false);
@@ -54,6 +59,8 @@ const AddCar = () => {
     setUnlimitedMileage(false);
     setMilage(0);
     setDeposit(0);
+    setDamaged(false);
+    setDmgDescription('');
     setCollision(false);
     setTheftProtection(false);
     setRoadsideAssistance(false);
@@ -99,6 +106,8 @@ const AddCar = () => {
         milage: parseInt(milage),
         deposit: parseInt(deposit),
         benefits: checkBenefits(),
+        damaged,
+        dmgDescription,
         property: {
           seats,
           doors,
@@ -243,12 +252,6 @@ const AddCar = () => {
       });
     });
   };
-
-  // const removeSmallImage = (index) => {
-  //   const newSmallImages = [...smallImages];
-  //   newSmallImages.splice(index, 1);
-  //   setSmallImages(newSmallImages);
-  // };
 
   return (
     <>
@@ -539,6 +542,34 @@ const AddCar = () => {
                   onChange={(e) => setDescription(e.target.value)}
                 />
               </div>
+
+              <div className={styles.return__form__damage}>
+                <input
+                  type="checkbox"
+                  id="damaged"
+                  checked={!damaged}
+                  onChange={() => handleCheckboxChange(setDamaged)}
+                />
+                Car not damaged
+              </div>
+              <div className={styles.return__form__damage}>
+                <input
+                  type="checkbox"
+                  id="damaged"
+                  checked={damaged}
+                  onChange={() => handleCheckboxChange(setDamaged)}
+                />
+                Car damaged
+              </div>
+              {damaged && (
+                <div className={styles.return__form__textarea}>
+                  <textarea
+                    id="dmgDescription"
+                    onChange={(e) => setDmgDescription(e.target.value)}
+                    defaultValue={dmgDescription}
+                  />
+                </div>
+              )}
 
               <button type="submit" className={styles.button__update}>
                 Create car

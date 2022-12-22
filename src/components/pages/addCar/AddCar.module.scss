@@ -188,3 +188,30 @@
   align-items: center;
   margin: 1rem;
 }
+
+.return__form__damage {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  input {
+    margin: 0.5rem 0.5rem 0.5rem 0;
+  }
+}
+
+.return__form__textarea {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 0.3rem;
+  textarea {
+    // margin: 1rem;
+    min-height: 12rem;
+    outline: none;
+    resize: none;
+    padding: 1rem;
+    width: 100%;
+    border-radius: 0.3rem;
+  }
+}
