@@ -453,6 +453,67 @@ const GET_ALL_RENTS = gql`
   }
 `;
 
+const GET_RENT_BY_ID = gql`
+  query Rent($rentId: ID!) {
+    rent(id: $rentId) {
+      id
+      car {
+        id
+        brand {
+          name
+        }
+        damaged
+        deposit
+        dmgDescription
+        location
+        milage
+        model
+        price
+        year
+      }
+      pickupDate
+      returnDate
+      rated
+      rentPrice
+      deposit
+      additionalCosts
+      depositCollected
+      totalCosts
+      allFinancialSorted
+      depositReturned
+      booking {
+        startDate
+        previousTotalPayment
+        totalPayment
+        newBooking
+        insuranceType
+        firstBookingId
+        endDate
+        id
+      }
+      handlingOverCard {
+        milageBefore
+        milageAfter
+        fullTankAfter
+        fuelCost
+        dmgBefore
+        dmgBeforeDesc
+        dmgAfter
+        dmgAfterDesc
+        regDocAfter
+        ocInsAfter
+        fireExtAfter
+        triangleAfter
+        firstAidKitAfter
+        arealAfter
+        spareWheelAfter
+        gpsAfter
+        userManualAfter
+      }
+    }
+  }
+`;
+
 export {
   GET_ALL_BORROWED_CARS,
   GET_ALL_USERS,
@@ -464,5 +525,6 @@ export {
   GET_CAR_CLASSES,
   GET_ALL_BOOKINGS,
   GET_BOOKING_BY_ID,
-  GET_ALL_RENTS
+  GET_ALL_RENTS,
+  GET_RENT_BY_ID
 };

@@ -21,7 +21,8 @@ const Rent = () => {
   const [endDate, setEndDate] = useState('');
   const navigate = useNavigate();
   const [insuranceRate, setInsuranceRate] = useState(0);
-  const deposit = 200;
+  const [deposit, setDeposit] = useState(0);
+  // const deposit = 200;
   const insuranceTable = {
     Silver: 0.3,
     Premium: 0.6,
@@ -33,7 +34,6 @@ const Rent = () => {
       if (!success) {
         setAlert(message, 'danger');
       } else {
-        // setAlert(message, 'success');
         updatePreviousBooking(rent.id);
         navigate('/bookings');
       }
@@ -52,11 +52,12 @@ const Rent = () => {
   useEffect(() => {
     if (data) {
       const {
-        bookedCar: { startDate, endDate, insuranceType }
+        bookedCar: { startDate, endDate, insuranceType, car }
       } = data;
       setStartDate(new Date(startDate));
       setEndDate(new Date(endDate));
       setInsuranceRate(insuranceTable[insuranceType]);
+      setDeposit(car.deposit);
     }
   }, [data]);
 
@@ -101,16 +102,15 @@ const Rent = () => {
 
   if (error) {
     console.log(error);
-    if (user === null) {
-      return (
-        <div className={styles.rent__wrapper}>
-          <div className={styles.error__message}>
-            <p>You need to be log in to see this page</p>
-          </div>
+  }
+  if (user && user === null) {
+    return (
+      <div className={styles.rent__wrapper}>
+        <div className={styles.error__message}>
+          <p>You need to be log in to see this page</p>
         </div>
-      );
-    }
-    return <p>Something went wrong error</p>;
+      </div>
+    );
   }
 
   const {
@@ -133,6 +133,7 @@ const Rent = () => {
   const handleRentCar = () => {
     const firstBookingId =
       data && data.bookedCar.newBooking ? bookingId : data.bookedCar.firstBookingId;
+
     const input = {
       carId: car.id,
       renterId: booker.id,
@@ -144,7 +145,26 @@ const Rent = () => {
       additionalCosts: 0,
       depositCollected: true, // check if user has
       allFinancialSorted: false,
-      depositReturned: false
+      depositReturned: false,
+      handlingOverCard: {
+        milageBefore: car.milage,
+        milageAfter: car.milage,
+        fullTankAfter: false,
+        fuelCost: 0,
+        dmgBefore: car.damaged,
+        dmgBeforeDesc: car.dmgDescription,
+        dmgAfter: false,
+        dmgAfterDesc: '',
+        regDocAfter: false,
+        ocInsAfter: false,
+        fireExtAfter: false,
+        triangleAfter: false,
+        firstAidKitAfter: false,
+        arealAfter: false,
+        spareWheelAfter: false,
+        gpsAfter: false,
+        userManualAfter: false
+      }
     };
     rentCar({ variables: { input } });
   };
