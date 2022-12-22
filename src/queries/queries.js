@@ -158,6 +158,8 @@ const ALL_CARS = gql`
       year
       milage
       deposit
+      damaged
+      dmgDescription
       property {
         seats
         doors
@@ -270,6 +272,8 @@ const GET_CAR = gql`
       year
       milage
       deposit
+      damaged
+      dmgDescription
       property {
         seats
         doors
@@ -394,6 +398,10 @@ const GET_BOOKING_BY_ID = gql`
         }
         price
         year
+        deposit
+        milage
+        damaged
+        dmgDescription
         location
       }
     }
