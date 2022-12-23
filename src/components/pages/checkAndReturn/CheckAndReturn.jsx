@@ -5,11 +5,10 @@ import { useParams } from 'react-router';
 import { useQuery } from '@apollo/client';
 import AuthContext from '../../../context/auth/authContext';
 import { GET_RENT_BY_ID } from '../../../queries/queries';
-// import AlertContext from '../../../context/alert/alertContext';
-// import { useEffect } from 'react';
-// import { useMutation } from '@apollo/client';
-// import { RENT_CAR, UPDATE_BOOKING } from '../../../mutations/mutations';
-// import { useNavigate } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
+import { UPDATE_RENT } from '../../../mutations/mutations';
+import AlertContext from '../../../context/alert/alertContext';
+import { useNavigate } from 'react-router-dom';
 
 const CheckAndReturn = () => {
   const handleCheckboxChange = (setFunction) => {
@@ -19,9 +18,9 @@ const CheckAndReturn = () => {
   const { rentId } = useParams();
   const authContext = useContext(AuthContext);
   const { user } = authContext;
-  // const alertContext = useContext(AlertContext);
-  // const { setAlert } = alertContext;
-  // const navigate = useNavigate();
+  const alertContext = useContext(AlertContext);
+  const { setAlert } = alertContext;
+  const navigate = useNavigate();
 
   const regDocBefore = true;
   const ocInsBefore = true;
@@ -68,6 +67,24 @@ const CheckAndReturn = () => {
     }
   }, [data]);
 
+  const [updateRent] = useMutation(UPDATE_RENT, {
+    onCompleted: ({ updateRent: { success, message } }) => {
+      if (!success) {
+        setAlert(message, 'danger');
+      } else {
+        setAlert('Handling Over Card completed', 'success');
+        navigate('/rents');
+      }
+    },
+    onError: (error) => {
+      console.log('error:', error.message);
+    },
+    refetchQueries: [
+      { query: GET_RENT_BY_ID, variables: { rentId } }
+      // { query: GET_RENTS }
+    ]
+  });
+
   if (user && user === null) {
     return (
       <div className={styles.page__wrapper}>
@@ -96,16 +113,28 @@ const CheckAndReturn = () => {
     );
   }
 
-  // const {
-  //   rent: { handlingOverCard }
-  // } = data;
+  const calculateAdditionalCost = () => {
+    let cost = 0;
+    if (!regDocAfter) cost += 25;
+    if (!ocInsAfter) cost += 25;
+    if (!fireExtAfter) cost += 50;
+    if (!spareWheelAfter) cost += 100;
+    if (!triangleAfter) cost += 25;
+    if (!firstAidKitAfter) cost += 20;
+    if (!arealAfter) cost += 15;
+    if (!gpsAfter) cost += 100;
+    if (!userManualAfter) cost += 10;
+    if (!fullTankAfter) cost += fuelCost;
+    return cost;
+  };
 
-  // console.log('handlingOverCard: ', handlingOverCard);
+  // console.log(calculateAdditionalCost());
 
   const handleUpdateRent = () => {
     const input = {
-      rentId,
+      id: rentId,
       returnDate: new Date(),
+      additionalCosts: calculateAdditionalCost(),
       handlingOverCard: {
         milageBefore,
         milageAfter,
@@ -126,8 +155,7 @@ const CheckAndReturn = () => {
         userManualAfter
       }
     };
-    // rentCar({ variables: { input } });
-    console.log('input: ', input);
+    updateRent({ variables: { input } });
   };
 
   return (
@@ -374,8 +402,47 @@ const CheckAndReturn = () => {
                 </div>
               </div>
             </div>
+            <div className={styles.return__footer__summary}>
+              <div className={styles.payment__summary__right}>
+                <div className={styles.payment__summary__right__title}>
+                  <h3>Addition costs:</h3>
+                </div>
+                <div className={styles.payment__summary__right__info}>
+                  <div className={styles.payment__summary__right__info__left}>
+                    {!regDocAfter && <p>Registration Documents:</p>}
+                    {!ocInsAfter && <p>OC insurance:</p>}
+                    {!fireExtAfter && <p>Fire extinguisher:</p>}
+                    {!spareWheelAfter && <p>Spare wheel:</p>}
+                    {!triangleAfter && <p>Triangle:</p>}
+                    {!firstAidKitAfter && <p>First Aid Kit:</p>}
+                    {!arealAfter && <p>Areal:</p>}
+                    {!gpsAfter && <p>Additional GPS:</p>}
+                    {!userManualAfter && <p>User Manual:</p>}
+                    {!fullTankAfter && <p>Cost of fuel:</p>}
+
+                    <p>
+                      <strong>Total price</strong>
+                    </p>
+                  </div>
+                  <div className={styles.payment__summary__right__info__right}>
+                    {!regDocAfter && <p>€25</p>}
+                    {!ocInsAfter && <p>€25</p>}
+                    {!fireExtAfter && <p>€50</p>}
+                    {!spareWheelAfter && <p>€100</p>}
+                    {!triangleAfter && <p>€25</p>}
+                    {!firstAidKitAfter && <p>€20</p>}
+                    {!arealAfter && <p>€15</p>}
+                    {!gpsAfter && <p>€100</p>}
+                    {!userManualAfter && <p>€10</p>}
+                    {!fullTankAfter && <p>€{fuelCost}</p>}
+                    <p>
+                      <strong>{`TOTAL: €${calculateAdditionalCost()}`}</strong>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div className={styles.return__footer}>
-              <div className={styles.return__footer__element}></div>
               <button className={styles.return__footer__button} onClick={() => handleUpdateRent()}>
                 Confirm return
               </button>
