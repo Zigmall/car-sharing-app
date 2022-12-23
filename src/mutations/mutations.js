@@ -396,6 +396,39 @@ const RENT_CAR = gql`
   }
 `;
 
+const UPDATE_RENT = gql`
+  mutation UpdateRent($input: UpdateRentInput!) {
+    updateRent(input: $input) {
+      message
+      success
+      rent {
+        id
+        returnDate
+        additionalCosts
+        handlingOverCard {
+          milageBefore
+          milageAfter
+          fullTankAfter
+          fuelCost
+          dmgBefore
+          dmgBeforeDesc
+          dmgAfter
+          dmgAfterDesc
+          regDocAfter
+          ocInsAfter
+          fireExtAfter
+          triangleAfter
+          firstAidKitAfter
+          arealAfter
+          spareWheelAfter
+          gpsAfter
+          userManualAfter
+        }
+      }
+    }
+  }
+`;
+
 export {
   DELETE_USER,
   UPDATE_USER,
@@ -409,5 +442,6 @@ export {
   UPLOAD_IMAGE,
   BOOK_CAR,
   UPDATE_BOOKING,
-  RENT_CAR
+  RENT_CAR,
+  UPDATE_RENT
 };
