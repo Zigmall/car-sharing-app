@@ -16,6 +16,7 @@ import ReturnCars from './components/pages/returnCars/ReturnCars';
 import Rents from './components/pages/rents/Rents';
 import CheckAndReturn from './components/pages/checkAndReturn/CheckAndReturn';
 import { createUploadLink } from 'apollo-upload-client';
+import ReturnSummary from './components/pages/rentSummary/ReturnSummary';
 import {
   ApolloClient,
   InMemoryCache,
@@ -89,6 +90,7 @@ const App = () => {
                 <Route path="/users" element={<Users />} />
                 <Route path="/rents/" element={<Rents />} />
                 <Route path="/rents/:rentId" element={<CheckAndReturn />} />
+                <Route path="/rent-summary/:rentId" element={<ReturnSummary />} />
               </Routes>
             </div>
           </AlertState>
