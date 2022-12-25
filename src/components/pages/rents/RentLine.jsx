@@ -10,7 +10,7 @@ const RentLine = ({ rent: { id, renter, pickupDate, returnDate, car, booking } }
     navigate(`/rents/${id}`);
   };
   const handleEdit = () => {
-    navigate(`/update-booking/${id}`);
+    navigate(`/rent-summary/${id}`);
   };
 
   const getCurrentBooking = () => {
