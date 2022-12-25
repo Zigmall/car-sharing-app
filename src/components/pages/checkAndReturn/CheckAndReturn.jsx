@@ -57,13 +57,13 @@ const CheckAndReturn = () => {
   useEffect(() => {
     if (data) {
       const {
-        rent: { car }
+        rent: { handlingOverCard }
       } = data;
       // console.log('car: ', car);
-      setMilageBefore(car.milage);
-      setDmgBefore(car.damaged);
-      setDmgBeforeDesc(car.dmgDescription);
-      setMilageAfter(car.milage);
+      setMilageBefore(handlingOverCard.milageBefore);
+      setDmgBefore(handlingOverCard.dmgBefore);
+      setDmgBeforeDesc(handlingOverCard.dmgBeforeDesc);
+      setMilageAfter(handlingOverCard.milageBefore);
     }
   }, [data]);
 
