@@ -48,7 +48,31 @@ const ReturnSummary = () => {
       </div>
     );
   }
-  console.log('data: ', data);
+  const {
+    rent: {
+      returnDate,
+      rentPrice,
+      additionalCosts,
+      allFinancialSorted,
+      totalCosts,
+      deposit,
+      depositReturned
+    }
+  } = data;
+
+  const transformDate = (date) => {
+    if (!date) {
+      return 'Not returned yet';
+    }
+    const result = new Date(date).toLocaleDateString('en-GB', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric'
+    });
+    return result;
+  };
 
   return (
     <div className={styles.rentSummary__wrapper}>
@@ -57,75 +81,109 @@ const ReturnSummary = () => {
       </div>
       <div className={styles.rentSummary__content}>
         <div className={styles.rentSummary__content__wrapper}>
-          <div className={styles.rentSummary__content__left}>
+          <div
+            className={[
+              styles.rentSummary__content__element,
+              returnDate ? styles.background__green : styles.background__red
+            ].join(' ')}>
             <div className={styles.rentSummary__content__left__header}>
               <h2>Car return</h2>
             </div>
             <div className={styles.rentSummary__content__left__body}>
               <div className={styles.rentSummary__content__left__body__item}>
-                <p>Return Date 2021-01-01</p>
+                <p>
+                  <strong>Return Date</strong>
+                </p>
+                <p>{transformDate(returnDate)}</p>
               </div>
-              <div className={styles.rentSummary__content__left__body__item}>
-                <p>Return Time 12:00</p>
-              </div>
-              <div className={styles.rentSummary__content__left__body__item}>
-                <p>Return Location Location</p>
-              </div>
+              <br />
+              {returnDate && (
+                <div className={styles.rentSummary__content__left__body__item}>
+                  <p>
+                    <strong>Return Location</strong>
+                  </p>
+                  <p>Warszawa</p>
+                </div>
+              )}
             </div>
           </div>
           <div className={styles.rentSummary__content__left__body__item}>
-            <button className={styles.rentSummary__content__button}>
+            <button
+              disabled={returnDate ? false : true}
+              className={returnDate ? styles.rentSummary__content__button : styles.grey_button}
+              onClick={() => console.log(123)}>
               Check Handling Over Card
             </button>
           </div>
         </div>
+
         <div className={styles.rentSummary__content__wrapper}>
-          <div className={styles.rentSummary__content__middle}>
+          <div
+            className={[
+              styles.rentSummary__content__element,
+              allFinancialSorted ? styles.background__green : styles.background__red
+            ].join(' ')}>
             <div className={styles.rentSummary__content__middle__header}>
               <h2>Financial</h2>
             </div>
+
+            <br />
             <div className={styles.rentSummary__content__middle__body}>
               <div className={styles.rentSummary__content__middle__body__item}>
-                <p>Return Date</p>
-                <p>2021-01-01</p>
+                <p>
+                  <strong>Total costs: €{rentPrice + additionalCosts}</strong>
+                </p>
+                <br />
+                <p>Already paid: €{allFinancialSorted ? totalCosts : rentPrice}</p>
+                <br />
+                <p>Additional costs: €{additionalCosts}</p>
+                <br />
+                <p>
+                  <strong>To be paid: €{allFinancialSorted ? 0 : additionalCosts}</strong>
+                </p>
               </div>
-              <div className={styles.rentSummary__content__middle__body__item}>
-                <p>Return Time</p>
-                <p>12:00</p>
-              </div>
-              <div className={styles.rentSummary__content__middle__body__item}>
-                <p>Return Location</p>
-                <p>Location</p>
-              </div>
+              <br />
             </div>
           </div>
           <div className={styles.rentSummary__content__left__body__item}>
-            <button className={styles.rentSummary__content__button}>All financial completed</button>
+            <button
+              disabled={returnDate ? false : true}
+              className={returnDate ? styles.rentSummary__content__button : styles.grey_button}
+              onClick={() => console.log(4567)}>
+              All financial completed
+            </button>
           </div>
         </div>
+
         <div className={styles.rentSummary__content__wrapper}>
-          <div className={styles.rentSummary__content__right}>
+          <div
+            className={[
+              styles.rentSummary__content__element,
+              depositReturned ? styles.background__green : styles.background__red
+            ].join(' ')}>
             <div className={styles.rentSummary__content__right__header}>
-              <h2>Confirmation and deposit</h2>
+              <h2>Deposit</h2>
             </div>
             <div className={styles.rentSummary__content__right__body}>
               <div className={styles.rentSummary__content__right__body__item}>
-                <p>Return Date</p>
-                <p>2021-01-01</p>
+                <p>Deposit Amount: €{deposit}</p>
               </div>
+              <br />
               <div className={styles.rentSummary__content__right__body__item}>
-                <p>Return Time</p>
-                <p>12:00</p>
-              </div>
-              <div className={styles.rentSummary__content__right__body__item}>
-                <p>Return Location</p>
-                <p>Location</p>
+                <p>
+                  <strong>Returned: {depositReturned ? 'Yes' : 'No'}</strong>
+                </p>
               </div>
             </div>
           </div>
           <div className={styles.rentSummary__content__left__body__item}>
-            <button className={styles.rentSummary__content__button}>
-              Complete and return deposit
+            <button
+              disabled={allFinancialSorted ? false : true}
+              className={
+                allFinancialSorted ? styles.rentSummary__content__button : styles.grey_button
+              }
+              onClick={() => console.log(899)}>
+              Return deposit
             </button>
           </div>
         </div>
