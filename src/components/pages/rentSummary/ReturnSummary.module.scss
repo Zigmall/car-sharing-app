@@ -25,46 +25,34 @@
   margin: 1rem;
 }
 
-.rentSummary__content__left {
+.rentSummary__content__element {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  text-align: center;
   height: 13rem;
   width: 100%;
   border: 1px solid #e0e0e0;
   border-radius: 0.3rem;
   padding-bottom: 1.5rem;
   background-color: rgba(234, 151, 92, 0.337);
+}
+
+.background__red {
+  background-color: rgba(234, 151, 92, 0.337);
+}
+
+.background__green {
   background-color: rgba(35, 246, 84, 0.175);
 }
 
-.rentSummary__content__middle {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 13rem;
-  width: 100%;
-  border: 1px solid #e0e0e0;
+.grey_button {
+  margin-top: 1.5rem;
+  padding: 0.5rem 2rem;
   border-radius: 0.3rem;
-  padding-bottom: 1.5rem;
-  background-color: rgba(234, 151, 92, 0.337);
-  // background-color: rgba(35, 246, 84, 0.175);
-}
-
-.rentSummary__content__right {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 13rem;
-  width: 100%;
-  border: 1px solid #e0e0e0;
-  border-radius: 0.3rem;
-  padding-bottom: 1.5rem;
-  background-color: rgba(234, 151, 92, 0.337);
-  // background-color: rgba(35, 246, 84, 0.175);
+  background-color: #e0e0e0;
+  color: white;
+  cursor: pointer;
 }
 
 .rentSummary__content__button {
