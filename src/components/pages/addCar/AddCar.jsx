@@ -317,6 +317,10 @@ const AddCar = () => {
                         />
                       </div>
                     </div>
+                  </div>
+                </div>
+                <div className={styles.form__line_top}>
+                  <div className={styles.form__input__element}>
                     <label className={styles.form__label}>Brand</label>
                     <select
                       className={styles.form__select}
@@ -329,7 +333,8 @@ const AddCar = () => {
                         </option>
                       ))}
                     </select>
-
+                  </div>
+                  <div className={styles.form__input__element}>
                     <label className={styles.form__label}>Car Class</label>
                     <select
                       className={styles.form__select}
