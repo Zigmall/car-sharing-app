@@ -17,14 +17,6 @@ import Rents from './components/pages/rents/Rents';
 import CheckAndReturn from './components/pages/checkAndReturn/CheckAndReturn';
 import { createUploadLink } from 'apollo-upload-client';
 import ReturnSummary from './components/pages/rentSummary/ReturnSummary';
-import {
-  ApolloClient,
-  InMemoryCache,
-  // HttpLink,
-  ApolloProvider,
-  ApolloLink
-  // concat
-} from '@apollo/client';
 import AuthState from './context/auth/AuthState';
 import { loadUser } from './context/auth/AuthState';
 import AddCar from './components/pages/addCar/AddCar';
@@ -32,12 +24,19 @@ import Book from './components/pages/book/Book';
 import Bookings from './components/pages/bookings/Bookings';
 import Rent from './components/pages/rent/Rent';
 import UpdateBooking from './components/pages/updateBooking/UpdateBooking';
+import HandlingOverCard from './components/pages/handlingOverCard/HandlingOverCard';
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  ApolloLink
+  // concat
+} from '@apollo/client';
 
 const uploadLink = createUploadLink({
   uri: 'http://localhost:5000/'
 });
 // const URL = 'https://desolate-spire-04068.herokuapp.com';
-// const URL = 'http://localhost:5000';
 
 const authenticationLink = new ApolloLink((operation, forward) => {
   const token = loadUser();
@@ -49,15 +48,6 @@ const authenticationLink = new ApolloLink((operation, forward) => {
   });
   return forward(operation);
 });
-
-// const httpLink = new HttpLink({
-//   uri: URL
-// });
-
-// const client = new ApolloClient({
-//   link: concat(authenticationLink, httpLink),
-//   cache: new InMemoryCache()
-// });
 
 const client = new ApolloClient({
   link: ApolloLink.from([authenticationLink, uploadLink]),
@@ -90,6 +80,7 @@ const App = () => {
                 <Route path="/users" element={<Users />} />
                 <Route path="/rents/" element={<Rents />} />
                 <Route path="/rents/:rentId" element={<CheckAndReturn />} />
+                <Route path="/rents/handling-over-card/:rentId" element={<HandlingOverCard />} />
                 <Route path="/rent-summary/:rentId" element={<ReturnSummary />} />
               </Routes>
             </div>
