@@ -4,17 +4,50 @@ import { useParams } from 'react-router';
 import { useQuery } from '@apollo/client';
 import AuthContext from '../../../context/auth/authContext';
 import { GET_RENT_BY_ID } from '../../../queries/queries';
-// import { useMutation } from '@apollo/client';
-// import { UPDATE_RENT } from '../../../mutations/mutations';
-// import AlertContext from '../../../context/alert/alertContext';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
+import { UPDATE_RENT } from '../../../mutations/mutations';
+import AlertContext from '../../../context/alert/alertContext';
 const ReturnSummary = () => {
   const { rentId } = useParams();
   const authContext = useContext(AuthContext);
   const { user } = authContext;
-  // const alertContext = useContext(AlertContext);
-  // const { setAlert } = alertContext;
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
+  const alertContext = useContext(AlertContext);
+  const { setAlert } = alertContext;
+
+  const [updateRent] = useMutation(UPDATE_RENT, {
+    onCompleted: ({ updateRent: { success, message } }) => {
+      if (!success) {
+        setAlert(message, 'danger');
+      } else {
+        setAlert('Data updated successfully', 'success');
+      }
+    },
+    onError: (error) => {
+      console.log('error:', error.message);
+    },
+    refetchQueries: [{ query: GET_RENT_BY_ID, variables: { rentId } }]
+  });
+
+  const handleUpdateFinanceInRent = () => {
+    const input = {
+      id: rentId,
+      totalCosts: parseInt(rentPrice + additionalCosts),
+      allFinancialSorted: true
+    };
+    updateRent({ variables: { input } });
+    console.log('input: ', input);
+  };
+
+  const handleUpdateDepositInRent = () => {
+    const input = {
+      id: rentId,
+      depositReturned: true
+    };
+    updateRent({ variables: { input } });
+    console.log('input: ', input);
+  };
 
   const { loading, error, data } = useQuery(GET_RENT_BY_ID, {
     variables: { rentId }
@@ -56,7 +89,8 @@ const ReturnSummary = () => {
       allFinancialSorted,
       totalCosts,
       deposit,
-      depositReturned
+      depositReturned,
+      returnLocation
     }
   } = data;
 
@@ -72,6 +106,10 @@ const ReturnSummary = () => {
       minute: 'numeric'
     });
     return result;
+  };
+
+  const displayHandlingOverCard = () => {
+    navigate(`/rents/handling-over-card/${rentId}`);
   };
 
   return (
@@ -102,7 +140,7 @@ const ReturnSummary = () => {
                   <p>
                     <strong>Return Location</strong>
                   </p>
-                  <p>Warszawa</p>
+                  <p>{returnLocation}</p>
                 </div>
               )}
             </div>
@@ -111,7 +149,7 @@ const ReturnSummary = () => {
             <button
               disabled={returnDate ? false : true}
               className={returnDate ? styles.rentSummary__content__button : styles.grey_button}
-              onClick={() => console.log(123)}>
+              onClick={() => displayHandlingOverCard()}>
               Check Handling Over Card
             </button>
           </div>
@@ -147,9 +185,13 @@ const ReturnSummary = () => {
           </div>
           <div className={styles.rentSummary__content__left__body__item}>
             <button
-              disabled={returnDate ? false : true}
-              className={returnDate ? styles.rentSummary__content__button : styles.grey_button}
-              onClick={() => console.log(4567)}>
+              disabled={!allFinancialSorted && returnDate ? false : true}
+              className={
+                !allFinancialSorted && returnDate
+                  ? styles.rentSummary__content__button
+                  : styles.grey_button
+              }
+              onClick={() => handleUpdateFinanceInRent()}>
               All financial completed
             </button>
           </div>
@@ -178,11 +220,13 @@ const ReturnSummary = () => {
           </div>
           <div className={styles.rentSummary__content__left__body__item}>
             <button
-              disabled={allFinancialSorted ? false : true}
+              disabled={!depositReturned && allFinancialSorted ? false : true}
               className={
-                allFinancialSorted ? styles.rentSummary__content__button : styles.grey_button
+                !depositReturned && allFinancialSorted
+                  ? styles.rentSummary__content__button
+                  : styles.grey_button
               }
-              onClick={() => console.log(899)}>
+              onClick={() => handleUpdateDepositInRent()}>
               Return deposit
             </button>
           </div>
