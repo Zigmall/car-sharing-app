@@ -429,6 +429,21 @@ const UPDATE_RENT = gql`
   }
 `;
 
+const UPDATE_CAR_FROM_HANDLING_OVER_CARD = gql`
+  mutation UpdateCarFromHandlingOverCard($input: UpdateCarInput!) {
+    updateCar(input: $input) {
+      message
+      success
+      car {
+        milage
+        damaged
+        dmgDescription
+        location
+      }
+    }
+  }
+`;
+
 export {
   DELETE_USER,
   UPDATE_USER,
@@ -443,5 +458,6 @@ export {
   BOOK_CAR,
   UPDATE_BOOKING,
   RENT_CAR,
-  UPDATE_RENT
+  UPDATE_RENT,
+  UPDATE_CAR_FROM_HANDLING_OVER_CARD
 };
