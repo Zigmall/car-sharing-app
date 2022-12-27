@@ -218,32 +218,6 @@ const CREATE_CAR = gql`
   }
 `;
 
-const BOOK_CAR = gql`
-  mutation BookCar($input: BookCarInput!) {
-    bookCar(input: $input) {
-      success
-      message
-      bookedCar {
-        id
-        startDate
-        endDate
-        insuranceType
-        booker {
-          id
-          firstName
-        }
-        car {
-          id
-          model
-          brand {
-            name
-          }
-        }
-      }
-    }
-  }
-`;
-
 const SIGN_UP = gql`
   mutation SignUp($input: SignUp!) {
     signUp(input: $input) {
@@ -324,6 +298,152 @@ const UPLOAD_IMAGE = gql`
   }
 `;
 
+const BOOK_CAR = gql`
+  mutation BookCar($input: BookCarInput!) {
+    bookCar(input: $input) {
+      success
+      message
+      bookedCar {
+        id
+        startDate
+        endDate
+        insuranceType
+        currentPaid
+        previousTotalPayment
+        totalPayment
+        newBooking
+        booker {
+          id
+          firstName
+        }
+        car {
+          id
+          model
+          brand {
+            name
+          }
+        }
+      }
+    }
+  }
+`;
+
+const UPDATE_BOOKING = gql`
+  mutation UpdateBookedCar($input: UpdateBookedCarInput!) {
+    updateBookedCar(input: $input) {
+      success
+      message
+      bookedCar {
+        id
+        booker {
+          firstName
+          lastName
+        }
+        startDate
+        endDate
+        newBooking
+        totalPayment
+        previousTotalPayment
+        insuranceType
+        firstBookingId
+        currentPaid
+        bookingChanges {
+          cancelled
+          moneyReturned
+          rentId {
+            id
+          }
+          newBookingId {
+            id
+          }
+        }
+        car {
+          brand {
+            name
+          }
+          model
+        }
+      }
+    }
+  }
+`;
+
+const RENT_CAR = gql`
+  mutation Rent($input: CreateRentInput!) {
+    createRent(input: $input) {
+      success
+      message
+      rent {
+        id
+        car {
+          id
+        }
+        renter {
+          id
+          firstName
+          lastName
+        }
+        pickupDate
+        rated
+        rentPrice
+        deposit
+        additionalCosts
+        depositCollected
+        allFinancialSorted
+        depositReturned
+      }
+    }
+  }
+`;
+
+const UPDATE_RENT = gql`
+  mutation UpdateRent($input: UpdateRentInput!) {
+    updateRent(input: $input) {
+      message
+      success
+      rent {
+        id
+        returnDate
+        additionalCosts
+        handlingOverCard {
+          milageBefore
+          milageAfter
+          fullTankAfter
+          fuelCost
+          dmgBefore
+          dmgBeforeDesc
+          dmgAfter
+          dmgAfterDesc
+          regDocAfter
+          ocInsAfter
+          fireExtAfter
+          triangleAfter
+          firstAidKitAfter
+          arealAfter
+          spareWheelAfter
+          gpsAfter
+          userManualAfter
+        }
+      }
+    }
+  }
+`;
+
+const UPDATE_CAR_FROM_HANDLING_OVER_CARD = gql`
+  mutation UpdateCarFromHandlingOverCard($input: UpdateCarInput!) {
+    updateCar(input: $input) {
+      message
+      success
+      car {
+        milage
+        damaged
+        dmgDescription
+        location
+      }
+    }
+  }
+`;
+
 export {
   DELETE_USER,
   UPDATE_USER,
@@ -335,5 +455,9 @@ export {
   SIGN_UP,
   CREATE_COMMENT,
   UPLOAD_IMAGE,
-  BOOK_CAR
+  BOOK_CAR,
+  UPDATE_BOOKING,
+  RENT_CAR,
+  UPDATE_RENT,
+  UPDATE_CAR_FROM_HANDLING_OVER_CARD
 };

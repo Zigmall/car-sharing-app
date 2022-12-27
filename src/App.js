@@ -13,26 +13,30 @@ import AlertState from './context/alert/AlertState';
 import Alerts from './components/alerts/Alerts';
 import Login from './components/auth/Login';
 import ReturnCars from './components/pages/returnCars/ReturnCars';
+import Rents from './components/pages/rents/Rents';
+import CheckAndReturn from './components/pages/checkAndReturn/CheckAndReturn';
 import { createUploadLink } from 'apollo-upload-client';
+import ReturnSummary from './components/pages/rentSummary/ReturnSummary';
+import AuthState from './context/auth/AuthState';
+import { loadUser } from './context/auth/AuthState';
+import AddCar from './components/pages/addCar/AddCar';
+import Book from './components/pages/book/Book';
+import Bookings from './components/pages/bookings/Bookings';
+import Rent from './components/pages/rent/Rent';
+import UpdateBooking from './components/pages/updateBooking/UpdateBooking';
+import HandlingOverCard from './components/pages/handlingOverCard/HandlingOverCard';
 import {
   ApolloClient,
   InMemoryCache,
-  // HttpLink,
   ApolloProvider,
   ApolloLink
   // concat
 } from '@apollo/client';
-import AuthState from './context/auth/AuthState';
-import { loadUser } from './context/auth/AuthState';
-import AddCar from './components/pages/addCar/AddCar';
-import OrderCar from './components/pages/order/OrderCar';
-import Book from './components/pages/book/Book';
 
 const uploadLink = createUploadLink({
   uri: 'http://localhost:5000/'
 });
 // const URL = 'https://desolate-spire-04068.herokuapp.com';
-// const URL = 'http://localhost:5000';
 
 const authenticationLink = new ApolloLink((operation, forward) => {
   const token = loadUser();
@@ -44,15 +48,6 @@ const authenticationLink = new ApolloLink((operation, forward) => {
   });
   return forward(operation);
 });
-
-// const httpLink = new HttpLink({
-//   uri: URL
-// });
-
-// const client = new ApolloClient({
-//   link: concat(authenticationLink, httpLink),
-//   cache: new InMemoryCache()
-// });
 
 const client = new ApolloClient({
   link: ApolloLink.from([authenticationLink, uploadLink]),
@@ -76,11 +71,17 @@ const App = () => {
                 <Route path="/cars/:carId" element={<CarDetails />} />
                 <Route path="/return-car" element={<ReturnCars />} />
                 <Route path="/return-car/:userId" element={<ReturnCars />} />
-                <Route path="/rentals" element={<Rentals />} />
+                <Route path="/bookings" element={<Bookings />} />
+                <Route path="/bookings/:userId" element={<Rent />} />
+                <Route path="/book-car/:carId" element={<Book />} />
+                <Route path="/update-booking/:userId" element={<UpdateBooking />} />
+                <Route path="/all-cars" element={<Rentals />} />
                 <Route path="/users/:userId" element={<User />} />
                 <Route path="/users" element={<Users />} />
-                <Route path="/order-car" element={<OrderCar />} />
-                <Route path="book-car/:carId" element={<Book />} />
+                <Route path="/rents/" element={<Rents />} />
+                <Route path="/rents/:rentId" element={<CheckAndReturn />} />
+                <Route path="/rents/handling-over-card/:rentId" element={<HandlingOverCard />} />
+                <Route path="/rent-summary/:rentId" element={<ReturnSummary />} />
               </Routes>
             </div>
           </AlertState>

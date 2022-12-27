@@ -29,7 +29,6 @@ const Users = () => {
         </div>
       );
     }
-    console.log(error);
     return <p>Something went wrong error</p>;
   }
   return (
@@ -41,11 +40,13 @@ const Users = () => {
               <th>Name</th>
               <th>Email</th>
               <th>Phone</th>
+              <th>Edit</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>
-            {data.allUsers.map((user) => (
-              <UserRow key={user.id} user={user} />
+            {data.allUsers.map((userElement) => (
+              <UserRow key={userElement.id} user={userElement} />
             ))}
           </tbody>
         </table>

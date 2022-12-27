@@ -1,0 +1,60 @@
+.bookings__wrapper {
+  margin-left: 12.9rem;
+}
+
+.bookings__table {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem auto;
+  width: 100%;
+}
+
+.error__message {
+  font-size: 25px;
+  font-weight: bold;
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.button__wrapper {
+  padding: 0.4rem 1rem;
+  border-radius: 0.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0.5rem auto;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid black;
+}
+
+.button__wrapper:hover {
+  cursor: pointer;
+  border: 1px solid;
+  color: black;
+}
+
+.button__rent {
+  color: #0074ef;
+}
+
+.button__rent:hover {
+  background-color: #0074ef;
+  color: white;
+}
+
+.button__update {
+  color: #0074ef;
+}
+
+.button__update:hover {
+  background-color: #0074ef;
+  color: white;
+}
+
+.button__cancelBooking {
+  color: red;
+}
+
+.button__cancelBooking:hover {
+  background-color: rgba(239, 19, 30, 0.902);
+}

@@ -52,7 +52,6 @@ const Book = () => {
   const { changeTab } = carContext;
   const authContext = useContext(AuthContext);
   const { user } = authContext;
-  const deposit = 200;
   const insuranceTable = {
     Silver: 0.3,
     Premium: 0.6,
@@ -86,7 +85,11 @@ const Book = () => {
       bookerId: user.id,
       startDate,
       endDate,
-      insuranceType
+      insuranceType,
+      currentPaid: calculateTotalPrice(insuranceRate),
+      previousTotalPayment: 0,
+      totalPayment: calculateTotalPrice(insuranceRate),
+      newBooking: true
     };
     bookCar({ variables: { input } });
   };
@@ -103,8 +106,7 @@ const Book = () => {
   const calculateTotalPrice = (insuranceRate) => {
     return (
       Math.ceil((endDate - startDate) / 86400000) * car.price +
-      calculateInsurancePrice(insuranceRate) +
-      deposit
+      calculateInsurancePrice(insuranceRate)
     );
   };
 
@@ -215,10 +217,13 @@ const Book = () => {
             </div>
           )}
           {showInsuranceOptions && (
-            <Insurance
-              setInsurance={setInsurance}
-              calculateInsurancePrice={calculateInsurancePrice}
-            />
+            <div className={styles.insurance__options}>
+              <Insurance
+                setInsurance={setInsurance}
+                calculateInsurancePrice={calculateInsurancePrice}
+                active={insuranceType}
+              />
+            </div>
           )}
           {showPaymentSummary && (
             <>
@@ -256,16 +261,18 @@ const Book = () => {
                       <p>End Date</p>
                       <p>Price per day</p>
                       <p>Insurance</p>
-                      <p>Deposit</p>
-                      <p>Total price</p>
+                      <p>
+                        <strong>Total price</strong>
+                      </p>
                     </div>
                     <div className={styles.payment__summary__right__info__right}>
                       <p>{startDate && startDate.toLocaleString()}</p>
                       <p>{endDate && endDate.toLocaleString()}</p>
                       <p>€{car.price}</p>
                       <p>€{calculateInsurancePrice(insuranceRate)}</p>
-                      <p>€{deposit}</p>
-                      <p>€{calculateTotalPrice(insuranceRate)}</p>
+                      <p>
+                        <strong>€{calculateTotalPrice(insuranceRate)}</strong>
+                      </p>
                     </div>
                   </div>
                 </div>

@@ -156,6 +156,10 @@ const ALL_CARS = gql`
         name
       }
       year
+      milage
+      deposit
+      damaged
+      dmgDescription
       property {
         seats
         doors
@@ -266,6 +270,10 @@ const GET_CAR = gql`
         name
       }
       year
+      milage
+      deposit
+      damaged
+      dmgDescription
       property {
         seats
         doors
@@ -297,6 +305,217 @@ const GET_CAR = gql`
   }
 `;
 
+const GET_ALL_BOOKINGS = gql`
+  query Bookers {
+    bookedCars {
+      id
+      booker {
+        firstName
+        lastName
+      }
+      startDate
+      endDate
+      newBooking
+      totalPayment
+      previousTotalPayment
+      insuranceType
+      firstBookingId
+      currentPaid
+      bookingChanges {
+        cancelled
+        moneyReturned
+        rentId {
+          id
+        }
+        newBookingId {
+          id
+        }
+      }
+      car {
+        brand {
+          name
+        }
+        model
+      }
+    }
+  }
+`;
+
+const GET_BOOKING_BY_ID = gql`
+  query BookingById($bookingId: ID!) {
+    bookedCar(id: $bookingId) {
+      id
+      startDate
+      endDate
+      newBooking
+      insuranceType
+      firstBookingId
+      currentPaid
+      previousTotalPayment
+      totalPayment
+      bookingChanges {
+        cancelled
+        moneyReturned
+        rentId {
+          id
+        }
+        newBookingId {
+          id
+        }
+      }
+      booker {
+        id
+        firstName
+        lastName
+        email
+        mobile
+        isAdmin
+        address {
+          country
+          city
+          street
+          houseNumber
+          flatNumber
+          postCode
+        }
+      }
+      car {
+        id
+        brand {
+          id
+          name
+        }
+        model
+        carClass {
+          id
+          name
+        }
+        picturePath {
+          url
+        }
+        pictures {
+          url
+        }
+        price
+        year
+        deposit
+        milage
+        damaged
+        dmgDescription
+        location
+      }
+    }
+  }
+`;
+
+const GET_ALL_RENTS = gql`
+  query Rents {
+    rents {
+      id
+      car {
+        id
+        brand {
+          name
+        }
+        model
+      }
+      renter {
+        firstName
+        lastName
+      }
+      booking {
+        id
+        startDate
+        endDate
+        insuranceType
+        newBooking
+
+        bookingChanges {
+          newBookingId {
+            id
+          }
+          rentId {
+            id
+          }
+        }
+      }
+      pickupDate
+      returnDate
+      returnLocation
+      rated
+      rentPrice
+      deposit
+      additionalCosts
+      depositCollected
+      totalCosts
+      allFinancialSorted
+      depositReturned
+    }
+  }
+`;
+
+const GET_RENT_BY_ID = gql`
+  query Rent($rentId: ID!) {
+    rent(id: $rentId) {
+      id
+      car {
+        id
+        brand {
+          name
+        }
+        damaged
+        deposit
+        dmgDescription
+        location
+        milage
+        model
+        price
+        year
+      }
+      pickupDate
+      returnDate
+      returnLocation
+      rated
+      rentPrice
+      deposit
+      additionalCosts
+      depositCollected
+      totalCosts
+      allFinancialSorted
+      depositReturned
+      booking {
+        startDate
+        previousTotalPayment
+        totalPayment
+        newBooking
+        insuranceType
+        firstBookingId
+        endDate
+        id
+      }
+      handlingOverCard {
+        milageBefore
+        milageAfter
+        fullTankAfter
+        fuelCost
+        dmgBefore
+        dmgBeforeDesc
+        dmgAfter
+        dmgAfterDesc
+        regDocAfter
+        ocInsAfter
+        fireExtAfter
+        triangleAfter
+        firstAidKitAfter
+        arealAfter
+        spareWheelAfter
+        gpsAfter
+        userManualAfter
+      }
+    }
+  }
+`;
+
 export {
   GET_ALL_BORROWED_CARS,
   GET_ALL_USERS,
@@ -305,5 +524,9 @@ export {
   GET_CURRENT_USER,
   GET_BRANDS,
   GET_CAR,
-  GET_CAR_CLASSES
+  GET_CAR_CLASSES,
+  GET_ALL_BOOKINGS,
+  GET_BOOKING_BY_ID,
+  GET_ALL_RENTS,
+  GET_RENT_BY_ID
 };
