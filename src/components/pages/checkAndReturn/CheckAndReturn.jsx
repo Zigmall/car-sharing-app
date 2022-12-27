@@ -6,7 +6,7 @@ import { useQuery } from '@apollo/client';
 import AuthContext from '../../../context/auth/authContext';
 import { GET_RENT_BY_ID } from '../../../queries/queries';
 import { useMutation } from '@apollo/client';
-import { UPDATE_RENT } from '../../../mutations/mutations';
+import { UPDATE_RENT, UPDATE_CAR_FROM_HANDLING_OVER_CARD } from '../../../mutations/mutations';
 import AlertContext from '../../../context/alert/alertContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -49,10 +49,22 @@ const CheckAndReturn = () => {
   const [spareWheelAfter, setSpareWheelAfter] = useState(false);
   const [gpsAfter, setGpsAfter] = useState(false);
   const [userManualAfter, setUserManualAfter] = useState(false);
+  const [location, setLocation] = useState('');
 
   const { loading, error, data } = useQuery(GET_RENT_BY_ID, {
     variables: { rentId }
   });
+
+  const carLocation = [
+    { location: 'Warszawa, Lotnisko Chopina' },
+    { location: 'Warszawa, Lotnisko Modlin' },
+    { location: 'Warszawa, Kwiatowa 15' },
+    { location: 'Warszawa, Złota 30' }
+  ];
+
+  const checkIfLocationIsChosen = () => {
+    return location === '' ? false : true;
+  };
 
   useEffect(() => {
     if (data) {
@@ -74,6 +86,23 @@ const CheckAndReturn = () => {
       } else {
         setAlert('Handling Over Card completed', 'success');
         navigate('/rents');
+      }
+    },
+    onError: (error) => {
+      console.log('error:', error.message);
+    },
+    refetchQueries: [
+      { query: GET_RENT_BY_ID, variables: { rentId } }
+      // { query: GET_RENTS }
+    ]
+  });
+
+  const [updateCar] = useMutation(UPDATE_CAR_FROM_HANDLING_OVER_CARD, {
+    onCompleted: ({ updateCar: { success, message } }) => {
+      if (!success) {
+        setAlert(message, 'danger');
+      } else {
+        console.log('success', message);
       }
     },
     onError: (error) => {
@@ -128,12 +157,34 @@ const CheckAndReturn = () => {
     return cost;
   };
 
-  // console.log(calculateAdditionalCost());
+  const updateCarDetails = () => {
+    const {
+      rent: { car, handlingOverCard }
+    } = data;
+    const { milageAfter, dmgAfter, dmgAfterDesc, dmgBeforeDesc } = handlingOverCard;
+    const dmgDes = dmgAfter ? car.dmgDescription + ' ' + dmgAfterDesc : dmgBeforeDesc;
+    const dmg = dmgBefore || dmgAfter ? true : false;
+    const input = {
+      id: car.id,
+      milage: milageAfter,
+      damaged: dmg,
+      dmgDescription: dmgDes,
+      location: location
+    };
+    updateCar({ variables: { input } });
+    console.log('input: ', input);
+  };
 
   const handleUpdateRent = () => {
+    if (!checkIfLocationIsChosen()) {
+      setAlert('Please choose return location', 'warning');
+      return;
+    }
+    updateCarDetails();
     const input = {
       id: rentId,
       returnDate: new Date(),
+      returnLocation: location,
       additionalCosts: calculateAdditionalCost(),
       handlingOverCard: {
         milageBefore,
@@ -338,6 +389,7 @@ const CheckAndReturn = () => {
                   <label>
                     Milage:{' '}
                     <input
+                      className={styles.form__input}
                       type="number"
                       id="milageAfter"
                       onChange={(e) => setMilageAfter(parseInt(e.target.value))}
@@ -369,6 +421,7 @@ const CheckAndReturn = () => {
                   {!fullTankAfter && (
                     <input
                       type="number"
+                      className={styles.form__input}
                       id="fuelCost"
                       placeholder="Fuel cost"
                       onChange={(e) => setFuelCost(parseInt(e.target.value))}
@@ -400,6 +453,15 @@ const CheckAndReturn = () => {
                     defaultValue={dmgAfterDesc}
                   />
                 </div>
+                <select
+                  className={styles.form__select}
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}>
+                  <option>Select Return Location</option>
+                  {carLocation.map((location, index) => (
+                    <option key={index}>{location.location}</option>
+                  ))}
+                </select>
               </div>
             </div>
             <div className={styles.return__footer__summary}>
@@ -444,7 +506,7 @@ const CheckAndReturn = () => {
             </div>
             <div className={styles.return__footer}>
               <button className={styles.return__footer__button} onClick={() => handleUpdateRent()}>
-                Confirm return
+                Confirm car return
               </button>
             </div>
           </div>
