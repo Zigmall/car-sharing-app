@@ -441,6 +441,7 @@ const GET_ALL_RENTS = gql`
       }
       pickupDate
       returnDate
+      returnLocation
       rated
       rentPrice
       deposit
@@ -473,6 +474,7 @@ const GET_RENT_BY_ID = gql`
       }
       pickupDate
       returnDate
+      returnLocation
       rated
       rentPrice
       deposit
