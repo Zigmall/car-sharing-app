@@ -54,11 +54,18 @@ const RentLine = ({ rent: { id, renter, pickupDate, returnDate, car, booking } }
             </button>
           </td>
           <td>
-            <button
-              onClick={() => handleCheckAndReturn()}
-              className={[styles.button__wrapper, styles.button__return].join(' ')}>
-              Return Car
-            </button>
+            {!returnDate && (
+              <button
+                onClick={() => handleCheckAndReturn()}
+                className={[styles.button__wrapper, styles.button__return].join(' ')}>
+                Return Car
+              </button>
+            )}
+            {returnDate && (
+              <p className={styles.button__returned}>
+                <strong>Returned </strong>
+              </p>
+            )}
           </td>
         </tr>
       )}
