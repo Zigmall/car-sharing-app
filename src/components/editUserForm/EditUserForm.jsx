@@ -19,7 +19,7 @@ const EditUserForm = (props) => {
   const [lastName, setLastName] = useState(user.lastName || '');
   const [email, setEmail] = useState(user.email || '');
   const [mobile, setMobile] = useState(user.mobile || '');
-  const [isAdmin, setIsAdmin] = useState(user.isAdmin ? true : false);
+  const [role, setRole] = useState(user.role || '');
   const [country, setCountry] = useState(user.address.country || '');
   const [city, setCity] = useState(user.address.city || '');
   const [street, setStreet] = useState(user.address.street || '');
@@ -27,48 +27,51 @@ const EditUserForm = (props) => {
   const [flatNumber, setFlatNumber] = useState(user.address.flatNumber || '');
   const [postCode, setPostCode] = useState(user.address.postCode || '');
 
-  const [updateUser] = currentUser.isAdmin
-    ? useMutation(UPDATE_USER, {
-        variables: {
-          input: {
-            id: user.id,
-            firstName,
-            lastName,
-            email,
-            mobile,
-            isAdmin,
-            address: { country, city, street, houseNumber, flatNumber, postCode }
-          }
-        },
-        onCompleted: () => {
-          completeForBooking
-            ? setAlert('Address completed successfully', 'success')
-            : setAlert('User has been updated', 'success');
-        },
-        refetchQueries: [{ query: GET_ALL_USERS }]
-      })
-    : useMutation(UPDATE_MY_PERSONAL_DATA, {
-        variables: {
-          input: {
-            id: user.id,
-            firstName,
-            lastName,
-            email,
-            mobile,
-            address: { country, city, street, houseNumber, flatNumber, postCode }
-          }
-        },
-        onCompleted: () => {
-          completeForBooking
-            ? setAlert('Address completed successfully', 'success')
-            : setAlert('User has been updated', 'success');
-        },
-        refetchQueries: [{ query: GET_CURRENT_USER }]
-      });
+  const [updateUser] =
+    currentUser.role === 'ADMIN'
+      ? useMutation(UPDATE_USER, {
+          variables: {
+            input: {
+              id: user.id,
+              firstName,
+              lastName,
+              email,
+              mobile,
+              role,
+              address: { country, city, street, houseNumber, flatNumber, postCode }
+            }
+          },
+          onCompleted: () => {
+            completeForBooking
+              ? setAlert('Address completed successfully', 'success')
+              : setAlert('User has been updated', 'success');
+          },
+          refetchQueries: [{ query: GET_ALL_USERS }]
+        })
+      : useMutation(UPDATE_MY_PERSONAL_DATA, {
+          variables: {
+            input: {
+              id: user.id,
+              firstName,
+              lastName,
+              email,
+              mobile,
+              address: { country, city, street, houseNumber, flatNumber, postCode }
+            }
+          },
+          onCompleted: () => {
+            completeForBooking
+              ? setAlert('Address completed successfully', 'success')
+              : setAlert('User has been updated', 'success');
+          },
+          refetchQueries: [{ query: GET_CURRENT_USER }]
+        });
 
-  const handleCheckboxChange = () => {
-    setIsAdmin(!isAdmin);
-  };
+  const options = [
+    { value: 'ADMIN', label: 'Admin' },
+    { value: 'USER', label: 'User' },
+    { value: 'SUPERVISOR', label: 'Supervisor' }
+  ];
 
   const handleUpdateUser = (e) => {
     e.preventDefault();
@@ -169,16 +172,20 @@ const EditUserForm = (props) => {
                 </div>
               </div>
 
-              {user && currentUser.isAdmin && (
+              {user && currentUser.role === 'ADMIN' && (
                 <div className={styles.admin__wrapper}>
-                  <input
-                    type="checkbox"
-                    className={styles.admin__checkbox}
-                    id="admin"
-                    checked={isAdmin}
-                    onChange={() => handleCheckboxChange()}
-                  />
-                  <label className={styles.form__label}>Administrator</label>
+                  <label className={styles.form__label}>Role</label>
+
+                  <select
+                    className={styles.form__select}
+                    value={role}
+                    onChange={(e) => setRole(e.target.value)}>
+                    {options.map((role) => (
+                      <option key={role.value} value={role.value}>
+                        {role.label}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               )}
 
