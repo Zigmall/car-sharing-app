@@ -2,7 +2,9 @@ import styles from './Rents.module.scss';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 
-const RentLine = ({ rent: { id, renter, pickupDate, returnDate, car, booking } }) => {
+const RentLine = ({
+  rent: { id, renter, pickupDate, returnDate, car, booking, depositReturned }
+}) => {
   //   const { handleCancelBooking } = props;
   const navigate = useNavigate();
 
@@ -61,11 +63,16 @@ const RentLine = ({ rent: { id, renter, pickupDate, returnDate, car, booking } }
                 Return Car
               </button>
             )}
-            {returnDate && (
-              <p className={styles.button__returned}>
-                <strong>Returned </strong>
-              </p>
-            )}
+            {returnDate &&
+              (depositReturned ? (
+                <p className={styles.button__completed}>
+                  <strong>Completed </strong>
+                </p>
+              ) : (
+                <p className={styles.button__returned}>
+                  <strong>Returned </strong>
+                </p>
+              ))}
           </td>
         </tr>
       )}
