@@ -170,12 +170,11 @@ const Rent = () => {
 
   return (
     <>
-      {user && !user.isAdmin ? (
+      {user && !(user.role === 'ADMIN' || user.role === 'SUPERVISOR') ? (
         <div className={styles.rent__wrapper}>
           <h1>You need to be Supervisor to perform this action</h1>
         </div>
       ) : (
-        data &&
         car && (
           <div className={styles.rent__wrapper}>
             <h1>Rent Car</h1>

@@ -33,7 +33,7 @@ const User = () => {
   const { user } = data;
   const { user: currentUser } = authContext;
   const goBack = () => {
-    if (currentUser.isAdmin) {
+    if (currentUser.role === 'ADMIN') {
       navigate('/users');
     } else {
       changeTab(1);
@@ -48,7 +48,7 @@ const User = () => {
             <div className={styles.button__wrapper}>
               <button
                 onClick={goBack}
-                to={user.isAdmin ? '/users' : '/'}
+                to={user.role === 'ADMIN' ? '/users' : '/'}
                 className={styles.button__back}>
                 Back
               </button>

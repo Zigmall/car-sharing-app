@@ -28,7 +28,7 @@ const EditUserForm = (props) => {
   const [postCode, setPostCode] = useState(user.address.postCode || '');
 
   const [updateUser] =
-    currentUser.role === 'ADMIN'
+    currentUser && currentUser.role === 'ADMIN'
       ? useMutation(UPDATE_USER, {
           variables: {
             input: {
