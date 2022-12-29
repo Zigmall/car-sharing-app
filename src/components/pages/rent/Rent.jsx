@@ -137,7 +137,7 @@ const Rent = () => {
       carId: car.id,
       renterId: booker.id,
       firstBookingId,
-      pickupDate: startDate,
+      pickupDate: new Date(),
       rated: false,
       rentPrice: calculateTotalPrice(insuranceRate),
       deposit,
