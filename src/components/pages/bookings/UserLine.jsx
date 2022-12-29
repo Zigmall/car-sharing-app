@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 
 const UserLine = (props) => {
-  // booking: { id, booker, startDate, endDate, car }
   const {
     booking: { id, booker, startDate, endDate, car }
   } = props;
@@ -31,7 +30,9 @@ const UserLine = (props) => {
     hour: 'numeric',
     minute: 'numeric'
   });
-
+  // console.log(car.model, new Date(startDate).getTime() - new Date().getTime() < 1000 * 60 * 60 * 3);
+  // console.log(car.model, new Date(startDate).getTime() - new Date().getTime());
+  const isRentable = new Date(startDate).getTime() - new Date().getTime() < 1000 * 60 * 60 * 3;
   return (
     <>
       {id && (
@@ -43,7 +44,12 @@ const UserLine = (props) => {
           <td>
             <button
               onClick={() => handleRent()}
-              className={[styles.button__wrapper, styles.button__rent].join(' ')}>
+              disabled={!isRentable}
+              className={
+                isRentable
+                  ? [styles.button__wrapper, styles.button__rent].join(' ')
+                  : [styles.button__inactive, styles.button__wrapper].join(' ')
+              }>
               Proceed Rent
             </button>
           </td>

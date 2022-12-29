@@ -69,8 +69,6 @@ const App = () => {
                 <Route path="/registration" element={<Registration />} />
                 <Route path="login" element={<Login />} />
                 <Route path="/cars/:carId" element={<CarDetails />} />
-                <Route path="/return-car" element={<ReturnCars />} />
-                <Route path="/return-car/:userId" element={<ReturnCars />} />
                 <Route path="/bookings" element={<Bookings />} />
                 <Route path="/bookings/:userId" element={<Rent />} />
                 <Route path="/book-car/:carId" element={<Book />} />
@@ -82,6 +80,8 @@ const App = () => {
                 <Route path="/rents/:rentId" element={<CheckAndReturn />} />
                 <Route path="/rents/handling-over-card/:rentId" element={<HandlingOverCard />} />
                 <Route path="/rent-summary/:rentId" element={<ReturnSummary />} />
+                <Route path="/return-car" element={<ReturnCars />} />
+                <Route path="/return-car/:userId" element={<ReturnCars />} />
               </Routes>
             </div>
           </AlertState>
