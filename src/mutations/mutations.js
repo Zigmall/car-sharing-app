@@ -17,7 +17,7 @@ const UPDATE_USER = gql`
         id
         firstName
         lastName
-        isAdmin
+        role
         email
         mobile
         address {
@@ -45,7 +45,7 @@ const UPDATE_MY_PERSONAL_DATA = gql`
         id
         firstName
         lastName
-        isAdmin
+        role
         email
         mobile
         address {
@@ -76,7 +76,7 @@ const LOG_IN = gql`
         id
         firstName
         lastName
-        isAdmin
+        role
         email
         mobile
         address {

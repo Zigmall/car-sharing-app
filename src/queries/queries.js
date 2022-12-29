@@ -44,7 +44,7 @@ const GET_ALL_USERS = gql`
       firstName
       lastName
       email
-      isAdmin
+      role
       mobile
       address {
         city
@@ -96,7 +96,7 @@ const GET_USER = gql`
       id
       firstName
       lastName
-      isAdmin
+      role
       email
       mobile
       address {
@@ -182,7 +182,7 @@ const GET_CURRENT_USER = gql`
       id
       firstName
       lastName
-      isAdmin
+      role
       email
       mobile
       address {
@@ -369,7 +369,7 @@ const GET_BOOKING_BY_ID = gql`
         lastName
         email
         mobile
-        isAdmin
+        role
         address {
           country
           city
