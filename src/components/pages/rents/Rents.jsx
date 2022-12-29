@@ -51,17 +51,13 @@ const Rents = () => {
                   <th>Return Day</th>
                   <th>Car</th>
                   <th>Rent</th>
-                  <th>Returns</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                {rents.map(
-                  (rent) => {
-                    // console.log('rent >>>', rent);
-                    return <RentLine key={rent.id} rent={rent} />;
-                  }
-                  //   ) : null
-                )}
+                {rents.map((rent) => {
+                  return <RentLine key={rent.id} rent={rent} />;
+                })}
               </tbody>
             </table>
           </div>

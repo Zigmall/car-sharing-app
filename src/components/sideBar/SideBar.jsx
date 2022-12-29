@@ -181,7 +181,7 @@ const SideBar = ({ setColorOnSideBarIcon, sideBarIndex }) => {
   user && setMenu();
   return (
     <>
-      {user && (
+      {menu && (
         <div className={styles.sideBarWrapper}>
           <div className={styles.sideBar}>
             {menu.map((element, index) => (
