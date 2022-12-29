@@ -111,7 +111,7 @@ const UpdateBooking = () => {
   }
 
   const {
-    bookedCar: { car, totalPayment: previousTotalPayment, booker }
+    bookedCar: { car, totalPayment: previousTotalPayment, booker, startDate: start }
   } = data;
 
   const handUpdateButton = () => {
@@ -146,6 +146,8 @@ const UpdateBooking = () => {
     setInsuranceRate(insuranceTable[insuranceType]);
     setInsuranceType(insuranceType);
   };
+  const now = new Date();
+  const rentStarts = new Date(start);
 
   return (
     <>
@@ -183,11 +185,12 @@ const UpdateBooking = () => {
                           setStartDate(date);
                         }}
                         selectsStart
+                        timeIntervals={30}
                         startDate={startDate}
                         endDate={endDate}
                         minDate={new Date()}
                         dateFormat="d/M/yyyy - HH:mm"
-                        readOnly
+                        readOnly={new Date(rentStarts.setHours(rentStarts.getHours() - 3)) < now}
                       />
                     </div>
                     <div className={styles.datePicker__container__right}>

@@ -58,3 +58,8 @@
 .button__cancelBooking:hover {
   background-color: rgba(239, 19, 30, 0.902);
 }
+
+.button__inactive {
+  color: grey;
+  background-color: #e0e0e0;
+}
