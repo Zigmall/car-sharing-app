@@ -70,7 +70,7 @@ const Bookings = () => {
     <>
       {data && !(user.role === 'ADMIN' || user.role === 'SUPERVISOR') ? (
         <div className={styles.error__message}>
-          <h4>You need to be higher rank to perform this action</h4>
+          <h5>You need to be higher rank to perform this action</h5>
         </div>
       ) : (
         <div className={styles.bookings__wrapper}>

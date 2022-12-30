@@ -520,6 +520,7 @@ const GET_RENTS_BY_RENTER_ID = gql`
   query GetRentsByRenterId($renterId: ID!) {
     getRentsByRenterId(id: $renterId) {
       id
+      rated
       renter {
         id
         firstName
@@ -532,7 +533,6 @@ const GET_RENTS_BY_RENTER_ID = gql`
         }
         model
       }
-      rated
     }
   }
 `;

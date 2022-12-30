@@ -152,8 +152,8 @@ const UpdateBooking = () => {
   return (
     <>
       {user && !(user.role === 'ADMIN' || user.role === 'SUPERVISOR') ? (
-        <div className={styles.updateBooking__wrapper}>
-          <h1>You need to be higher rank to perform this action</h1>
+        <div className={styles.error__message}>
+          <h5>You need to be higher rank to perform this action</h5>
         </div>
       ) : (
         data &&

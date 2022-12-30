@@ -14,10 +14,12 @@ const NewComment = ({ car, user }) => {
   const { setAlert } = alertContext;
   const [comment, setComment] = useState('');
   const [rating, changeRating] = useState(0);
+  const [filteredRentList, setFilteredRentList] = useState([]);
   const [rentId, setRentId] = useState('');
   const voted = false;
 
   const checkIfUserIsAllowedToComment = (userRentList) => {
+    console.log('userRentList>>>', userRentList);
     if (userRentList === null || userRentList === undefined) {
       return [];
     }
@@ -91,10 +93,10 @@ const NewComment = ({ car, user }) => {
 
   useEffect(() => {
     if (data) {
-      const filteredRentList = checkIfUserIsAllowedToComment(data.getRentsByRenterId);
-      if (filteredRentList.length > 0) {
-        setRentId(filteredRentList[0].id);
-      }
+      const litsOfRents = checkIfUserIsAllowedToComment(data.getRentsByRenterId);
+      setFilteredRentList(litsOfRents);
+      console.log(litsOfRents);
+      litsOfRents.length > 0 && setRentId(litsOfRents[0].id);
     }
   }, [data]);
 
@@ -113,6 +115,7 @@ const NewComment = ({ car, user }) => {
       </div>
     );
 
+  console.log('rentId', rentId);
   if (!rentId || rentId.length === 0) {
     return (
       <div className={styles.left__space}>
@@ -122,7 +125,7 @@ const NewComment = ({ car, user }) => {
       </div>
     );
   }
-
+  console.log('filteredRentList', filteredRentList);
   return (
     <div className={styles.comment__wrapper}>
       <div className={styles.comment__border}>

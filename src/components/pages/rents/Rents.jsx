@@ -36,7 +36,11 @@ const Rents = () => {
   const { rents } = data;
   return (
     <>
-      {data && (
+      {data && user && !(user.role === 'ADMIN' || user.role === 'SUPERVISOR') ? (
+        <div className={styles.error__message}>
+          <h5>You need to be higher rank to perform this action</h5>
+        </div>
+      ) : (
         <div className={styles.rents__wrapper}>
           <div className={styles.rents__table}>
             <table>
