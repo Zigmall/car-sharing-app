@@ -108,7 +108,7 @@ const CarDetails = () => {
             author={comment.user}
           />
         ))}
-        <NewComment comments={car.comments} carId={carId} />
+        {user && <NewComment car={car} user={user} />}
       </div>
     </div>
   ) : null;
