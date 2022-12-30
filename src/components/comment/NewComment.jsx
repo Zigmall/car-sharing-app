@@ -1,21 +1,41 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Rating from '../rating/Rating';
 import styles from './Comment.module.scss';
 import PropTypes from 'prop-types';
 import AlertContext from '../../context/alert/alertContext';
-import AuthContext from '../../context/auth/authContext';
-import { CREATE_COMMENT } from '../../mutations/mutations';
-import { GET_CAR } from '../../queries/queries';
-import { useMutation } from '@apollo/client';
+// import AuthContext from '../../context/auth/authContext';
+import { CREATE_COMMENT, UPDATE_RENT_AFTER_COMMENT } from '../../mutations/mutations';
+import { GET_CAR, GET_RENTS_BY_RENTER_ID } from '../../queries/queries';
+import { useMutation, useQuery } from '@apollo/client';
 
-const NewComment = ({ carId }) => {
+const NewComment = ({ car, user }) => {
+  const carId = car.id;
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
-  const authContext = useContext(AuthContext);
-  const { user } = authContext;
   const [comment, setComment] = useState('');
   const [rating, changeRating] = useState(0);
+  const [rentId, setRentId] = useState('');
   const voted = false;
+
+  const checkIfUserIsAllowedToComment = (userRentList) => {
+    if (userRentList === null || userRentList === undefined) {
+      return [];
+    }
+    if (userRentList.length > 0) {
+      return userRentList.filter(
+        (rent) =>
+          rent.car.brand.name === car.brand.name &&
+          rent.car.model === car.model &&
+          rent.rated === false
+      );
+    } else {
+      return [];
+    }
+  };
+
+  const { loading, error, data } = useQuery(GET_RENTS_BY_RENTER_ID, {
+    variables: { renterId: user.id }
+  });
 
   const handleSendComment = (e) => {
     e.preventDefault();
@@ -32,6 +52,7 @@ const NewComment = ({ carId }) => {
         carId,
         rating
       };
+
       createComment({ variables: { input } });
     }
   };
@@ -43,6 +64,12 @@ const NewComment = ({ carId }) => {
         setAlert(message, 'success');
         setComment('');
         changeRating(0);
+        const input = {
+          id: rentId,
+          rated: true
+        };
+        updateRentAfterComment({ variables: { input } });
+        console.log('input', input);
       }
     },
     onError: (error) => {
@@ -50,6 +77,55 @@ const NewComment = ({ carId }) => {
     },
     refetchQueries: [{ query: GET_CAR, variables: { carId } }]
   });
+
+  const [updateRentAfterComment] = useMutation(UPDATE_RENT_AFTER_COMMENT, {
+    onCompleted: ({ updateRent }) => {
+      const { success, message } = updateRent;
+      console.log(success, message);
+    },
+    onError: (error) => {
+      console.log(error.message);
+    },
+    refetchQueries: [{ query: GET_RENTS_BY_RENTER_ID, variables: { renterId: user.id } }]
+  });
+
+  useEffect(() => {
+    if (data) {
+      const filteredRentList = checkIfUserIsAllowedToComment(data.getRentsByRenterId);
+      console.log('filteredRentList', filteredRentList);
+      if (filteredRentList.length > 0) {
+        setRentId(filteredRentList[0].id);
+      }
+    }
+  }, [data]);
+
+  if (loading) return;
+  <div className={styles.left__space}>
+    <div className={styles.error__message}>
+      <p>loading...</p>
+    </div>
+  </div>;
+  if (error)
+    return (
+      <div className={styles.left__space}>
+        <div className={styles.error__message}>
+          <p>loading...</p>
+        </div>
+      </div>
+    );
+
+  console.log('rentId', rentId);
+  console.log('rentId.length === 0', rentId.length === 0);
+  console.log('!rentId', !rentId);
+  if (!rentId || rentId.length === 0) {
+    return (
+      <div className={styles.left__space}>
+        <div className={styles.comment__replacement}>
+          <h1>You need to rent this car to comment</h1>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.comment__wrapper}>
@@ -76,7 +152,8 @@ const NewComment = ({ carId }) => {
 
 NewComment.propTypes = {
   comments: PropTypes.arrayOf(PropTypes.object),
-  carId: PropTypes.string
+  car: PropTypes.object,
+  user: PropTypes.object
 };
 
 export default NewComment;
