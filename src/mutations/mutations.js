@@ -444,6 +444,19 @@ const UPDATE_CAR_FROM_HANDLING_OVER_CARD = gql`
   }
 `;
 
+const UPDATE_RENT_AFTER_COMMENT = gql`
+  mutation UpdateRentAfterComment($input: UpdateRentInput!) {
+    updateRent(input: $input) {
+      message
+      success
+      rent {
+        id
+        rated
+      }
+    }
+  }
+`;
+
 export {
   DELETE_USER,
   UPDATE_USER,
@@ -459,5 +472,6 @@ export {
   UPDATE_BOOKING,
   RENT_CAR,
   UPDATE_RENT,
-  UPDATE_CAR_FROM_HANDLING_OVER_CARD
+  UPDATE_CAR_FROM_HANDLING_OVER_CARD,
+  UPDATE_RENT_AFTER_COMMENT
 };
