@@ -188,28 +188,22 @@ const AddCar = () => {
 
   if (loading || loadingClasses)
     return (
-      <div className={styles.left__space}>
-        <div className={styles.error__message}>
-          <p>Loading...</p>
-        </div>
+      <div className={styles.error__message}>
+        <p>Loading...</p>
       </div>
     );
   if (error) {
     console.log(error);
     return (
-      <div className={styles.left__space}>
-        <div className={styles.error__message}>
-          <p>Something went wrong</p>
-        </div>
+      <div className={styles.error__message}>
+        <p>Something went wrong...</p>
       </div>
     );
   } else if (errorClasses) {
     console.log(errorClasses);
     return (
-      <div className={styles.left__space}>
-        <div className={styles.error__message}>
-          <p>Something went wrong</p>
-        </div>
+      <div className={styles.error__message}>
+        <p>Something went wrong...</p>
       </div>
     );
   }

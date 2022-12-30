@@ -20,37 +20,54 @@ const ReturnCars = () => {
     }
   });
 
-  if (error) {
-    console.log(error);
-  }
   if (loading) {
-    return <p className={styles.noCars}>Loading...</p>;
+    return (
+      <div className={styles.left__space}>
+        <div className={styles.error__message}>
+          <p>loading...</p>
+        </div>
+      </div>
+    );
+  }
+  if (error) {
+    console.log('error:', error.message);
+    return (
+      <div className={styles.left__space}>
+        <div className={styles.error__message}>
+          <p>Something went wrong...</p>
+        </div>
+      </div>
+    );
   }
   const currentlyBorrowedCars = data.user.borrowedCars.filter((car) => car.endDate === null);
 
   return (
-    <div className={styles.returnCarWrapper}>
-      {currentlyBorrowedCars && currentlyBorrowedCars.length > 0 ? (
-        currentlyBorrowedCars.map((car, index) => (
-          <Car
-            key={index}
-            id={car.car.id}
-            carClass={car.car.carClass.name}
-            benefits={car.car.benefits}
-            model={car.car.model}
-            picturePath={car.car.picturePath}
-            brand={car.car.brand}
-            property={car.car.property}
-            location={car.car.location}
-            price={car.car.price}
-            car={car}
-            returnCar={true}
-          />
-        ))
-      ) : (
-        <div className={styles.noCars}>You have no cars to return.</div>
+    <>
+      {data && (
+        <div className={styles.returnCarWrapper}>
+          {currentlyBorrowedCars && currentlyBorrowedCars.length > 0 ? (
+            currentlyBorrowedCars.map((car, index) => (
+              <Car
+                key={index}
+                id={car.car.id}
+                carClass={car.car.carClass.name}
+                benefits={car.car.benefits}
+                model={car.car.model}
+                picturePath={car.car.picturePath}
+                brand={car.car.brand}
+                property={car.car.property}
+                location={car.car.location}
+                price={car.car.price}
+                car={car}
+                returnCar={true}
+              />
+            ))
+          ) : (
+            <div className={styles.noCars}>You have no cars to return.</div>
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 };
 

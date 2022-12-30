@@ -89,25 +89,25 @@ const UpdateBooking = () => {
 
   if (loading)
     return (
-      <div className={styles.updateBooking__wrapper}>
-        <div className={styles.error__message}>
-          <p>Loading...</p>
-        </div>
+      <div className={styles.error__message}>
+        <p>Loading...</p>
       </div>
     );
 
   if (error) {
     console.log(error);
-    if (user === null) {
+    if (user === null || user === undefined) {
       return (
-        <div className={styles.updateBooking__wrapper}>
-          <div className={styles.error__message}>
-            <p>You need to be log in to see this page</p>
-          </div>
+        <div className={styles.error__message}>
+          <p>You need to be log in to see this page</p>
         </div>
       );
     }
-    return <p>Something went wrong error</p>;
+    return (
+      <div className={styles.error__message}>
+        <p>Something went wrong...</p>
+      </div>
+    );
   }
 
   const {
@@ -153,7 +153,7 @@ const UpdateBooking = () => {
     <>
       {user && !(user.role === 'ADMIN' || user.role === 'SUPERVISOR') ? (
         <div className={styles.updateBooking__wrapper}>
-          <h1>You need to be Supervisor to perform this action</h1>
+          <h1>You need to be higher rank to perform this action</h1>
         </div>
       ) : (
         data &&

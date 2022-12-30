@@ -7,6 +7,13 @@
   align-items: center;
 }
 
+.error__message {
+  margin-left: 12.9rem;
+  font-size: 2rem;
+  margin-top: 2rem;
+  text-align: center;
+}
+
 .rentSummary__content {
   display: flex;
   flex-direction: row;
@@ -54,7 +61,6 @@
   color: white;
   cursor: pointer;
 }
-
 
 .rentSummary__content__button {
   margin-top: 1.5rem;

@@ -92,22 +92,23 @@ const Rent = () => {
 
   if (loading)
     return (
-      <div className={styles.rent__wrapper}>
-        <div className={styles.error__message}>
-          <p>Loading...</p>
-        </div>
+      <div className={styles.error__message}>
+        <p>Loading...</p>
       </div>
     );
 
   if (error) {
     console.log(error);
-  }
-  if (user && user === null) {
-    return (
-      <div className={styles.rent__wrapper}>
+    if (user === null) {
+      return (
         <div className={styles.error__message}>
           <p>You need to be log in to see this page</p>
         </div>
+      );
+    }
+    return (
+      <div className={styles.error__message}>
+        <p>Something went wrong...</p>
       </div>
     );
   }

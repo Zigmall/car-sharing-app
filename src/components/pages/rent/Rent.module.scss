@@ -7,14 +7,20 @@
   align-items: center;
 }
 
+.error__message {
+  margin-left: 12.9rem;
+  font-size: 2rem;
+  margin-top: 2rem;
+  text-align: center;
+}
+
 .rent__data__wrapper {
   display: flex;
   flex-direction: row;
-  margin:  2rem;
+  margin: 2rem;
   justify-content: center;
   width: 100%;
   border-radius: 0.3rem;
-  
 }
 
 .userData__wrapper {
@@ -54,13 +60,6 @@
   border: 1px solid black;
   background-color: #e0ebf7;
 }
-
-
-
-
-
-
-
 
 .payment__summary__title {
   font-size: 1.3rem;
@@ -109,7 +108,6 @@
   :hover {
     fill: #0074ef;
   }
-  
 }
 
 .datePicker__container {
@@ -166,7 +164,6 @@
   justify-content: center;
   width: 100%;
   color: white;
- 
 }
 
 .button__update {

@@ -70,34 +70,6 @@ const HandlingOverCard = () => {
     }
   }, [data]);
 
-  if (user && user === null) {
-    return (
-      <div className={styles.page__wrapper}>
-        <div className={styles.error__message}>
-          <p>You are not authorized to perform this action</p>
-        </div>
-      </div>
-    );
-  }
-  if (loading)
-    return (
-      <div className={styles.page__wrapper}>
-        <div className={styles.error__message}>
-          <p>Loading...</p>
-        </div>
-      </div>
-    );
-  if (error) {
-    console.log('error: ', error);
-    return (
-      <div className={styles.page__wrapper}>
-        <div className={styles.error__message}>
-          <p>Something went wrong...</p>
-        </div>
-      </div>
-    );
-  }
-
   const calculateAdditionalCost = () => {
     let cost = 0;
     if (!regDocAfter) cost += 25;
@@ -113,9 +85,32 @@ const HandlingOverCard = () => {
     return cost;
   };
 
+  if (loading)
+    return (
+      <div className={styles.error__message}>
+        <p>Loading...</p>
+      </div>
+    );
+
+  if (error) {
+    console.log(error);
+    if (user === null) {
+      return (
+        <div className={styles.error__message}>
+          <p>You need to be log in to see this page</p>
+        </div>
+      );
+    }
+    return (
+      <div className={styles.error__message}>
+        <p>Something went wrong...</p>
+      </div>
+    );
+  }
+
   return (
     <>
-      {
+      {data && (
         <div className={styles.return__wrapper}>
           <div className={styles.return__container}>
             <div className={styles.return__form}>
@@ -350,7 +345,7 @@ const HandlingOverCard = () => {
             </div>
           </div>
         </div>
-      }
+      )}
     </>
   );
 };

@@ -4,37 +4,35 @@ import { useQuery } from '@apollo/client';
 import { GET_ALL_RENTS } from '../../../queries/queries';
 import AuthContext from '../../../context/auth/authContext';
 import RentLine from './RentLine';
-import AlertContext from '../../../context/alert/alertContext';
 
 const Rents = () => {
   const { loading, error, data } = useQuery(GET_ALL_RENTS);
   const authContext = useContext(AuthContext);
   const { user } = authContext;
-  const alertContext = useContext(AlertContext);
-  const { setAlert } = alertContext;
 
   if (loading)
     return (
-      <div className={styles.rents__wrapper}>
-        <div className={styles.error__message}>
-          <p>Loading...</p>
-        </div>
+      <div className={styles.error__message}>
+        <p>Loading...</p>
       </div>
     );
 
   if (error) {
     console.log(error);
-  }
-  if (user === null) {
-    setAlert('You are not authorized to view this page', 'danger');
-    return (
-      <div className={styles.rents__wrapper}>
+    if (user === null || user === undefined) {
+      return (
         <div className={styles.error__message}>
           <p>You need to be log in to see this page</p>
         </div>
+      );
+    }
+    return (
+      <div className={styles.error__message}>
+        <p>Something went wrong...</p>
       </div>
     );
   }
+
   const { rents } = data;
   return (
     <>

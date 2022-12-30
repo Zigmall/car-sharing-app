@@ -22,6 +22,8 @@ const CheckAndReturn = () => {
   const { setAlert } = alertContext;
   const navigate = useNavigate();
 
+  user && (user === null || user === undefined) ? navigate('/login') : null;
+
   const regDocBefore = true;
   const ocInsBefore = true;
   const fireExtinguisherBefore = true;
@@ -114,30 +116,25 @@ const CheckAndReturn = () => {
     ]
   });
 
-  if (user && user === null) {
+  if (loading) {
     return (
-      <div className={styles.page__wrapper}>
-        <div className={styles.error__message}>
-          <p>You are not authorized to perform this action</p>
-        </div>
+      <div className={styles.error__message}>
+        <p>loading...</p>
       </div>
     );
   }
-  if (loading)
-    return (
-      <div className={styles.page__wrapper}>
-        <div className={styles.error__message}>
-          <p>Loading...</p>
-        </div>
-      </div>
-    );
   if (error) {
-    console.log('error: ', error);
-    return (
-      <div className={styles.page__wrapper}>
+    console.log(error);
+    if (user === null || user === undefined) {
+      return (
         <div className={styles.error__message}>
-          <p>Something went wrong...</p>
+          <p>You need to be log in to see this page</p>
         </div>
+      );
+    }
+    return (
+      <div className={styles.error__message}>
+        <p>Something went wrong...</p>
       </div>
     );
   }
@@ -211,7 +208,11 @@ const CheckAndReturn = () => {
 
   return (
     <>
-      {
+      {data && user && !(user.role === 'ADMIN' || user.role === 'SUPERVISOR') ? (
+        <div className={styles.error__message}>
+          <h4>You need to be higher rank to perform this action</h4>
+        </div>
+      ) : (
         <div className={styles.return__wrapper}>
           <div className={styles.return__container}>
             <div className={styles.return__header}>
@@ -511,7 +512,7 @@ const CheckAndReturn = () => {
             </div>
           </div>
         </div>
-      }
+      )}
     </>
   );
 };

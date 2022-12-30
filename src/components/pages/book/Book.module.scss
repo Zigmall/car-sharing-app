@@ -6,6 +6,13 @@
   margin-bottom: 10rem;
 }
 
+.error__message {
+  margin-left: 12.9rem;
+  font-size: 2rem;
+  margin-top: 2rem;
+  text-align: center;
+}
+
 .datePicker__container {
   display: flex;
   flex-direction: row;
@@ -80,7 +87,7 @@
   margin: 0 auto;
   width: 68%;
   margin-top: 1rem;
-  h2{
+  h2 {
     margin-bottom: 0.3rem;
   }
 }
@@ -109,7 +116,7 @@
   margin: 0 auto;
   width: 75%;
   margin-top: 1rem;
-  h2{
+  h2 {
     margin-bottom: 0.3rem;
   }
 }
@@ -128,7 +135,7 @@
   display: flex;
 }
 
-.payment__summary__left__car{
+.payment__summary__left__car {
   display: flex;
   flex-direction: column;
   margin-left: 1.5rem;
@@ -207,7 +214,6 @@
   :hover {
     fill: #0074ef;
   }
-  
 }
 
 .insurance__options {
@@ -215,4 +221,3 @@
   width: 68%;
   margin: 0 auto;
 }
-

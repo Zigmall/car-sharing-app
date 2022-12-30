@@ -45,29 +45,34 @@ const Bookings = () => {
 
   if (loading)
     return (
-      <div className={styles.bookings__wrapper}>
-        <div className={styles.error__message}>
-          <p>Loading...</p>
-        </div>
+      <div className={styles.error__message}>
+        <p>Loading...</p>
       </div>
     );
 
   if (error) {
     console.log(error);
-  }
-  if (user === null) {
-    return (
-      <div className={styles.bookings__wrapper}>
+    if (user === null) {
+      return (
         <div className={styles.error__message}>
           <p>You need to be log in to see this page</p>
         </div>
+      );
+    }
+    return (
+      <div className={styles.error__message}>
+        <p>Something went wrong...</p>
       </div>
     );
   }
 
   return (
     <>
-      {data && (
+      {data && !(user.role === 'ADMIN' || user.role === 'SUPERVISOR') ? (
+        <div className={styles.error__message}>
+          <h4>You need to be higher rank to perform this action</h4>
+        </div>
+      ) : (
         <div className={styles.bookings__wrapper}>
           <div className={styles.bookings__table}>
             <table>

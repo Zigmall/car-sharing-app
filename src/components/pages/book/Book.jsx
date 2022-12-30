@@ -63,21 +63,7 @@ const Book = () => {
     setInsuranceType(insuranceType);
   };
 
-  if (loading) {
-    return (
-      <div className={styles.left__space}>
-        <div className={styles.error__message}>
-          <p>loading...</p>
-        </div>
-      </div>
-    );
-  }
-  if (error) {
-    console.log('error:', error.message);
-    return <p>Could not load car...</p>;
-  }
   const { car } = data;
-  // const { brand, model, price, year, fuel, transmission, image } = car;
 
   const handlePayAndBookButton = () => {
     const input = {
@@ -109,6 +95,29 @@ const Book = () => {
       calculateInsurancePrice(insuranceRate)
     );
   };
+
+  if (loading)
+    return (
+      <div className={styles.error__message}>
+        <p>Loading...</p>
+      </div>
+    );
+
+  if (error) {
+    console.log(error);
+    if (user === null) {
+      return (
+        <div className={styles.error__message}>
+          <p>You need to be log in to see this page</p>
+        </div>
+      );
+    }
+    return (
+      <div className={styles.error__message}>
+        <p>Something went wrong...</p>
+      </div>
+    );
+  }
 
   return (
     <>

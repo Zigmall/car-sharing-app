@@ -92,7 +92,6 @@ const NewComment = ({ car, user }) => {
   useEffect(() => {
     if (data) {
       const filteredRentList = checkIfUserIsAllowedToComment(data.getRentsByRenterId);
-      console.log('filteredRentList', filteredRentList);
       if (filteredRentList.length > 0) {
         setRentId(filteredRentList[0].id);
       }
@@ -114,9 +113,6 @@ const NewComment = ({ car, user }) => {
       </div>
     );
 
-  console.log('rentId', rentId);
-  console.log('rentId.length === 0', rentId.length === 0);
-  console.log('!rentId', !rentId);
   if (!rentId || rentId.length === 0) {
     return (
       <div className={styles.left__space}>
