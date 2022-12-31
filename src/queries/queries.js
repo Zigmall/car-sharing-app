@@ -536,22 +536,41 @@ const GET_RENT_BY_ID = gql`
   }
 `;
 
-const GET_RENTS_BY_RENTER_ID = gql`
-  query GetRentsByRenterId($renterId: ID!) {
-    getRentsByRenterId(id: $renterId) {
+const BOOKED_CARS_BY_USER_ID = gql`
+  query BookedCarsByUserId {
+    bookedCarsByUserId {
       id
-      rated
-      renter {
+      booker {
         id
-        firstName
-        lastName
       }
+      startDate
+      endDate
+      insuranceType
+      newBooking
+      firstBookingId
+      bookingChanges {
+        cancelled
+        moneyReturned
+        newBookingId {
+          id
+        }
+        rentId {
+          id
+        }
+      }
+      currentPaid
+      previousTotalPayment
+      totalPayment
       car {
         id
         brand {
           name
         }
         model
+        picturePath {
+          url
+        }
+        price
       }
     }
   }
@@ -570,5 +589,5 @@ export {
   GET_BOOKING_BY_ID,
   GET_ALL_RENTS,
   GET_RENT_BY_ID,
-  GET_RENTS_BY_RENTER_ID
+  BOOKED_CARS_BY_USER_ID
 };
