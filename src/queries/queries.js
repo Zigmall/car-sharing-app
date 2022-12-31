@@ -110,6 +110,16 @@ const GET_USER = gql`
       avatar {
         color
       }
+      rents {
+        id
+        car {
+          brand {
+            name
+          }
+          model
+        }
+        rated
+      }
       borrowedCars {
         id
         startDate
@@ -192,6 +202,16 @@ const GET_CURRENT_USER = gql`
         houseNumber
         flatNumber
         postCode
+      }
+      rents {
+        id
+        car {
+          brand {
+            name
+          }
+          model
+        }
+        rated
       }
       avatar {
         color
