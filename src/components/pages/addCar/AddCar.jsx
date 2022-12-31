@@ -6,6 +6,7 @@ import AlertContext from '../../../context/alert/alertContext';
 import { CREATE_CAR, UPLOAD_IMAGE } from '../../../mutations/mutations';
 import { useMutation } from '@apollo/client';
 import MiddleIcon from '../../groupElement/MiddleIcon';
+import AuthContext from '../../../context/auth/authContext';
 
 const AddCar = () => {
   const handleCheckboxChange = (setFunction) => {
@@ -20,6 +21,8 @@ const AddCar = () => {
   } = useQuery(GET_CAR_CLASSES);
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
+  const authContext = useContext(AuthContext);
+  const { user } = authContext;
 
   const [model, setModel] = useState('');
   const [carClass, setCarClass] = useState('');
@@ -249,7 +252,11 @@ const AddCar = () => {
 
   return (
     <>
-      {brands && classes && (
+      {brands && classes && user && !(user.role === 'ADMIN' || user.role === 'SUPERVISOR') ? (
+        <div className={styles.error__message}>
+          <h5>You need to be higher rank to perform this action</h5>
+        </div>
+      ) : (
         <div className={styles.left__space}>
           <div className={styles.car__wrapper}>
             <div className={styles.car__header}>
