@@ -3,10 +3,9 @@ import Rating from '../rating/Rating';
 import styles from './Comment.module.scss';
 import PropTypes from 'prop-types';
 import AlertContext from '../../context/alert/alertContext';
-// import AuthContext from '../../context/auth/authContext';
 import { CREATE_COMMENT, UPDATE_RENT_AFTER_COMMENT } from '../../mutations/mutations';
-import { GET_CAR, GET_RENTS_BY_RENTER_ID } from '../../queries/queries';
-import { useMutation, useQuery } from '@apollo/client';
+import { GET_CAR, GET_CURRENT_USER } from '../../queries/queries';
+import { useMutation } from '@apollo/client';
 
 const NewComment = ({ car, user }) => {
   const carId = car.id;
@@ -19,7 +18,6 @@ const NewComment = ({ car, user }) => {
   const voted = false;
 
   const checkIfUserIsAllowedToComment = (userRentList) => {
-    console.log('userRentList>>>', userRentList);
     if (userRentList === null || userRentList === undefined) {
       return [];
     }
@@ -34,10 +32,6 @@ const NewComment = ({ car, user }) => {
       return [];
     }
   };
-
-  const { loading, error, data } = useQuery(GET_RENTS_BY_RENTER_ID, {
-    variables: { renterId: user.id }
-  });
 
   const handleSendComment = (e) => {
     e.preventDefault();
@@ -71,7 +65,6 @@ const NewComment = ({ car, user }) => {
           rated: true
         };
         updateRentAfterComment({ variables: { input } });
-        console.log('input', input);
       }
     },
     onError: (error) => {
@@ -81,42 +74,21 @@ const NewComment = ({ car, user }) => {
   });
 
   const [updateRentAfterComment] = useMutation(UPDATE_RENT_AFTER_COMMENT, {
-    onCompleted: ({ updateRent }) => {
-      const { success, message } = updateRent;
-      console.log(success, message);
-    },
     onError: (error) => {
       console.log(error.message);
     },
-    refetchQueries: [{ query: GET_RENTS_BY_RENTER_ID, variables: { renterId: user.id } }]
+    refetchQueries: [{ query: GET_CURRENT_USER }]
   });
 
   useEffect(() => {
-    if (data) {
-      const litsOfRents = checkIfUserIsAllowedToComment(data.getRentsByRenterId);
-      setFilteredRentList(litsOfRents);
-      console.log(litsOfRents);
+    if (user.rents) {
+      const litsOfRents = checkIfUserIsAllowedToComment(user.rents);
+      setFilteredRentList(checkIfUserIsAllowedToComment(user.rents));
       litsOfRents.length > 0 && setRentId(litsOfRents[0].id);
     }
-  }, [data]);
+  }, [user]);
 
-  if (loading) return;
-  <div className={styles.left__space}>
-    <div className={styles.error__message}>
-      <p>loading...</p>
-    </div>
-  </div>;
-  if (error)
-    return (
-      <div className={styles.left__space}>
-        <div className={styles.error__message}>
-          <p>loading...</p>
-        </div>
-      </div>
-    );
-
-  console.log('rentId', rentId);
-  if (!rentId || rentId.length === 0) {
+  if (filteredRentList.length === 0) {
     return (
       <div className={styles.left__space}>
         <div className={styles.comment__replacement}>
@@ -125,7 +97,6 @@ const NewComment = ({ car, user }) => {
       </div>
     );
   }
-  console.log('filteredRentList', filteredRentList);
   return (
     <div className={styles.comment__wrapper}>
       <div className={styles.comment__border}>

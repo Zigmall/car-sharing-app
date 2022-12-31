@@ -13,20 +13,20 @@ import AlertContext from '../../context/alert/alertContext';
 import AuthContext from '../../context/auth/authContext';
 
 const CarDetails = () => {
+  const authContext = useContext(AuthContext);
+  const { user } = authContext;
   const { carId } = useParams();
   const voted = true;
-  const { loading, error, data } = useQuery(GET_CAR, {
-    variables: { carId }
-  });
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
   const navigate = useNavigate();
-  const authContext = useContext(AuthContext);
-  const { user } = authContext;
+  const { loading, error, data } = useQuery(GET_CAR, {
+    variables: { carId }
+  });
 
   const handleBorrow = () => {
     if (!user) {
-      setAlert('You need to be logged in to borrow a car', 'danger');
+      setAlert('You need to be logged in to book this car', 'danger');
       navigate('/login');
     } else {
       navigate(`/book-car/${car.id}`);
@@ -47,6 +47,7 @@ const CarDetails = () => {
     return <p>Could not load car...</p>;
   }
   const { car } = data;
+
   const sumOfAllPoints = car.comments.reduce((acc, curr) => acc + curr.rating, 0);
   const numberOfComments = car.comments.length;
 
@@ -54,64 +55,68 @@ const CarDetails = () => {
     ? 0
     : ((sumOfAllPoints / numberOfComments) * 10) / 10;
 
-  return !loading && !error ? (
-    <div className={styles.carDetailsWrapper}>
-      <div className={styles.topPicture}>
-        <MainPicture picturePath={car.picturePath.url} />
-      </div>
-      <div className={styles.bottomWrapper}>
-        <div className={styles.leftColumn}>
-          <label>
-            {car.brand.name} {car.model} {car.year}
-          </label>
-          <Rating voted={voted} rating={overallRating} />
-          <div className={styles.columns}>
-            <div className={styles.lineOfIcons}>
-              <div className={styles.informationElement}>
-                <OpenDoorCar iconHeight={'25'} iconWidth={'25'} />
-                <label>{`${car.property.doors} doors`}</label>
-              </div>
-              <div className={styles.informationElement}>
-                <Luggage iconHeight={'25'} iconWidth={'25'} />
-                <label>{`${car.property.trunk} bags`}</label>
+  return (
+    <>
+      {data && car && (
+        <div className={styles.carDetailsWrapper}>
+          <div className={styles.topPicture}>
+            <MainPicture picturePath={car.picturePath.url} />
+          </div>
+          <div className={styles.bottomWrapper}>
+            <div className={styles.leftColumn}>
+              <label>
+                {car.brand.name} {car.model} {car.year}
+              </label>
+              <Rating voted={voted} rating={overallRating} />
+              <div className={styles.columns}>
+                <div className={styles.lineOfIcons}>
+                  <div className={styles.informationElement}>
+                    <OpenDoorCar iconHeight={'25'} iconWidth={'25'} />
+                    <label>{`${car.property.doors} doors`}</label>
+                  </div>
+                  <div className={styles.informationElement}>
+                    <Luggage iconHeight={'25'} iconWidth={'25'} />
+                    <label>{`${car.property.trunk} bags`}</label>
+                  </div>
+                </div>
+                <div className={styles.lineOfIcons}>
+                  <div className={styles.informationElement}>
+                    <GearBox iconHeight={'25'} iconWidth={'25'} />
+                    <label>{car.property.manualGearBox ? 'Manual' : 'Automat'}</label>
+                  </div>
+                  <div className={styles.informationElement}>
+                    <AirConditioner iconHeight={'25'} iconWidth={'25'} />
+                    <label>{car.property.airConditioning ? '' : 'No'} Air Conditioning</label>
+                  </div>
+                </div>
               </div>
             </div>
-            <div className={styles.lineOfIcons}>
-              <div className={styles.informationElement}>
-                <GearBox iconHeight={'25'} iconWidth={'25'} />
-                <label>{car.property.manualGearBox ? 'Manual' : 'Automat'}</label>
-              </div>
-              <div className={styles.informationElement}>
-                <AirConditioner iconHeight={'25'} iconWidth={'25'} />
-                <label>{car.property.airConditioning ? '' : 'No'} Air Conditioning</label>
-              </div>
+            <div className={styles.rightColumn}>
+              <h3>Price €{car.price}</h3>
+              <p>Location: {car.location}</p>
+              <button onClick={() => handleBorrow()} className={styles.button}>
+                Book
+              </button>
             </div>
           </div>
+          <div className={styles.review}>
+            <h3>RATINGS AND COMMENTS</h3>
+            <h3>{`${car.comments.length} ratings`}</h3>
+            {car.comments.map((comment) => (
+              <Comment
+                key={comment.id}
+                createdAt={comment.createdAt}
+                rating={comment.rating}
+                text={comment.text}
+                author={comment.user}
+              />
+            ))}
+            {user && <NewComment car={car} user={user} />}
+          </div>
         </div>
-        <div className={styles.rightColumn}>
-          <h3>Price €{car.price}</h3>
-          <p>Location: {car.location}</p>
-          <button onClick={() => handleBorrow()} className={styles.button}>
-            Book
-          </button>
-        </div>
-      </div>
-      <div className={styles.review}>
-        <h3>RATINGS AND COMMENTS</h3>
-        <h3>{`${car.comments.length} ratings`}</h3>
-        {car.comments.map((comment) => (
-          <Comment
-            key={comment.id}
-            createdAt={comment.createdAt}
-            rating={comment.rating}
-            text={comment.text}
-            author={comment.user}
-          />
-        ))}
-        {user && <NewComment car={car} user={user} />}
-      </div>
-    </div>
-  ) : null;
+      )}
+    </>
+  );
 };
 
 export default CarDetails;
