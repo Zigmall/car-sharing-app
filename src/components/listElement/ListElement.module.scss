@@ -1,0 +1,119 @@
+.payment__summary {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0 auto;
+  width: 70%;
+    margin-top: 3rem;
+  h2 {
+    margin-bottom: 0.3rem;
+  }
+  border: 1px solid #e0ebf7;
+  border-radius: 0.3rem;
+}
+
+.payment__summary__left {
+  display: flex;
+  flex-direction: column;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+  justify-content: center;
+}
+.payment__summary__left__title {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: #000000;
+  justify-content: center;
+  display: flex;
+  h3 {
+    margin: 0.5rem 0;
+  }
+}
+
+.payment__summary__left__car {
+  display: flex;
+  flex-direction: column;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+.payment__summary__left__car__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0.3rem;
+  img {
+    width: 20rem;
+    height: 8rem;
+    border-radius: 0.3rem;
+  }
+}
+
+.payment__summary__left__car__info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+.payment__summary__right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.payment__summary__right__title {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: #000000;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.payment__summary__right__info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  p {
+    font-size: 1.2rem;
+    margin-bottom: 0.2rem;
+  }
+}
+
+.payment__summary__right__info__left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+.payment__summary__right__info__right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+.checkIconStyles {
+  margin: 1.3rem 0.5rem;
+}
+
+.dropDownArrow {
+  margin: 1.3rem 1rem 0 0;
+  cursor: pointer;
+  :hover {
+    fill: #0074ef;
+  }
+}
+
+.insurance__options {
+  display: flex;
+  width: 68%;
+  margin: 0 auto;
+}
