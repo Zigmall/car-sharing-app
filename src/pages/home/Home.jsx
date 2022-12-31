@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
-import List from '../../list/List';
-import CarContext from '../../../context/car/carContext';
-import TypeNavigationBar from '../../groupElement/TypeNavigationBar';
+import List from '../../components/list/List';
+import CarContext from '../../context/car/carContext';
+import TypeNavigationBar from '../../components/groupElement/TypeNavigationBar';
 
 const Home = () => {
   const carContext = useContext(CarContext);

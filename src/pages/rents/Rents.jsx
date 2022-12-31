@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 import styles from './Rents.module.scss';
 import { useQuery } from '@apollo/client';
-import { GET_ALL_RENTS } from '../../../queries/queries';
-import AuthContext from '../../../context/auth/authContext';
+import { GET_ALL_RENTS } from '../../queries/queries';
+import AuthContext from '../../context/auth/authContext';
 import RentLine from './RentLine';
 
 const Rents = () => {

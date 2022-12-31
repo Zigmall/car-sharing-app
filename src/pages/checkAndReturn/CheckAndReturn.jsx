@@ -1,15 +1,28 @@
 import { useContext, useState, useEffect } from 'react';
-import styles from './HandlingOverCard.module.scss';
+import styles from './CheckAndReturn.module.scss';
 import { useParams } from 'react-router';
 
 import { useQuery } from '@apollo/client';
-import AuthContext from '../../../context/auth/authContext';
-import { GET_RENT_BY_ID } from '../../../queries/queries';
+import AuthContext from '../../context/auth/authContext';
+import { GET_RENT_BY_ID } from '../../queries/queries';
+import { useMutation } from '@apollo/client';
+import { UPDATE_RENT, UPDATE_CAR_FROM_HANDLING_OVER_CARD } from '../../mutations/mutations';
+import AlertContext from '../../context/alert/alertContext';
+import { useNavigate } from 'react-router-dom';
 
-const HandlingOverCard = () => {
+const CheckAndReturn = () => {
+  const handleCheckboxChange = (setFunction) => {
+    setFunction((prevState) => !prevState);
+  };
+
   const { rentId } = useParams();
   const authContext = useContext(AuthContext);
   const { user } = authContext;
+  const alertContext = useContext(AlertContext);
+  const { setAlert } = alertContext;
+  const navigate = useNavigate();
+
+  user && (user === null || user === undefined) ? navigate('/login') : null;
 
   const regDocBefore = true;
   const ocInsBefore = true;
@@ -44,31 +57,87 @@ const HandlingOverCard = () => {
     variables: { rentId }
   });
 
+  const carLocation = [
+    { location: 'Warszawa, Lotnisko Chopina' },
+    { location: 'Warszawa, Lotnisko Modlin' },
+    { location: 'Warszawa, Kwiatowa 15' },
+    { location: 'Warszawa, Złota 30' }
+  ];
+
+  const checkIfLocationIsChosen = () => {
+    return location === '' ? false : true;
+  };
+
   useEffect(() => {
     if (data) {
       const {
-        rent: { handlingOverCard, returnLocation }
+        rent: { handlingOverCard }
       } = data;
+      // console.log('car: ', car);
       setMilageBefore(handlingOverCard.milageBefore);
-      setMilageAfter(handlingOverCard.milageAfter);
-      setFullTankAfter(handlingOverCard.fullTankAfter);
-      setFuelCost(handlingOverCard.fuelCost);
       setDmgBefore(handlingOverCard.dmgBefore);
       setDmgBeforeDesc(handlingOverCard.dmgBeforeDesc);
-      setDmgAfter(handlingOverCard.dmgAfter);
-      setDmgAfterDesc(handlingOverCard.dmgAfterDesc);
-      setRegDocAfter(handlingOverCard.regDocAfter);
-      setOcInsAfter(handlingOverCard.ocInsAfter);
-      setFireExtAfter(handlingOverCard.fireExtAfter);
-      setTriangleAfter(handlingOverCard.triangleAfter);
-      setFirstAidKitAfter(handlingOverCard.firstAidKitAfter);
-      setArealAfter(handlingOverCard.arealAfter);
-      setSpareWheelAfter(handlingOverCard.spareWheelAfter);
-      setGpsAfter(handlingOverCard.gpsAfter);
-      setUserManualAfter(handlingOverCard.userManualAfter);
-      setLocation(returnLocation);
+      setMilageAfter(handlingOverCard.milageBefore);
     }
   }, [data]);
+
+  const [updateRent] = useMutation(UPDATE_RENT, {
+    onCompleted: ({ updateRent: { success, message } }) => {
+      if (!success) {
+        setAlert(message, 'danger');
+      } else {
+        setAlert('Handling Over Card completed', 'success');
+        navigate('/rents');
+      }
+    },
+    onError: (error) => {
+      console.log('error:', error.message);
+    },
+    refetchQueries: [
+      { query: GET_RENT_BY_ID, variables: { rentId } }
+      // { query: GET_RENTS }
+    ]
+  });
+
+  const [updateCar] = useMutation(UPDATE_CAR_FROM_HANDLING_OVER_CARD, {
+    onCompleted: ({ updateCar: { success, message } }) => {
+      if (!success) {
+        setAlert(message, 'danger');
+      } else {
+        console.log('success', message);
+      }
+    },
+    onError: (error) => {
+      console.log('error:', error.message);
+    },
+    refetchQueries: [
+      { query: GET_RENT_BY_ID, variables: { rentId } }
+      // { query: GET_RENTS }
+    ]
+  });
+
+  if (loading) {
+    return (
+      <div className={styles.error__message}>
+        <p>loading...</p>
+      </div>
+    );
+  }
+  if (error) {
+    console.log(error);
+    if (user === null || user === undefined) {
+      return (
+        <div className={styles.error__message}>
+          <p>You need to be log in to see this page</p>
+        </div>
+      );
+    }
+    return (
+      <div className={styles.error__message}>
+        <p>Something went wrong...</p>
+      </div>
+    );
+  }
 
   const calculateAdditionalCost = () => {
     let cost = 0;
@@ -85,38 +154,70 @@ const HandlingOverCard = () => {
     return cost;
   };
 
-  if (loading)
-    return (
-      <div className={styles.error__message}>
-        <p>Loading...</p>
-      </div>
-    );
+  const updateCarDetails = () => {
+    const {
+      rent: { car, handlingOverCard }
+    } = data;
+    const { milageAfter, dmgAfter, dmgAfterDesc, dmgBeforeDesc } = handlingOverCard;
+    const dmgDes = dmgAfter ? car.dmgDescription + ' ' + dmgAfterDesc : dmgBeforeDesc;
+    const dmg = dmgBefore || dmgAfter ? true : false;
+    const input = {
+      id: car.id,
+      milage: milageAfter,
+      damaged: dmg,
+      dmgDescription: dmgDes,
+      location: location
+    };
+    updateCar({ variables: { input } });
+    console.log('input: ', input);
+  };
 
-  if (error) {
-    console.log(error);
-    if (user === null) {
-      return (
-        <div className={styles.error__message}>
-          <p>You need to be log in to see this page</p>
-        </div>
-      );
+  const handleUpdateRent = () => {
+    if (!checkIfLocationIsChosen()) {
+      setAlert('Please choose return location', 'warning');
+      return;
     }
-    return (
-      <div className={styles.error__message}>
-        <p>Something went wrong...</p>
-      </div>
-    );
-  }
+    updateCarDetails();
+    const input = {
+      id: rentId,
+      returnDate: new Date(),
+      returnLocation: location,
+      additionalCosts: calculateAdditionalCost(),
+      handlingOverCard: {
+        milageBefore,
+        milageAfter,
+        fullTankAfter,
+        fuelCost: fullTankAfter ? 0 : fuelCost,
+        dmgBefore,
+        dmgBeforeDesc,
+        dmgAfter,
+        dmgAfterDesc,
+        regDocAfter,
+        ocInsAfter,
+        fireExtAfter,
+        triangleAfter,
+        firstAidKitAfter,
+        arealAfter,
+        spareWheelAfter,
+        gpsAfter,
+        userManualAfter
+      }
+    };
+    updateRent({ variables: { input } });
+  };
 
   return (
     <>
       {data && user && !(user.role === 'ADMIN' || user.role === 'SUPERVISOR') ? (
         <div className={styles.error__message}>
-          <h5>You need to be higher rank to perform this action</h5>
+          <h4>You need to be higher rank to perform this action</h4>
         </div>
       ) : (
         <div className={styles.return__wrapper}>
           <div className={styles.return__container}>
+            <div className={styles.return__header}>
+              <h1>Check and Return</h1>
+            </div>
             <div className={styles.return__form}>
               <div className={styles.return__form__leftColumn}>
                 <div className={styles.return__form__element}>
@@ -126,15 +227,29 @@ const HandlingOverCard = () => {
                   <p>Fuel level: 100%</p>
                 </div>
                 <div className={styles.return__form__damage}>
-                  <input type="checkbox" id="dmgBefore" checked={!dmgBefore} readOnly={true} />
+                  <input
+                    type="checkbox"
+                    id="dmgBefore"
+                    checked={!dmgBefore}
+                    onChange={() => handleCheckboxChange(setDmgBefore)}
+                  />
                   No old damages
                 </div>
                 <div className={styles.return__form__damage}>
-                  <input type="checkbox" id="dmgBefore" checked={dmgBefore} readOnly={true} />
+                  <input
+                    type="checkbox"
+                    id="dmgBefore"
+                    checked={dmgBefore}
+                    onChange={() => handleCheckboxChange(setDmgBefore)}
+                  />
                   New damages
                 </div>
                 <div className={styles.return__form__textarea}>
-                  <textarea id="dmgBeforeDesc" readOnly={true} defaultValue={dmgBeforeDesc} />
+                  <textarea
+                    id="dmgBeforeDesc"
+                    onChange={() => handleCheckboxChange(setDmgBeforeDesc)}
+                    defaultValue={dmgBeforeDesc}
+                  />
                 </div>
               </div>
               <div className={styles.return__form__middleColumn}>
@@ -143,13 +258,23 @@ const HandlingOverCard = () => {
                 <div className={styles.return__form__middleColumn__element}>
                   <input type="checkbox" id="regDocBefore" checked={regDocBefore} readOnly={true} />
                   <h4>Registration documents</h4>
-                  <input type="checkbox" id="regDocAfter" checked={regDocAfter} readOnly={true} />
+                  <input
+                    type="checkbox"
+                    id="regDocAfter"
+                    checked={regDocAfter}
+                    onChange={() => handleCheckboxChange(setRegDocAfter)}
+                  />
                 </div>
 
                 <div className={styles.return__form__middleColumn__element}>
                   <input type="checkbox" id="ocInsBefore" checked={ocInsBefore} readOnly={true} />
                   <h4>OC insurance</h4>
-                  <input type="checkbox" id="ocInsAfter" checked={ocInsAfter} readOnly={true} />
+                  <input
+                    type="checkbox"
+                    id="ocInsAfter"
+                    checked={ocInsAfter}
+                    onChange={() => handleCheckboxChange(setOcInsAfter)}
+                  />
                 </div>
 
                 <div className={styles.return__form__middleColumn__element}>
@@ -160,7 +285,12 @@ const HandlingOverCard = () => {
                     readOnly={true}
                   />
                   <h4>Fire extinguisher</h4>
-                  <input type="checkbox" id="fireExtAfter" checked={fireExtAfter} readOnly={true} />
+                  <input
+                    type="checkbox"
+                    id="fireExtAfter"
+                    checked={fireExtAfter}
+                    onChange={() => handleCheckboxChange(setFireExtAfter)}
+                  />
                 </div>
 
                 <div className={styles.return__form__middleColumn__element}>
@@ -175,7 +305,7 @@ const HandlingOverCard = () => {
                     type="checkbox"
                     id="spareWheelAfter"
                     checked={spareWheelAfter}
-                    readOnly={true}
+                    onChange={() => handleCheckboxChange(setSpareWheelAfter)}
                   />
                 </div>
 
@@ -191,7 +321,7 @@ const HandlingOverCard = () => {
                     type="checkbox"
                     id="triangleAfter"
                     checked={triangleAfter}
-                    readOnly={true}
+                    onChange={() => handleCheckboxChange(setTriangleAfter)}
                   />
                 </div>
 
@@ -207,14 +337,19 @@ const HandlingOverCard = () => {
                     type="checkbox"
                     id="firstAidKitAfter"
                     checked={firstAidKitAfter}
-                    readOnly={true}
+                    onChange={() => handleCheckboxChange(setFirstAidKitAfter)}
                   />
                 </div>
 
                 <div className={styles.return__form__middleColumn__element}>
                   <input type="checkbox" id="arealBefore" checked={arealBefore} readOnly={true} />
                   <h4>Areal</h4>
-                  <input type="checkbox" id="arealAfter" checked={arealAfter} readOnly={true} />
+                  <input
+                    type="checkbox"
+                    id="arealAfter"
+                    checked={arealAfter}
+                    onChange={() => handleCheckboxChange(setArealAfter)}
+                  />
                 </div>
 
                 <div className={styles.return__form__middleColumn__element}>
@@ -225,7 +360,12 @@ const HandlingOverCard = () => {
                     readOnly={true}
                   />
                   <h4>Additional GPS</h4>
-                  <input type="checkbox" id="gpsAfter" checked={gpsAfter} readOnly={true} />
+                  <input
+                    type="checkbox"
+                    id="gpsAfter"
+                    checked={gpsAfter}
+                    onChange={() => handleCheckboxChange(setGpsAfter)}
+                  />
                 </div>
 
                 <div className={styles.return__form__middleColumn__element}>
@@ -240,7 +380,7 @@ const HandlingOverCard = () => {
                     type="checkbox"
                     id="userManualAfter"
                     checked={userManualAfter}
-                    readOnly={true}
+                    onChange={() => handleCheckboxChange(setUserManualAfter)}
                   />
                 </div>
                 <div className={styles.bottom__space} />
@@ -253,7 +393,7 @@ const HandlingOverCard = () => {
                       className={styles.form__input}
                       type="number"
                       id="milageAfter"
-                      readOnly={true}
+                      onChange={(e) => setMilageAfter(parseInt(e.target.value))}
                       value={milageAfter}
                     />
                   </label>
@@ -265,7 +405,7 @@ const HandlingOverCard = () => {
                       type="checkbox"
                       id="fullTankAfter"
                       checked={fullTankAfter}
-                      readOnly={true}
+                      onChange={() => handleCheckboxChange(setFullTankAfter)}
                     />
                     Yes
                   </label>
@@ -274,7 +414,7 @@ const HandlingOverCard = () => {
                       type="checkbox"
                       id="fullTankAfter"
                       checked={!fullTankAfter}
-                      readOnly={true}
+                      onChange={() => handleCheckboxChange(setFullTankAfter)}
                     />
                     No
                   </label>
@@ -283,28 +423,46 @@ const HandlingOverCard = () => {
                     <input
                       type="number"
                       className={styles.form__input}
-                      value={fuelCost}
                       id="fuelCost"
                       placeholder="Fuel cost"
-                      readOnly={true}
+                      onChange={(e) => setFuelCost(parseInt(e.target.value))}
                     />
                   )}
                 </div>
                 <div className={styles.return__form__damage}>
-                  <input type="checkbox" id="dmgAfter" checked={!dmgAfter} readOnly={true} />
+                  <input
+                    type="checkbox"
+                    id="dmgAfter"
+                    checked={!dmgAfter}
+                    onChange={() => handleCheckboxChange(setDmgAfter)}
+                  />
                   No new damages
                 </div>
                 <div className={styles.return__form__damage}>
-                  <input type="checkbox" id="dmgAfter" checked={dmgAfter} readOnly={true} />
+                  <input
+                    type="checkbox"
+                    id="dmgAfter"
+                    checked={dmgAfter}
+                    onChange={() => handleCheckboxChange(setDmgAfter)}
+                  />
                   New damages
                 </div>
                 <div className={styles.return__form__textarea}>
-                  <textarea id="dmgAfterDesc" readOnly={true} defaultValue={dmgAfterDesc} />
+                  <textarea
+                    id="dmgAfterDesc"
+                    onChange={() => handleCheckboxChange(setDmgAfterDesc)}
+                    defaultValue={dmgAfterDesc}
+                  />
                 </div>
-                <div className={styles.return__location}>
-                  <h3>Return location:</h3>
-                  <p>{location}</p>
-                </div>
+                <select
+                  className={styles.form__select}
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}>
+                  <option>Select Return Location</option>
+                  {carLocation.map((location, index) => (
+                    <option key={index}>{location.location}</option>
+                  ))}
+                </select>
               </div>
             </div>
             <div className={styles.return__footer__summary}>
@@ -347,6 +505,11 @@ const HandlingOverCard = () => {
                 </div>
               </div>
             </div>
+            <div className={styles.return__footer}>
+              <button className={styles.return__footer__button} onClick={() => handleUpdateRent()}>
+                Confirm car return
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -354,4 +517,4 @@ const HandlingOverCard = () => {
   );
 };
 
-export default HandlingOverCard;
+export default CheckAndReturn;

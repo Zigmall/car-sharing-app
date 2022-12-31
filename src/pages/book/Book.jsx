@@ -2,18 +2,18 @@ import React, { useState, useContext } from 'react';
 import DatePicker from 'react-datepicker';
 import styles from './Book.module.scss';
 import 'react-datepicker/dist/react-datepicker.css';
-import EditUserForm from '../../editUserForm/EditUserForm';
-import AuthContext from '../../../context/auth/authContext';
-import CarContext from '../../../context/car/carContext';
-import AlertContext from '../../../context/alert/alertContext';
+import EditUserForm from '../../components/editUserForm/EditUserForm';
+import AuthContext from '../../context/auth/authContext';
+import CarContext from '../../context/car/carContext';
+import AlertContext from '../../context/alert/alertContext';
 import { useParams } from 'react-router';
 import { useQuery } from '@apollo/client';
-import { GET_CAR } from '../../../queries/queries';
-import { CheckIcon, DropDownArrow } from '../../assets/SvgList';
+import { GET_CAR } from '../../queries/queries';
+import { CheckIcon, DropDownArrow } from '../../components/assets/SvgList';
 import { useEffect } from 'react';
 import { useMutation } from '@apollo/client';
-import { BOOK_CAR } from '../../../mutations/mutations';
-import Insurance from '../../insurance/Insurance';
+import { BOOK_CAR } from '../../mutations/mutations';
+import Insurance from '../../components/insurance/Insurance';
 import { useNavigate } from 'react-router-dom';
 
 const Book = () => {

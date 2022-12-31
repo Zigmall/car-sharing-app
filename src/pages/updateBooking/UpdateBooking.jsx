@@ -4,14 +4,14 @@ import { useParams } from 'react-router';
 import { useQuery } from '@apollo/client';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { GET_BOOKING_BY_ID, GET_ALL_BOOKINGS } from '../../../queries/queries';
-import { BOOK_CAR, UPDATE_BOOKING } from '../../../mutations/mutations';
-import AuthContext from '../../../context/auth/authContext';
-import AlertContext from '../../../context/alert/alertContext';
+import { GET_BOOKING_BY_ID, GET_ALL_BOOKINGS } from '../../queries/queries';
+import { BOOK_CAR, UPDATE_BOOKING } from '../../mutations/mutations';
+import AuthContext from '../../context/auth/authContext';
+import AlertContext from '../../context/alert/alertContext';
 import { useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
-import Insurance from '../../insurance/Insurance';
+import Insurance from '../../components/insurance/Insurance';
 
 const UpdateBooking = () => {
   const authContext = useContext(AuthContext);

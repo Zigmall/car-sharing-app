@@ -1,8 +1,8 @@
 import { useQuery } from '@apollo/client';
 import React from 'react';
 import styles from './ReturnCars.module.scss';
-import Car from '../../car/Car';
-import { GET_ALL_BORROWED_CARS } from '../../../queries/queries';
+import Car from '../../components/car/Car';
+import { GET_ALL_BORROWED_CARS } from '../../queries/queries';
 import { useParams } from 'react-router-dom';
 
 const ReturnCars = () => {

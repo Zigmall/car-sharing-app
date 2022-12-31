@@ -1,12 +1,12 @@
 import { useContext } from 'react';
 import { useQuery } from '@apollo/client';
-import { GET_ALL_BOOKINGS } from '../../../queries/queries';
-import AuthContext from '../../../context/auth/authContext';
+import { GET_ALL_BOOKINGS } from '../../queries/queries';
+import AuthContext from '../../context/auth/authContext';
 import UserLine from './UserLine';
 import styles from './Bookings.module.scss';
 import { useMutation } from '@apollo/client';
-import { UPDATE_BOOKING } from '../../../mutations/mutations';
-import AlertContext from '../../../context/alert/alertContext';
+import { UPDATE_BOOKING } from '../../mutations/mutations';
+import AlertContext from '../../context/alert/alertContext';
 
 const Bookings = () => {
   const { loading, error, data } = useQuery(GET_ALL_BOOKINGS);

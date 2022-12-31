@@ -1,12 +1,12 @@
 import React, { useState, useContext, useRef } from 'react';
 import styles from './AddCar.module.scss';
-import { GET_BRANDS, ALL_CARS, GET_CAR_CLASSES } from '../../../queries/queries';
+import { GET_BRANDS, ALL_CARS, GET_CAR_CLASSES } from '../../queries/queries';
 import { useQuery } from '@apollo/client';
-import AlertContext from '../../../context/alert/alertContext';
-import { CREATE_CAR, UPLOAD_IMAGE } from '../../../mutations/mutations';
+import AlertContext from '../../context/alert/alertContext';
+import { CREATE_CAR, UPLOAD_IMAGE } from '../../mutations/mutations';
 import { useMutation } from '@apollo/client';
-import MiddleIcon from '../../groupElement/MiddleIcon';
-import AuthContext from '../../../context/auth/authContext';
+import MiddleIcon from '../../components/groupElement/MiddleIcon';
+import AuthContext from '../../context/auth/authContext';
 
 const AddCar = () => {
   const handleCheckboxChange = (setFunction) => {

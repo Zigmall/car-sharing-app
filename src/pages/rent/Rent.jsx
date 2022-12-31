@@ -2,13 +2,13 @@ import { useContext, useState } from 'react';
 import styles from './Rent.module.scss';
 import { useParams } from 'react-router';
 import { useQuery } from '@apollo/client';
-import AuthContext from '../../../context/auth/authContext';
-import AlertContext from '../../../context/alert/alertContext';
-import EditUserForm from '../../editUserForm/EditUserForm';
+import AuthContext from '../../context/auth/authContext';
+import AlertContext from '../../context/alert/alertContext';
+import EditUserForm from '../../components/editUserForm/EditUserForm';
 import { useEffect } from 'react';
 import { useMutation } from '@apollo/client';
-import { GET_BOOKING_BY_ID, GET_ALL_BOOKINGS, GET_ALL_RENTS } from '../../../queries/queries';
-import { RENT_CAR, UPDATE_BOOKING } from '../../../mutations/mutations';
+import { GET_BOOKING_BY_ID, GET_ALL_BOOKINGS, GET_ALL_RENTS } from '../../queries/queries';
+import { RENT_CAR, UPDATE_BOOKING } from '../../mutations/mutations';
 import { useNavigate } from 'react-router-dom';
 
 const Rent = () => {

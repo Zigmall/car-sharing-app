@@ -1,5 +1,5 @@
 import React from 'react';
-import Home from './components/pages/home/Home';
+import Home from './pages/home/Home';
 import { Route, Routes } from 'react-router';
 import CarDetails from './components/carDetails/CarDetails';
 import Users from './components/users/Users';
@@ -12,19 +12,19 @@ import Registration from './components/auth/Registration';
 import AlertState from './context/alert/AlertState';
 import Alerts from './components/alerts/Alerts';
 import Login from './components/auth/Login';
-import ReturnCars from './components/pages/returnCars/ReturnCars';
-import Rents from './components/pages/rents/Rents';
-import CheckAndReturn from './components/pages/checkAndReturn/CheckAndReturn';
+import ReturnCars from './pages/returnCars/ReturnCars';
+import Rents from './pages/rents/Rents';
+import CheckAndReturn from './pages/checkAndReturn/CheckAndReturn';
 import { createUploadLink } from 'apollo-upload-client';
-import ReturnSummary from './components/pages/rentSummary/ReturnSummary';
+import ReturnSummary from './pages/rentSummary/ReturnSummary';
 import AuthState from './context/auth/AuthState';
 import { loadUser } from './context/auth/AuthState';
-import AddCar from './components/pages/addCar/AddCar';
-import Book from './components/pages/book/Book';
-import Bookings from './components/pages/bookings/Bookings';
-import Rent from './components/pages/rent/Rent';
-import UpdateBooking from './components/pages/updateBooking/UpdateBooking';
-import HandlingOverCard from './components/pages/handlingOverCard/HandlingOverCard';
+import AddCar from './pages/addCar/AddCar';
+import Book from './pages/book/Book';
+import Bookings from './pages/bookings/Bookings';
+import Rent from './pages/rent/Rent';
+import UpdateBooking from './pages/updateBooking/UpdateBooking';
+import HandlingOverCard from './pages/handlingOverCard/HandlingOverCard';
 import {
   ApolloClient,
   InMemoryCache,

@@ -2,12 +2,12 @@ import React, { useContext } from 'react';
 import styles from './ReturnSummary.module.scss';
 import { useParams } from 'react-router';
 import { useQuery } from '@apollo/client';
-import AuthContext from '../../../context/auth/authContext';
-import { GET_RENT_BY_ID } from '../../../queries/queries';
+import AuthContext from '../../context/auth/authContext';
+import { GET_RENT_BY_ID } from '../../queries/queries';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { UPDATE_RENT } from '../../../mutations/mutations';
-import AlertContext from '../../../context/alert/alertContext';
+import { UPDATE_RENT } from '../../mutations/mutations';
+import AlertContext from '../../context/alert/alertContext';
 const ReturnSummary = () => {
   const { rentId } = useParams();
   const authContext = useContext(AuthContext);
