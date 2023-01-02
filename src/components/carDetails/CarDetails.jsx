@@ -76,7 +76,7 @@ const CarDetails = () => {
                   </div>
                   <div className={styles.informationElement}>
                     <Luggage iconHeight={'25'} iconWidth={'25'} />
-                    <label>{`${car.property.trunk} bags`}</label>
+                    <label>{`capacity ${car.property.trunk} l.`}</label>
                   </div>
                 </div>
                 <div className={styles.lineOfIcons}>

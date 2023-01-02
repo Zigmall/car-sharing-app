@@ -330,10 +330,7 @@ z"
 );
 
 const GreenTick = ({ iconHeight, iconWidth }) => (
-  <svg
-    style={{ height: iconHeight, width: iconWidth }}
-    viewBox="0 0 520 520"
-    xmlns="http://www.w3.org/2000/svg">
+  <svg style={{ height: iconHeight, width: iconWidth }} viewBox="0 0 520 520">
     <path
       fill="#009045"
       d="m213.245 414.76-4.378-7.457c-32.838-55.947-120.186-174.797-121.067-175.991l-2.562-3.482 32.862-32.463 94.036 65.663c58.937-76.169 113.841-128.59 149.758-159.311 39.678-33.94 64.8-49.127 65.845-49.757l1.188-.713h57.9l-9.805 8.733c-123.822 110.286-258.155 344.907-259.498 347.264z"
