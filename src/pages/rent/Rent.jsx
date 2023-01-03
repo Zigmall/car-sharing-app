@@ -41,7 +41,6 @@ const Rent = () => {
       console.log(error);
       setAlert('Something went wrong', 'error');
     }
-    // refetchQueries: ['GET_RENTS_BY_ID']
   });
 
   const { loading, error, data } = useQuery(GET_BOOKING_BY_ID, {
