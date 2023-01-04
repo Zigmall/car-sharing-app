@@ -31,6 +31,8 @@ const GET_ALL_BORROWED_CARS = gql`
           }
           location {
             point
+            fullAddress
+            city
           }
           price
         }
@@ -86,6 +88,8 @@ const GET_ALL_USERS = gql`
           }
           location {
             point
+            fullAddress
+            city
           }
           price
         }
@@ -151,6 +155,8 @@ const GET_USER = gql`
           }
           location {
             point
+            fullAddress
+            city
           }
           price
         }
@@ -188,6 +194,8 @@ const ALL_CARS = gql`
       }
       location {
         point
+        fullAddress
+        city
       }
       price
     }
@@ -251,6 +259,8 @@ const GET_CURRENT_USER = gql`
           }
           location {
             point
+            fullAddress
+            city
           }
           price
         }
@@ -320,6 +330,8 @@ const GET_CAR = gql`
       }
       location {
         point
+        fullAddress
+        city
       }
       price
       comments {
@@ -440,6 +452,8 @@ const GET_BOOKING_BY_ID = gql`
         dmgDescription
         location {
           point
+          fullAddress
+          city
         }
       }
     }
@@ -506,6 +520,8 @@ const GET_RENT_BY_ID = gql`
         dmgDescription
         location {
           point
+          fullAddress
+          city
         }
         milage
         model
@@ -596,6 +612,17 @@ const BOOKED_CARS_BY_USER_ID = gql`
   }
 `;
 
+const GET_LOCATIONS = gql`
+  query Locations {
+    locations {
+      id
+      point
+      fullAddress
+      city
+    }
+  }
+`;
+
 export {
   GET_ALL_BORROWED_CARS,
   GET_ALL_USERS,
@@ -609,5 +636,6 @@ export {
   GET_BOOKING_BY_ID,
   GET_ALL_RENTS,
   GET_RENT_BY_ID,
-  BOOKED_CARS_BY_USER_ID
+  BOOKED_CARS_BY_USER_ID,
+  GET_LOCATIONS
 };

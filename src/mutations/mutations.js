@@ -112,7 +112,11 @@ const LOG_IN = gql`
               airConditioning
               manualGearBox
             }
-            location
+            location {
+              point
+              fullAddress
+              city
+            }
             price
           }
         }
@@ -147,7 +151,11 @@ const RETURN_CAR = gql`
             airConditioning
             manualGearBox
           }
-          location
+          location {
+            point
+            fullAddress
+            city
+          }
           price
         }
       }
@@ -192,7 +200,11 @@ const CREATE_CAR = gql`
         }
         benefits
         year
-        location
+        location {
+          point
+          fullAddress
+          city
+        }
         price
         description
         brand {
@@ -251,7 +263,11 @@ const SIGN_UP = gql`
               airConditioning
               manualGearBox
             }
-            location
+            location {
+              point
+              fullAddress
+              city
+            }
             price
           }
         }
@@ -438,7 +454,11 @@ const UPDATE_CAR_FROM_HANDLING_OVER_CARD = gql`
         milage
         damaged
         dmgDescription
-        location
+        location {
+          point
+          fullAddress
+          city
+        }
       }
     }
   }
@@ -475,7 +495,11 @@ const UPDATE_CAR = gql`
           name
         }
         benefits
-        location
+        location {
+          point
+          fullAddress
+          city
+        }
         milage
         model
         picturePath {
