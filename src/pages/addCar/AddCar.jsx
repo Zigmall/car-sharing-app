@@ -1,7 +1,7 @@
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import styles from './AddCar.module.scss';
-import { GET_BRANDS, ALL_CARS, GET_CAR_CLASSES } from '../../queries/queries';
-import { useQuery } from '@apollo/client';
+import { ALL_CARS } from '../../queries/queries';
+// import { useQuery } from '@apollo/client';
 import AlertContext from '../../context/alert/alertContext';
 import { CREATE_CAR, UPLOAD_IMAGE, UPDATE_CAR } from '../../mutations/mutations';
 import { useMutation } from '@apollo/client';
@@ -9,23 +9,18 @@ import MiddleIcon from '../../components/groupElement/MiddleIcon';
 import AuthContext from '../../context/auth/authContext';
 import PropTypes from 'prop-types';
 
-const AddCar = ({ car }) => {
+const AddCar = ({ car, brands, classes, locations }) => {
   const handleCheckboxChange = (setFunction) => {
     setFunction((prevState) => !prevState);
   };
   const [isItEdit, setIsItEdit] = useState(false);
-  const [brand, setBrand] = useState('');
-  const { loading, error, data } = useQuery(GET_BRANDS);
-  const {
-    loading: loadingClasses,
-    error: errorClasses,
-    data: dataClasses
-  } = useQuery(GET_CAR_CLASSES);
+
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
   const authContext = useContext(AuthContext);
   const { user } = authContext;
 
+  const [brand, setBrand] = useState('');
   const [model, setModel] = useState('');
   const [carClass, setCarClass] = useState('');
   const [year, setYear] = useState(0);
@@ -55,22 +50,23 @@ const AddCar = ({ car }) => {
   const inputRefSmall = useRef();
   const triggerFileSelection = (inputRef) => inputRef.current.click();
 
-  const classesList = dataClasses && dataClasses.carClasses;
   const getCarClassId = (name) => {
-    return classesList.find((carClassItem) => carClassItem.name === name).id;
+    return classes?.find((carClassItem) => carClassItem.name === name).id;
   };
 
-  const brandsList = data && data.brands;
   const getBrandId = (name) => {
-    return brandsList.find((brandItem) => brandItem.name === name).id;
+    return brands?.find((brandItem) => brandItem.name === name).id;
+  };
+  const getLocationId = (point) => {
+    return locations.find((location) => location.point === point).id;
   };
 
   const checkIfItsEdit = () => {
     if (car) {
       setIsItEdit(true);
-      setBrand(brandsList && getBrandId(car?.brand?.name));
+      setBrand(brands && getBrandId(car?.brand?.name));
       setModel(car.model);
-      setCarClass(classesList && getCarClassId(car?.carClass?.name));
+      setCarClass(classes && getCarClassId(car?.carClass?.name));
       setYear(car.year);
       setMilage(car.milage);
       setDeposit(car.deposit);
@@ -87,7 +83,7 @@ const AddCar = ({ car }) => {
       setAirConditioning(car.property.airConditioning);
       setManualGearBox(car.property.manualGearBox);
 
-      setLocation(car.location);
+      setLocation(locations && getLocationId(car?.location?.point));
       setDescription(car.description);
       setMainImage(car.picturePath.url);
       setMainImageUrl(car.picturePath.url);
@@ -217,8 +213,7 @@ const AddCar = ({ car }) => {
         description,
         picturePath: {
           url: mainImageUrl
-        },
-        pictures: smallImagesUrlList
+        }
       }
     },
     refetchQueries: [{ query: ALL_CARS }]
@@ -282,7 +277,6 @@ const AddCar = ({ car }) => {
         : updateCar().then((res) => {
             if (res.data.updateCar.success) {
               setAlert('Car has been updated', 'success');
-              resetForm();
             } else {
               setAlert('Something went wrong', 'danger');
               console.log(res.data.updateCar.message);
@@ -290,30 +284,6 @@ const AddCar = ({ car }) => {
           });
     }
   };
-
-  if (loading || loadingClasses)
-    return (
-      <div className={styles.error__message}>
-        <p>Loading...</p>
-      </div>
-    );
-  if (error) {
-    console.log(error);
-    return (
-      <div className={styles.error__message}>
-        <p>Something went wrong...</p>
-      </div>
-    );
-  } else if (errorClasses) {
-    console.log(errorClasses);
-    return (
-      <div className={styles.error__message}>
-        <p>Something went wrong...</p>
-      </div>
-    );
-  }
-  const brands = data.brands;
-  const classes = dataClasses.carClasses;
 
   const onSelectMainImage = (e) => {
     const picture = e.target.files[0];
@@ -350,10 +320,19 @@ const AddCar = ({ car }) => {
       });
     });
   };
+  // console.log('locationList', locationList);
+  console.log('location', location);
+  console.log('brand', brand);
+  console.log('carClass', carClass);
+  brand && console.log('brand*', brand);
 
   return (
     <>
-      {brands && classes && user && !(user.role === 'ADMIN' || user.role === 'SUPERVISOR') ? (
+      {brands &&
+      classes &&
+      locations &&
+      user &&
+      !(user.role === 'ADMIN' || user.role === 'SUPERVISOR') ? (
         <div className={styles.error__message}>
           <h5>You need to be higher rank to perform this action</h5>
         </div>
@@ -428,9 +407,6 @@ const AddCar = ({ car }) => {
                       className={styles.form__select}
                       value={brand}
                       onChange={(e) => setBrand(e.target.value)}>
-                      <option value={isItEdit ? brand : ''}>
-                        {isItEdit ? car?.brand.name : 'Chose brand'}
-                      </option>
                       {brands.map((brand) => (
                         <option key={brand.id} value={brand.id}>
                           {brand.name}
@@ -444,12 +420,26 @@ const AddCar = ({ car }) => {
                       className={styles.form__select}
                       value={carClass}
                       onChange={(e) => setCarClass(e.target.value)}>
-                      <option value={isItEdit ? carClass : ''}>{`${
-                        isItEdit ? car?.carClass?.name : 'Select Class'
-                      }`}</option>
                       {classes.map((element) => (
                         <option key={element.id} value={element.id}>
                           {element.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className={styles.form__input__element}>
+                    <label className={styles.form__label}>Pick Up Location</label>
+                    <select
+                      className={styles.form__select}
+                      value={location}
+                      onChange={(e) => setLocation(e.target.value)}>
+                      {/* <option value={isItEdit ? location : ''}>{`${
+                        isItEdit ? car?.location?.point : 'Select Location'
+                      }`}</option> */}
+                      {locations.map((element) => (
+                        <option key={element.id} value={element.id}>
+                          {element.point}
                         </option>
                       ))}
                     </select>
@@ -510,17 +500,6 @@ const AddCar = ({ car }) => {
                       id="deposit"
                       value={deposit}
                       onChange={(e) => setDeposit(e.target.value)}
-                    />
-                  </div>
-
-                  <div className={styles.form__element}>
-                    <label className={styles.form__label}>Pick Up Location</label>
-                    <input
-                      type="text"
-                      className={styles.form__input}
-                      id="location"
-                      value={location}
-                      onChange={(e) => setLocation(e.target.value)}
                     />
                   </div>
                 </div>
@@ -694,7 +673,10 @@ const AddCar = ({ car }) => {
 };
 
 AddCar.propTypes = {
-  car: PropTypes.object
+  car: PropTypes.object,
+  locations: PropTypes.array,
+  brands: PropTypes.array,
+  classes: PropTypes.array
 };
 
 export default AddCar;
