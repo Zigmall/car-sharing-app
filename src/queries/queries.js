@@ -29,7 +29,9 @@ const GET_ALL_BORROWED_CARS = gql`
             airConditioning
             manualGearBox
           }
-          location
+          location {
+            point
+          }
           price
         }
       }
@@ -82,7 +84,9 @@ const GET_ALL_USERS = gql`
             airConditioning
             manualGearBox
           }
-          location
+          location {
+            point
+          }
           price
         }
       }
@@ -145,7 +149,9 @@ const GET_USER = gql`
             airConditioning
             manualGearBox
           }
-          location
+          location {
+            point
+          }
           price
         }
       }
@@ -180,7 +186,9 @@ const ALL_CARS = gql`
       picturePath {
         url
       }
-      location
+      location {
+        point
+      }
       price
     }
   }
@@ -241,7 +249,9 @@ const GET_CURRENT_USER = gql`
             airConditioning
             manualGearBox
           }
-          location
+          location {
+            point
+          }
           price
         }
       }
@@ -298,13 +308,19 @@ const GET_CAR = gql`
         seats
         doors
         trunk
+        engine
         airConditioning
         manualGearBox
       }
       picturePath {
         url
       }
-      location
+      pictures {
+        url
+      }
+      location {
+        point
+      }
       price
       comments {
         id
@@ -422,7 +438,9 @@ const GET_BOOKING_BY_ID = gql`
         milage
         damaged
         dmgDescription
-        location
+        location {
+          point
+        }
       }
     }
   }
@@ -486,7 +504,9 @@ const GET_RENT_BY_ID = gql`
         damaged
         deposit
         dmgDescription
-        location
+        location {
+          point
+        }
         milage
         model
         price
