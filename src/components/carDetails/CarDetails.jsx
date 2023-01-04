@@ -93,7 +93,7 @@ const CarDetails = () => {
             </div>
             <div className={styles.rightColumn}>
               <h3>Price €{car.price}</h3>
-              <p>Location: {car.location}</p>
+              <p>Location: {car.location.point}</p>
               <button onClick={() => handleBorrow()} className={styles.button}>
                 Book
               </button>

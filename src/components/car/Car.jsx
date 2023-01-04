@@ -60,7 +60,7 @@ const Car = ({
             <GpsDirection iconHeight="30px" iconWidth="20px" />
             <div className={styles.columnOneText}>
               <p>Pick-up location</p>
-              <label>{location}</label>
+              <label>{location.point}</label>
             </div>
           </div>
         </div>
@@ -89,7 +89,7 @@ Car.propTypes = {
   picturePath: PropTypes.object,
   brand: PropTypes.object,
   property: PropTypes.object,
-  location: PropTypes.string,
+  location: PropTypes.object,
   price: PropTypes.number,
   id: PropTypes.string,
   model: PropTypes.string,
