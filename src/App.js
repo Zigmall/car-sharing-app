@@ -26,6 +26,7 @@ import Rent from './pages/rent/Rent';
 import UpdateBooking from './pages/updateBooking/UpdateBooking';
 import HandlingOverCard from './pages/handlingOverCard/HandlingOverCard';
 import MyBookings from './pages/myBookings/MyBookings';
+import EditCar from './pages/editCar/EditCar';
 import {
   ApolloClient,
   InMemoryCache,
@@ -67,6 +68,7 @@ const App = () => {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/add-car" element={<AddCar />} />
+                <Route path="/edit-car/:carId" element={<EditCar />} />
                 <Route path="/registration" element={<Registration />} />
                 <Route path="login" element={<Login />} />
                 <Route path="/cars/:carId" element={<CarDetails />} />
