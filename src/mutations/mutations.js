@@ -457,6 +457,48 @@ const UPDATE_RENT_AFTER_COMMENT = gql`
   }
 `;
 
+const UPDATE_CAR = gql`
+  mutation UpdateCar($input: UpdateCarInput!) {
+    updateCar(input: $input) {
+      message
+      success
+      car {
+        id
+        dmgDescription
+        description
+        deposit
+        damaged
+        carClass {
+          name
+        }
+        brand {
+          name
+        }
+        benefits
+        location
+        milage
+        model
+        picturePath {
+          url
+        }
+        pictures {
+          url
+        }
+        price
+        property {
+          seats
+          doors
+          trunk
+          engine
+          airConditioning
+          manualGearBox
+        }
+        year
+      }
+    }
+  }
+`;
+
 export {
   DELETE_USER,
   UPDATE_USER,
@@ -473,5 +515,6 @@ export {
   RENT_CAR,
   UPDATE_RENT,
   UPDATE_CAR_FROM_HANDLING_OVER_CARD,
-  UPDATE_RENT_AFTER_COMMENT
+  UPDATE_RENT_AFTER_COMMENT,
+  UPDATE_CAR
 };
