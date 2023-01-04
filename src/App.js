@@ -19,7 +19,7 @@ import { createUploadLink } from 'apollo-upload-client';
 import ReturnSummary from './pages/rentSummary/ReturnSummary';
 import AuthState from './context/auth/AuthState';
 import { loadUser } from './context/auth/AuthState';
-import AddCar from './pages/addCar/AddCar';
+import AddCarWrapper from './pages/addCar/AddCarWrapper';
 import Book from './pages/book/Book';
 import Bookings from './pages/bookings/Bookings';
 import Rent from './pages/rent/Rent';
@@ -67,7 +67,7 @@ const App = () => {
               <Bars />
               <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/add-car" element={<AddCar />} />
+                <Route path="/add-car" element={<AddCarWrapper />} />
                 <Route path="/edit-car/:carId" element={<EditCar />} />
                 <Route path="/registration" element={<Registration />} />
                 <Route path="login" element={<Login />} />
