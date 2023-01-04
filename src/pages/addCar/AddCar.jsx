@@ -1,17 +1,19 @@
-import React, { useState, useContext, useRef } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import styles from './AddCar.module.scss';
 import { GET_BRANDS, ALL_CARS, GET_CAR_CLASSES } from '../../queries/queries';
 import { useQuery } from '@apollo/client';
 import AlertContext from '../../context/alert/alertContext';
-import { CREATE_CAR, UPLOAD_IMAGE } from '../../mutations/mutations';
+import { CREATE_CAR, UPLOAD_IMAGE, UPDATE_CAR } from '../../mutations/mutations';
 import { useMutation } from '@apollo/client';
 import MiddleIcon from '../../components/groupElement/MiddleIcon';
 import AuthContext from '../../context/auth/authContext';
+import PropTypes from 'prop-types';
 
-const AddCar = () => {
+const AddCar = ({ car }) => {
   const handleCheckboxChange = (setFunction) => {
     setFunction((prevState) => !prevState);
   };
+  const [isItEdit, setIsItEdit] = useState(false);
   const [brand, setBrand] = useState('');
   const { loading, error, data } = useQuery(GET_BRANDS);
   const {
@@ -53,6 +55,51 @@ const AddCar = () => {
   const inputRefSmall = useRef();
   const triggerFileSelection = (inputRef) => inputRef.current.click();
 
+  const classesList = dataClasses && dataClasses.carClasses;
+  const getCarClassId = (name) => {
+    return classesList.find((carClassItem) => carClassItem.name === name).id;
+  };
+
+  const brandsList = data && data.brands;
+  const getBrandId = (name) => {
+    return brandsList.find((brandItem) => brandItem.name === name).id;
+  };
+
+  const checkIfItsEdit = () => {
+    if (car) {
+      setIsItEdit(true);
+      setBrand(brandsList && getBrandId(car?.brand?.name));
+      setModel(car.model);
+      setCarClass(classesList && getCarClassId(car?.carClass?.name));
+      setYear(car.year);
+      setMilage(car.milage);
+      setDeposit(car.deposit);
+      setDamaged(car.damaged);
+      setDmgDescription(car.dmgDescription);
+      setPrice(car.price);
+
+      setBenefits(car.benefits);
+
+      setSeats(car.property.seats);
+      setDoors(car.property.doors);
+      setTrunk(car.property.trunk);
+      setEngine(car.property.engine);
+      setAirConditioning(car.property.airConditioning);
+      setManualGearBox(car.property.manualGearBox);
+
+      setLocation(car.location);
+      setDescription(car.description);
+      setMainImage(car.picturePath.url);
+      setMainImageUrl(car.picturePath.url);
+      // setSmallImages(car.pictures);
+      // setSmallImagesUrlList(car.pictures);
+    }
+  };
+
+  useEffect(() => {
+    checkIfItsEdit();
+  }, []);
+
   const resetForm = () => {
     setBrand('');
     setModel('');
@@ -80,6 +127,20 @@ const AddCar = () => {
     setMainImageUrl('');
     setSmallImagesUrlList([]);
   };
+  const setBenefits = (benefits) => {
+    if (benefits.includes('Unlimited mileage')) {
+      setUnlimitedMileage(true);
+    }
+    if (benefits.includes('Collision damage protection')) {
+      setCollision(true);
+    }
+    if (benefits.includes('Theft protection')) {
+      setTheftProtection(true);
+    }
+    if (benefits.includes('Roadside assistance')) {
+      setRoadsideAssistance(true);
+    }
+  };
 
   const checkBenefits = () => {
     let array = new Array();
@@ -101,6 +162,39 @@ const AddCar = () => {
   const [createNewCar] = useMutation(CREATE_CAR, {
     variables: {
       input: {
+        brand,
+        model,
+        carClass,
+        year: parseInt(year),
+        price: parseInt(price),
+        milage: parseInt(milage),
+        deposit: parseInt(deposit),
+        benefits: checkBenefits(),
+        damaged,
+        dmgDescription,
+        property: {
+          seats,
+          doors,
+          trunk,
+          engine,
+          airConditioning,
+          manualGearBox
+        },
+        location,
+        description,
+        picturePath: {
+          url: mainImageUrl
+        },
+        pictures: smallImagesUrlList
+      }
+    },
+    refetchQueries: [{ query: ALL_CARS }]
+  });
+
+  const [updateCar] = useMutation(UPDATE_CAR, {
+    variables: {
+      input: {
+        id: car?.id,
         brand,
         model,
         carClass,
@@ -174,18 +268,26 @@ const AddCar = () => {
       setAlert('Please fill out all fields', 'warning');
     } else if (mainImageUrl === '') {
       setAlert('Please upload main image', 'warning');
-    } else if (smallImagesUrlList.length < 1) {
-      setAlert('Please upload at least 1 small image', 'warning');
     } else {
-      createNewCar().then((res) => {
-        if (res.data.createCar.success) {
-          setAlert('Car has been added', 'success');
-          resetForm();
-        } else {
-          setAlert('Something went wrong', 'danger');
-          console.log(res.data.createCar.message);
-        }
-      });
+      !isItEdit
+        ? createNewCar().then((res) => {
+            if (res.data.createCar.success) {
+              setAlert('Car has been added', 'success');
+              resetForm();
+            } else {
+              setAlert('Something went wrong', 'danger');
+              console.log(res.data.createCar.message);
+            }
+          })
+        : updateCar().then((res) => {
+            if (res.data.updateCar.success) {
+              setAlert('Car has been updated', 'success');
+              resetForm();
+            } else {
+              setAlert('Something went wrong', 'danger');
+              console.log(res.data.updateCar.message);
+            }
+          });
     }
   };
 
@@ -230,7 +332,6 @@ const AddCar = () => {
       });
     });
   };
-
   const onSelectSmallImage = (e) => {
     const picture = e.target.files[0];
     if (!picture) return;
@@ -260,7 +361,7 @@ const AddCar = () => {
         <div className={styles.left__space}>
           <div className={styles.car__wrapper}>
             <div className={styles.car__header}>
-              <h1>Add Car</h1>
+              <h1>{`${isItEdit ? 'Edit' : 'New'} Car`} </h1>
             </div>
             <form onSubmit={handleCreateCar}>
               <div className={styles.car__form}>
@@ -327,7 +428,9 @@ const AddCar = () => {
                       className={styles.form__select}
                       value={brand}
                       onChange={(e) => setBrand(e.target.value)}>
-                      <option value="">Select brand</option>
+                      <option value={isItEdit ? brand : ''}>
+                        {isItEdit ? car?.brand.name : 'Chose brand'}
+                      </option>
                       {brands.map((brand) => (
                         <option key={brand.id} value={brand.id}>
                           {brand.name}
@@ -341,7 +444,9 @@ const AddCar = () => {
                       className={styles.form__select}
                       value={carClass}
                       onChange={(e) => setCarClass(e.target.value)}>
-                      <option value="">Select Class</option>
+                      <option value={isItEdit ? carClass : ''}>{`${
+                        isItEdit ? car?.carClass?.name : 'Select Class'
+                      }`}</option>
                       {classes.map((element) => (
                         <option key={element.id} value={element.id}>
                           {element.name}
@@ -578,7 +683,7 @@ const AddCar = () => {
               )}
 
               <button type="submit" className={styles.button__update}>
-                Create car
+                {`${isItEdit ? 'Edit' : 'Create'} car`}
               </button>
             </form>
           </div>
@@ -586,6 +691,10 @@ const AddCar = () => {
       )}
     </>
   );
+};
+
+AddCar.propTypes = {
+  car: PropTypes.object
 };
 
 export default AddCar;
