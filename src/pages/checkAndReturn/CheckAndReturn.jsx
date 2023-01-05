@@ -1,10 +1,9 @@
 import { useContext, useState, useEffect } from 'react';
 import styles from './CheckAndReturn.module.scss';
 import { useParams } from 'react-router';
-
 import { useQuery } from '@apollo/client';
 import AuthContext from '../../context/auth/authContext';
-import { GET_RENT_BY_ID } from '../../queries/queries';
+import { GET_RENT_BY_ID, GET_LOCATIONS } from '../../queries/queries';
 import { useMutation } from '@apollo/client';
 import { UPDATE_RENT, UPDATE_CAR_FROM_HANDLING_OVER_CARD } from '../../mutations/mutations';
 import AlertContext from '../../context/alert/alertContext';
@@ -20,8 +19,8 @@ const CheckAndReturn = () => {
   const { user } = authContext;
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
+  const carLocations = useQuery(GET_LOCATIONS);
   const navigate = useNavigate();
-
   user && (user === null || user === undefined) ? navigate('/login') : null;
 
   const regDocBefore = true;
@@ -57,15 +56,8 @@ const CheckAndReturn = () => {
     variables: { rentId }
   });
 
-  const carLocation = [
-    { location: 'Warszawa, Lotnisko Chopina' },
-    { location: 'Warszawa, Lotnisko Modlin' },
-    { location: 'Warszawa, Kwiatowa 15' },
-    { location: 'Warszawa, Złota 30' }
-  ];
-
   const checkIfLocationIsChosen = () => {
-    return location === '' ? false : true;
+    return location === '' || location === 'Select Return Location' ? false : true;
   };
 
   useEffect(() => {
@@ -73,7 +65,6 @@ const CheckAndReturn = () => {
       const {
         rent: { handlingOverCard }
       } = data;
-      // console.log('car: ', car);
       setMilageBefore(handlingOverCard.milageBefore);
       setDmgBefore(handlingOverCard.dmgBefore);
       setDmgBeforeDesc(handlingOverCard.dmgBeforeDesc);
@@ -93,10 +84,7 @@ const CheckAndReturn = () => {
     onError: (error) => {
       console.log('error:', error.message);
     },
-    refetchQueries: [
-      { query: GET_RENT_BY_ID, variables: { rentId } }
-      // { query: GET_RENTS }
-    ]
+    refetchQueries: [{ query: GET_RENT_BY_ID, variables: { rentId } }]
   });
 
   const [updateCar] = useMutation(UPDATE_CAR_FROM_HANDLING_OVER_CARD, {
@@ -110,13 +98,10 @@ const CheckAndReturn = () => {
     onError: (error) => {
       console.log('error:', error.message);
     },
-    refetchQueries: [
-      { query: GET_RENT_BY_ID, variables: { rentId } }
-      // { query: GET_RENTS }
-    ]
+    refetchQueries: [{ query: GET_RENT_BY_ID, variables: { rentId } }]
   });
 
-  if (loading) {
+  if (loading || carLocations.loading) {
     return (
       <div className={styles.error__message}>
         <p>loading...</p>
@@ -132,6 +117,13 @@ const CheckAndReturn = () => {
         </div>
       );
     }
+    return (
+      <div className={styles.error__message}>
+        <p>Something went wrong...</p>
+      </div>
+    );
+  } else if (carLocations.error) {
+    console.log(carLocations.error);
     return (
       <div className={styles.error__message}>
         <p>Something went wrong...</p>
@@ -171,7 +163,6 @@ const CheckAndReturn = () => {
     updateCar({ variables: { input } });
     console.log('input: ', input);
   };
-
   const handleUpdateRent = () => {
     if (!checkIfLocationIsChosen()) {
       setAlert('Please choose return location', 'warning');
@@ -216,7 +207,7 @@ const CheckAndReturn = () => {
         <div className={styles.return__wrapper}>
           <div className={styles.return__container}>
             <div className={styles.return__header}>
-              <h1>Check and Return</h1>
+              <h1>Return Car</h1>
             </div>
             <div className={styles.return__form}>
               <div className={styles.return__form__leftColumn}>
@@ -253,7 +244,7 @@ const CheckAndReturn = () => {
                 </div>
               </div>
               <div className={styles.return__form__middleColumn}>
-                <h2>HANDLING OVER</h2>
+                <h2>HANDLING OVER CARD</h2>
 
                 <div className={styles.return__form__middleColumn__element}>
                   <input type="checkbox" id="regDocBefore" checked={regDocBefore} readOnly={true} />
@@ -454,15 +445,19 @@ const CheckAndReturn = () => {
                     defaultValue={dmgAfterDesc}
                   />
                 </div>
-                <select
-                  className={styles.form__select}
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}>
-                  <option>Select Return Location</option>
-                  {carLocation.map((location, index) => (
-                    <option key={index}>{location.location}</option>
-                  ))}
-                </select>
+                {carLocations?.data && (
+                  <select
+                    className={styles.form__select}
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}>
+                    <option>Select Return Location</option>
+                    {carLocations.data.locations.map((location) => (
+                      <option key={location.id} value={location.id}>
+                        {location.point}
+                      </option>
+                    ))}
+                  </select>
+                )}
               </div>
             </div>
             <div className={styles.return__footer__summary}>
