@@ -30,6 +30,7 @@ const GET_ALL_BORROWED_CARS = gql`
             manualGearBox
           }
           location {
+            id
             point
             fullAddress
             city
@@ -87,6 +88,7 @@ const GET_ALL_USERS = gql`
             manualGearBox
           }
           location {
+            id
             point
             fullAddress
             city
@@ -154,6 +156,7 @@ const GET_USER = gql`
             manualGearBox
           }
           location {
+            id
             point
             fullAddress
             city
@@ -193,6 +196,7 @@ const ALL_CARS = gql`
         url
       }
       location {
+        id
         point
         fullAddress
         city
@@ -258,6 +262,7 @@ const GET_CURRENT_USER = gql`
             manualGearBox
           }
           location {
+            id
             point
             fullAddress
             city
@@ -329,6 +334,7 @@ const GET_CAR = gql`
         url
       }
       location {
+        id
         point
         fullAddress
         city
@@ -451,6 +457,7 @@ const GET_BOOKING_BY_ID = gql`
         damaged
         dmgDescription
         location {
+          id
           point
           fullAddress
           city
@@ -493,7 +500,12 @@ const GET_ALL_RENTS = gql`
       }
       pickupDate
       returnDate
-      returnLocation
+      returnLocation {
+        id
+        point
+        fullAddress
+        city
+      }
       rated
       rentPrice
       deposit
@@ -519,6 +531,7 @@ const GET_RENT_BY_ID = gql`
         deposit
         dmgDescription
         location {
+          id
           point
           fullAddress
           city
@@ -530,7 +543,12 @@ const GET_RENT_BY_ID = gql`
       }
       pickupDate
       returnDate
-      returnLocation
+      returnLocation {
+        id
+        point
+        fullAddress
+        city
+      }
       rated
       rentPrice
       deposit

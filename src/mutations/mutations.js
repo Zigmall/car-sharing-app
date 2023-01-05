@@ -113,6 +113,7 @@ const LOG_IN = gql`
               manualGearBox
             }
             location {
+              id
               point
               fullAddress
               city
@@ -152,6 +153,7 @@ const RETURN_CAR = gql`
             manualGearBox
           }
           location {
+            id
             point
             fullAddress
             city
@@ -201,6 +203,7 @@ const CREATE_CAR = gql`
         benefits
         year
         location {
+          id
           point
           fullAddress
           city
@@ -264,6 +267,7 @@ const SIGN_UP = gql`
               manualGearBox
             }
             location {
+              id
               point
               fullAddress
               city
@@ -455,6 +459,7 @@ const UPDATE_CAR_FROM_HANDLING_OVER_CARD = gql`
         damaged
         dmgDescription
         location {
+          id
           point
           fullAddress
           city
@@ -496,6 +501,7 @@ const UPDATE_CAR = gql`
         }
         benefits
         location {
+          id
           point
           fullAddress
           city
