@@ -320,11 +320,6 @@ const AddCar = ({ car, brands, classes, locations }) => {
       });
     });
   };
-  // console.log('locationList', locationList);
-  console.log('location', location);
-  console.log('brand', brand);
-  console.log('carClass', carClass);
-  brand && console.log('brand*', brand);
 
   return (
     <>

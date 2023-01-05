@@ -107,7 +107,6 @@ const HandlingOverCard = () => {
       </div>
     );
   }
-
   return (
     <>
       {data && user && !(user.role === 'ADMIN' || user.role === 'SUPERVISOR') ? (
@@ -303,7 +302,7 @@ const HandlingOverCard = () => {
                 </div>
                 <div className={styles.return__location}>
                   <h3>Return location:</h3>
-                  <p>{location}</p>
+                  <p>{location?.point}</p>
                 </div>
               </div>
             </div>

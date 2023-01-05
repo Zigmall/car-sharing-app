@@ -124,126 +124,130 @@ const ReturnSummary = () => {
           <h5>You need to be higher rank to perform this action</h5>
         </div>
       ) : (
-        <div className={styles.rentSummary__wrapper}>
-          <div className={styles.rentSummary__header}>
-            <h1>Return Summary</h1>
-          </div>
-          <div className={styles.rentSummary__content}>
-            <div className={styles.rentSummary__content__wrapper}>
-              <div
-                className={[
-                  styles.rentSummary__content__element,
-                  returnDate ? styles.background__green : styles.background__red
-                ].join(' ')}>
-                <div className={styles.rentSummary__content__left__header}>
-                  <h2>Car return</h2>
-                </div>
-                <div className={styles.rentSummary__content__left__body}>
-                  <div className={styles.rentSummary__content__left__body__item}>
-                    <p>
-                      <strong>Return Date</strong>
-                    </p>
-                    <p>{transformDate(returnDate)}</p>
+        data?.rent && (
+          <div className={styles.rentSummary__wrapper}>
+            <div className={styles.rentSummary__header}>
+              <h1>Return Summary</h1>
+            </div>
+            <div className={styles.rentSummary__content}>
+              <div className={styles.rentSummary__content__wrapper}>
+                <div
+                  className={[
+                    styles.rentSummary__content__element,
+                    returnDate ? styles.background__green : styles.background__red
+                  ].join(' ')}>
+                  <div className={styles.rentSummary__content__left__header}>
+                    <h2>Car return</h2>
                   </div>
-                  <br />
-                  {returnDate && (
+                  <div className={styles.rentSummary__content__left__body}>
                     <div className={styles.rentSummary__content__left__body__item}>
                       <p>
-                        <strong>Return Location</strong>
+                        <strong>Return Date</strong>
                       </p>
-                      <p>{returnLocation}</p>
+                      <p>{transformDate(returnDate)}</p>
                     </div>
-                  )}
-                </div>
-              </div>
-              <div className={styles.rentSummary__content__left__body__item}>
-                <button
-                  disabled={returnDate ? false : true}
-                  className={returnDate ? styles.rentSummary__content__button : styles.grey_button}
-                  onClick={() => displayHandlingOverCard()}>
-                  Check Handling Over Card
-                </button>
-              </div>
-            </div>
-
-            <div className={styles.rentSummary__content__wrapper}>
-              <div
-                className={[
-                  styles.rentSummary__content__element,
-                  allFinancialSorted ? styles.background__green : styles.background__red
-                ].join(' ')}>
-                <div className={styles.rentSummary__content__middle__header}>
-                  <h2>Financial</h2>
-                </div>
-
-                <br />
-                <div className={styles.rentSummary__content__middle__body}>
-                  <div className={styles.rentSummary__content__middle__body__item}>
-                    <p>
-                      <strong>Total costs: €{rentPrice + additionalCosts}</strong>
-                    </p>
                     <br />
-                    <p>Already paid: €{allFinancialSorted ? totalCosts : rentPrice}</p>
-                    <br />
-                    <p>Additional costs: €{additionalCosts}</p>
-                    <br />
-                    <p>
-                      <strong>To be paid: €{allFinancialSorted ? 0 : additionalCosts}</strong>
-                    </p>
+                    {returnDate && (
+                      <div className={styles.rentSummary__content__left__body__item}>
+                        <p>
+                          <strong>Return Location</strong>
+                        </p>
+                        <p>{returnLocation?.point}</p>
+                      </div>
+                    )}
                   </div>
+                </div>
+                <div className={styles.rentSummary__content__left__body__item}>
+                  <button
+                    disabled={returnDate ? false : true}
+                    className={
+                      returnDate ? styles.rentSummary__content__button : styles.grey_button
+                    }
+                    onClick={() => displayHandlingOverCard()}>
+                    Check Handling Over Card
+                  </button>
+                </div>
+              </div>
+
+              <div className={styles.rentSummary__content__wrapper}>
+                <div
+                  className={[
+                    styles.rentSummary__content__element,
+                    allFinancialSorted ? styles.background__green : styles.background__red
+                  ].join(' ')}>
+                  <div className={styles.rentSummary__content__middle__header}>
+                    <h2>Financial</h2>
+                  </div>
+
                   <br />
+                  <div className={styles.rentSummary__content__middle__body}>
+                    <div className={styles.rentSummary__content__middle__body__item}>
+                      <p>
+                        <strong>Total costs: €{rentPrice + additionalCosts}</strong>
+                      </p>
+                      <br />
+                      <p>Already paid: €{allFinancialSorted ? totalCosts : rentPrice}</p>
+                      <br />
+                      <p>Additional costs: €{additionalCosts}</p>
+                      <br />
+                      <p>
+                        <strong>To be paid: €{allFinancialSorted ? 0 : additionalCosts}</strong>
+                      </p>
+                    </div>
+                    <br />
+                  </div>
+                </div>
+                <div className={styles.rentSummary__content__left__body__item}>
+                  <button
+                    disabled={!allFinancialSorted && returnDate ? false : true}
+                    className={
+                      !allFinancialSorted && returnDate
+                        ? styles.rentSummary__content__button
+                        : styles.grey_button
+                    }
+                    onClick={() => handleUpdateFinanceInRent()}>
+                    All financial completed
+                  </button>
                 </div>
               </div>
-              <div className={styles.rentSummary__content__left__body__item}>
-                <button
-                  disabled={!allFinancialSorted && returnDate ? false : true}
-                  className={
-                    !allFinancialSorted && returnDate
-                      ? styles.rentSummary__content__button
-                      : styles.grey_button
-                  }
-                  onClick={() => handleUpdateFinanceInRent()}>
-                  All financial completed
-                </button>
-              </div>
-            </div>
 
-            <div className={styles.rentSummary__content__wrapper}>
-              <div
-                className={[
-                  styles.rentSummary__content__element,
-                  depositReturned ? styles.background__green : styles.background__red
-                ].join(' ')}>
-                <div className={styles.rentSummary__content__right__header}>
-                  <h2>Deposit</h2>
-                </div>
-                <div className={styles.rentSummary__content__right__body}>
-                  <div className={styles.rentSummary__content__right__body__item}>
-                    <p>Deposit Amount: €{deposit}</p>
+              <div className={styles.rentSummary__content__wrapper}>
+                <div
+                  className={[
+                    styles.rentSummary__content__element,
+                    depositReturned ? styles.background__green : styles.background__red
+                  ].join(' ')}>
+                  <div className={styles.rentSummary__content__right__header}>
+                    <h2>Deposit</h2>
                   </div>
-                  <br />
-                  <div className={styles.rentSummary__content__right__body__item}>
-                    <p>
-                      <strong>Returned: {depositReturned ? 'Yes' : 'No'}</strong>
-                    </p>
+                  <div className={styles.rentSummary__content__right__body}>
+                    <div className={styles.rentSummary__content__right__body__item}>
+                      <p>Deposit Amount: €{deposit}</p>
+                    </div>
+                    <br />
+                    <div className={styles.rentSummary__content__right__body__item}>
+                      <p>
+                        <strong>Returned: {depositReturned ? 'Yes' : 'No'}</strong>
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className={styles.rentSummary__content__left__body__item}>
-                <button
-                  disabled={!depositReturned && allFinancialSorted ? false : true}
-                  className={
-                    !depositReturned && allFinancialSorted
-                      ? styles.rentSummary__content__button
-                      : styles.grey_button
-                  }
-                  onClick={() => handleUpdateDepositInRent()}>
-                  Return deposit
-                </button>
+                <div className={styles.rentSummary__content__left__body__item}>
+                  <button
+                    disabled={!depositReturned && allFinancialSorted ? false : true}
+                    className={
+                      !depositReturned && allFinancialSorted
+                        ? styles.rentSummary__content__button
+                        : styles.grey_button
+                    }
+                    onClick={() => handleUpdateDepositInRent()}>
+                    Return deposit
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )
       )}
     </>
   );

@@ -16,7 +16,6 @@ const EditCar = () => {
 
   const brandsList = useQuery(GET_BRANDS, {
     onCompleted: (data) => {
-      console.log('data.brands', data.brands);
       setBrands(data.brands);
     }
   });
