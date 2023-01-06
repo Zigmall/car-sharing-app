@@ -12,4 +12,69 @@
   display: flex;
   flex-direction: column;
   margin-top: 1rem;
+  // justify-content: center;
+  align-items: center;
+  td {
+    padding: 0rem 3rem;
+  }
+}
+
+.button__wrapper {
+  padding: 0.4rem 1rem;
+  border-radius: 0.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0.5rem auto;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid black;
+}
+
+.button__wrapper:hover {
+  cursor: pointer;
+  border: 1px solid;
+  color: black;
+}
+
+.button__rent {
+  color: #0074ef;
+}
+
+// .button__rent:hover {
+//   background-color: #0074ef;
+//   color: white;
+// }
+
+.button__update {
+  color: #0074ef;
+}
+
+.button__update:hover {
+  background-color: #0074ef;
+  color: white;
+}
+
+.button__cancelBooking {
+  color: red;
+}
+
+.button__cancelBooking:hover {
+  background-color: rgba(239, 19, 30, 0.902);
+}
+
+.button__inactive {
+  color: grey;
+  background-color: #e0e0e0;
+}
+.spallPictureWrapper {
+  display: flex;
+  flex-direction: column;
+  height: 3rem;
+  // align-items: center;
+  margin: 1rem;
+}
+.spallPicture {
+  width: 100%;
+  height: 100%;
+  // object-fit: cover;
 }
