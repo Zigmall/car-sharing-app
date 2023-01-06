@@ -1,7 +1,6 @@
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import styles from './AddCar.module.scss';
-import { ALL_CARS } from '../../queries/queries';
-// import { useQuery } from '@apollo/client';
+import { ALL_CARS, GET_BRANDS } from '../../queries/queries';
 import AlertContext from '../../context/alert/alertContext';
 import { CREATE_CAR, UPLOAD_IMAGE, UPDATE_CAR } from '../../mutations/mutations';
 import { useMutation } from '@apollo/client';
@@ -73,22 +72,17 @@ const AddCar = ({ car, brands, classes, locations }) => {
       setDamaged(car.damaged);
       setDmgDescription(car.dmgDescription);
       setPrice(car.price);
-
       setBenefits(car.benefits);
-
       setSeats(car.property.seats);
       setDoors(car.property.doors);
       setTrunk(car.property.trunk);
       setEngine(car.property.engine);
       setAirConditioning(car.property.airConditioning);
       setManualGearBox(car.property.manualGearBox);
-
       setLocation(locations && getLocationId(car?.location?.point));
       setDescription(car.description);
       setMainImage(car.picturePath.url);
       setMainImageUrl(car.picturePath.url);
-      // setSmallImages(car.pictures);
-      // setSmallImagesUrlList(car.pictures);
     }
   };
 
@@ -184,7 +178,7 @@ const AddCar = ({ car, brands, classes, locations }) => {
         pictures: smallImagesUrlList
       }
     },
-    refetchQueries: [{ query: ALL_CARS }]
+    refetchQueries: [{ query: GET_BRANDS, ALL_CARS }]
   });
 
   const [updateCar] = useMutation(UPDATE_CAR, {
@@ -216,7 +210,7 @@ const AddCar = ({ car, brands, classes, locations }) => {
         }
       }
     },
-    refetchQueries: [{ query: ALL_CARS }]
+    refetchQueries: [{ query: ALL_CARS, GET_BRANDS }]
   });
 
   const [uploadMainImage] = useMutation(UPLOAD_IMAGE, {
@@ -429,9 +423,6 @@ const AddCar = ({ car, brands, classes, locations }) => {
                       className={styles.form__select}
                       value={location}
                       onChange={(e) => setLocation(e.target.value)}>
-                      {/* <option value={isItEdit ? location : ''}>{`${
-                        isItEdit ? car?.location?.point : 'Select Location'
-                      }`}</option> */}
                       {locations.map((element) => (
                         <option key={element.id} value={element.id}>
                           {element.point}
@@ -465,7 +456,7 @@ const AddCar = ({ car, brands, classes, locations }) => {
                   </div>
 
                   <div className={styles.form__element}>
-                    <label className={styles.form__label}>Price</label>
+                    <label className={styles.form__label}>Price per day</label>
                     <input
                       type="number"
                       className={styles.form__input}
