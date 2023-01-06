@@ -61,11 +61,21 @@
   }
   .form__label {
     margin-left: 0.6rem;
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
 }
 
 .admin__checkbox {
   height: 1rem;
   width: 1rem;
+}
+
+.form__select {
+  display: flex;
+  width: 20%;
+  height: 2rem;
+  outline: none;
+  padding: 0.3rem;
+  border-radius: 0.3rem;
+  border: 1px solid black;
 }

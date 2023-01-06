@@ -1,0 +1,246 @@
+.left__space {
+  margin-left: 12.9rem;
+}
+
+.error__message {
+  margin-left: 12.9rem;
+  font-size: 2rem;
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.car__wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem auto;
+  width: 75%;
+  border-radius: 0.3rem;
+  border: 1px solid black;
+  padding: 3rem;
+  accent-color: #0074ef;
+}
+
+.car__header {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+.car__form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+  h2 {
+    margin: 2.5rem 0 0 0;
+  }
+}
+
+.form__label {
+  margin-right: 1rem;
+}
+
+.car__form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+.form__line {
+  display: flex;
+  flex-direction: row;
+  margin-top: 1rem;
+  justify-content: space-between;
+}
+
+.form__element {
+  display: inline-block;
+  margin-right: 1rem;
+  margin-top: 1rem;
+}
+
+.form__input {
+  display: flex;
+  width: 100%;
+  margin: 0;
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+  border: 1px solid black;
+  outline: none;
+  margin-top: 0.15rem;
+}
+
+.button__wrapper {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem;
+}
+
+.benefit__wrapper {
+  display: block;
+  margin-top: 1rem;
+  input {
+    margin: 0;
+  }
+  .form__label {
+    margin-left: 0.6rem;
+    font-size: 1.2rem;
+  }
+}
+
+.benefit__line {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.property__line {
+  display: flex;
+  width: 100%;
+  margin: 0;
+  padding: 0.5rem 0;
+  margin: 2rem 0;
+}
+
+.textarea__input {
+  display: block;
+  width: 100%;
+  height: 3rem;
+  margin: 0;
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+  border: 1px solid black;
+  outline: none;
+  margin-top: 0.15rem;
+}
+
+.button__update {
+  display: inline-block;
+  margin-top: 1rem;
+  margin-right: 1rem;
+  padding: 0.5rem 2rem;
+  border-radius: 0.3rem;
+  background-color: #0074ef;
+  color: white;
+  cursor: pointer;
+}
+
+.description__line {
+  display: inline-block;
+  margin-right: 1rem;
+  width: 100%;
+}
+
+.image__wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto 1rem auto;
+  width: 100%;
+  border-radius: 0.3rem;
+  justify-content: center;
+  align-items: center;
+  svg {
+    height: 100%;
+    width: 100%;
+    opacity: 0.8;
+  }
+}
+
+.main__image__container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem;
+  border: black 1px solid;
+  border-radius: 0.3rem;
+  height: 12rem;
+  width: 28rem;
+  img {
+    height: 100%;
+    width: 100%;
+  }
+}
+.small__images__container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 0.5rem;
+  border-radius: 0.3rem;
+}
+
+.small__image {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 0.3rem;
+  border: black 1px solid;
+  border-radius: 0.3rem;
+  height: 5rem;
+  width: 10rem;
+  img {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.image__buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem;
+}
+
+.return__form__damage {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  outline: none;
+  input {
+    margin: 0.5rem 0.5rem 0.5rem 0;
+    outline: none;
+  }
+}
+
+.return__form__textarea {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 0.3rem;
+  textarea {
+    // margin: 1rem;
+    min-height: 12rem;
+    outline: none;
+    resize: none;
+    padding: 1rem;
+    width: 100%;
+    border-radius: 0.3rem;
+  }
+}
+
+.form__select {
+  display: block;
+  width: 100%;
+  height: 2rem;
+  outline: none;
+  padding: 0.3rem;
+  border-radius: 0.3rem;
+  border: 1px solid black;
+  margin-top: 0.15rem;
+}
+.form__line_top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.form__input__element {
+  display: inline-block;
+  margin-top: 1rem;
+}

@@ -29,7 +29,12 @@ const GET_ALL_BORROWED_CARS = gql`
             airConditioning
             manualGearBox
           }
-          location
+          location {
+            id
+            point
+            fullAddress
+            city
+          }
           price
         }
       }
@@ -44,7 +49,7 @@ const GET_ALL_USERS = gql`
       firstName
       lastName
       email
-      isAdmin
+      role
       mobile
       address {
         city
@@ -82,7 +87,12 @@ const GET_ALL_USERS = gql`
             airConditioning
             manualGearBox
           }
-          location
+          location {
+            id
+            point
+            fullAddress
+            city
+          }
           price
         }
       }
@@ -96,7 +106,7 @@ const GET_USER = gql`
       id
       firstName
       lastName
-      isAdmin
+      role
       email
       mobile
       address {
@@ -109,6 +119,16 @@ const GET_USER = gql`
       }
       avatar {
         color
+      }
+      rents {
+        id
+        car {
+          brand {
+            name
+          }
+          model
+        }
+        rated
       }
       borrowedCars {
         id
@@ -135,7 +155,12 @@ const GET_USER = gql`
             airConditioning
             manualGearBox
           }
-          location
+          location {
+            id
+            point
+            fullAddress
+            city
+          }
           price
         }
       }
@@ -170,7 +195,12 @@ const ALL_CARS = gql`
       picturePath {
         url
       }
-      location
+      location {
+        id
+        point
+        fullAddress
+        city
+      }
       price
     }
   }
@@ -182,7 +212,7 @@ const GET_CURRENT_USER = gql`
       id
       firstName
       lastName
-      isAdmin
+      role
       email
       mobile
       address {
@@ -192,6 +222,16 @@ const GET_CURRENT_USER = gql`
         houseNumber
         flatNumber
         postCode
+      }
+      rents {
+        id
+        car {
+          brand {
+            name
+          }
+          model
+        }
+        rated
       }
       avatar {
         color
@@ -221,7 +261,12 @@ const GET_CURRENT_USER = gql`
             airConditioning
             manualGearBox
           }
-          location
+          location {
+            id
+            point
+            fullAddress
+            city
+          }
           price
         }
       }
@@ -237,7 +282,33 @@ const GET_BRANDS = gql`
       cars {
         id
         model
+        carClass {
+          name
+        }
+        benefits
+        brand {
+          name
+        }
         year
+        milage
+        deposit
+        damaged
+        dmgDescription
+
+        location {
+          city
+          fullAddress
+          id
+          point
+        }
+        price
+        picturePath {
+          url
+        }
+        pictures {
+          url
+        }
+        description
       }
     }
   }
@@ -278,13 +349,22 @@ const GET_CAR = gql`
         seats
         doors
         trunk
+        engine
         airConditioning
         manualGearBox
       }
       picturePath {
         url
       }
-      location
+      pictures {
+        url
+      }
+      location {
+        id
+        point
+        fullAddress
+        city
+      }
       price
       comments {
         id
@@ -369,7 +449,7 @@ const GET_BOOKING_BY_ID = gql`
         lastName
         email
         mobile
-        isAdmin
+        role
         address {
           country
           city
@@ -402,7 +482,12 @@ const GET_BOOKING_BY_ID = gql`
         milage
         damaged
         dmgDescription
-        location
+        location {
+          id
+          point
+          fullAddress
+          city
+        }
       }
     }
   }
@@ -441,7 +526,12 @@ const GET_ALL_RENTS = gql`
       }
       pickupDate
       returnDate
-      returnLocation
+      returnLocation {
+        id
+        point
+        fullAddress
+        city
+      }
       rated
       rentPrice
       deposit
@@ -466,7 +556,12 @@ const GET_RENT_BY_ID = gql`
         damaged
         deposit
         dmgDescription
-        location
+        location {
+          id
+          point
+          fullAddress
+          city
+        }
         milage
         model
         price
@@ -474,7 +569,12 @@ const GET_RENT_BY_ID = gql`
       }
       pickupDate
       returnDate
-      returnLocation
+      returnLocation {
+        id
+        point
+        fullAddress
+        city
+      }
       rated
       rentPrice
       deposit
@@ -516,6 +616,57 @@ const GET_RENT_BY_ID = gql`
   }
 `;
 
+const BOOKED_CARS_BY_USER_ID = gql`
+  query BookedCarsByUserId {
+    bookedCarsByUserId {
+      id
+      booker {
+        id
+      }
+      startDate
+      endDate
+      insuranceType
+      newBooking
+      firstBookingId
+      bookingChanges {
+        cancelled
+        moneyReturned
+        newBookingId {
+          id
+        }
+        rentId {
+          id
+        }
+      }
+      currentPaid
+      previousTotalPayment
+      totalPayment
+      car {
+        id
+        brand {
+          name
+        }
+        model
+        picturePath {
+          url
+        }
+        price
+      }
+    }
+  }
+`;
+
+const GET_LOCATIONS = gql`
+  query Locations {
+    locations {
+      id
+      point
+      fullAddress
+      city
+    }
+  }
+`;
+
 export {
   GET_ALL_BORROWED_CARS,
   GET_ALL_USERS,
@@ -528,5 +679,7 @@ export {
   GET_ALL_BOOKINGS,
   GET_BOOKING_BY_ID,
   GET_ALL_RENTS,
-  GET_RENT_BY_ID
+  GET_RENT_BY_ID,
+  BOOKED_CARS_BY_USER_ID,
+  GET_LOCATIONS
 };

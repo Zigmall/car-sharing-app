@@ -17,7 +17,7 @@ const UPDATE_USER = gql`
         id
         firstName
         lastName
-        isAdmin
+        role
         email
         mobile
         address {
@@ -45,7 +45,7 @@ const UPDATE_MY_PERSONAL_DATA = gql`
         id
         firstName
         lastName
-        isAdmin
+        role
         email
         mobile
         address {
@@ -76,7 +76,7 @@ const LOG_IN = gql`
         id
         firstName
         lastName
-        isAdmin
+        role
         email
         mobile
         address {
@@ -112,7 +112,12 @@ const LOG_IN = gql`
               airConditioning
               manualGearBox
             }
-            location
+            location {
+              id
+              point
+              fullAddress
+              city
+            }
             price
           }
         }
@@ -147,7 +152,12 @@ const RETURN_CAR = gql`
             airConditioning
             manualGearBox
           }
-          location
+          location {
+            id
+            point
+            fullAddress
+            city
+          }
           price
         }
       }
@@ -192,7 +202,12 @@ const CREATE_CAR = gql`
         }
         benefits
         year
-        location
+        location {
+          id
+          point
+          fullAddress
+          city
+        }
         price
         description
         brand {
@@ -251,7 +266,12 @@ const SIGN_UP = gql`
               airConditioning
               manualGearBox
             }
-            location
+            location {
+              id
+              point
+              fullAddress
+              city
+            }
             price
           }
         }
@@ -438,8 +458,82 @@ const UPDATE_CAR_FROM_HANDLING_OVER_CARD = gql`
         milage
         damaged
         dmgDescription
-        location
+        location {
+          id
+          point
+          fullAddress
+          city
+        }
       }
+    }
+  }
+`;
+
+const UPDATE_RENT_AFTER_COMMENT = gql`
+  mutation UpdateRentAfterComment($input: UpdateRentInput!) {
+    updateRent(input: $input) {
+      message
+      success
+      rent {
+        id
+        rated
+      }
+    }
+  }
+`;
+
+const UPDATE_CAR = gql`
+  mutation UpdateCar($input: UpdateCarInput!) {
+    updateCar(input: $input) {
+      message
+      success
+      car {
+        id
+        dmgDescription
+        description
+        deposit
+        damaged
+        carClass {
+          name
+        }
+        brand {
+          name
+        }
+        benefits
+        location {
+          id
+          point
+          fullAddress
+          city
+        }
+        milage
+        model
+        picturePath {
+          url
+        }
+        pictures {
+          url
+        }
+        price
+        property {
+          seats
+          doors
+          trunk
+          engine
+          airConditioning
+          manualGearBox
+        }
+        year
+      }
+    }
+  }
+`;
+
+const DELETE_CAR = gql`
+  mutation DeleteCar($carId: ID!) {
+    deleteCar(id: $carId) {
+      message
+      success
     }
   }
 `;
@@ -459,5 +553,8 @@ export {
   UPDATE_BOOKING,
   RENT_CAR,
   UPDATE_RENT,
-  UPDATE_CAR_FROM_HANDLING_OVER_CARD
+  UPDATE_CAR_FROM_HANDLING_OVER_CARD,
+  UPDATE_RENT_AFTER_COMMENT,
+  UPDATE_CAR,
+  DELETE_CAR
 };

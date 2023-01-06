@@ -9,7 +9,6 @@ import { GasStation, GpsDirection } from '../assets/SvgList';
 import ActionButtons from '../actionButton/ActionButtons';
 
 const Car = ({
-  carClass,
   model,
   benefits,
   brand,
@@ -30,7 +29,6 @@ const Car = ({
         </div>
         <div className={styles.iconSide}>
           <div className={styles.carTypeAndName}>
-            <label>{carClass}</label>
             <p>
               {brand.name} {model}
             </p>
@@ -52,17 +50,17 @@ const Car = ({
       <div className={styles.bottomPart}>
         <div className={styles.columnOne}>
           <div className={styles.columnOneTop}>
-            <GasStation iconHeight="30px" iconWidth="30px" />
+            <GasStation iconHeight="25px" iconWidth="20px" />
             <div className={styles.columnOneText}>
               <p>Fuel policy</p>
               <label>Full to full</label>
             </div>
           </div>
           <div className={styles.columnOneBottom}>
-            <GpsDirection iconHeight="30px" iconWidth="30px" />
+            <GpsDirection iconHeight="30px" iconWidth="20px" />
             <div className={styles.columnOneText}>
               <p>Pick-up location</p>
-              <label>{location}</label>
+              <label>{location.point}</label>
             </div>
           </div>
         </div>
@@ -91,7 +89,7 @@ Car.propTypes = {
   picturePath: PropTypes.object,
   brand: PropTypes.object,
   property: PropTypes.object,
-  location: PropTypes.string,
+  location: PropTypes.object,
   price: PropTypes.number,
   id: PropTypes.string,
   model: PropTypes.string,

@@ -1,21 +1,37 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Rating from '../rating/Rating';
 import styles from './Comment.module.scss';
 import PropTypes from 'prop-types';
 import AlertContext from '../../context/alert/alertContext';
-import AuthContext from '../../context/auth/authContext';
-import { CREATE_COMMENT } from '../../mutations/mutations';
-import { GET_CAR } from '../../queries/queries';
+import { CREATE_COMMENT, UPDATE_RENT_AFTER_COMMENT } from '../../mutations/mutations';
+import { GET_CAR, GET_CURRENT_USER } from '../../queries/queries';
 import { useMutation } from '@apollo/client';
 
-const NewComment = ({ carId }) => {
+const NewComment = ({ car, user }) => {
+  const carId = car.id;
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
-  const authContext = useContext(AuthContext);
-  const { user } = authContext;
   const [comment, setComment] = useState('');
   const [rating, changeRating] = useState(0);
+  const [filteredRentList, setFilteredRentList] = useState([]);
+  const [rentId, setRentId] = useState('');
   const voted = false;
+
+  const checkIfUserIsAllowedToComment = (userRentList) => {
+    if (userRentList === null || userRentList === undefined) {
+      return [];
+    }
+    if (userRentList.length > 0) {
+      return userRentList.filter(
+        (rent) =>
+          rent.car.brand.name === car.brand.name &&
+          rent.car.model === car.model &&
+          rent.rated === false
+      );
+    } else {
+      return [];
+    }
+  };
 
   const handleSendComment = (e) => {
     e.preventDefault();
@@ -32,6 +48,7 @@ const NewComment = ({ carId }) => {
         carId,
         rating
       };
+
       createComment({ variables: { input } });
     }
   };
@@ -43,6 +60,11 @@ const NewComment = ({ carId }) => {
         setAlert(message, 'success');
         setComment('');
         changeRating(0);
+        const input = {
+          id: rentId,
+          rated: true
+        };
+        updateRentAfterComment({ variables: { input } });
       }
     },
     onError: (error) => {
@@ -51,6 +73,30 @@ const NewComment = ({ carId }) => {
     refetchQueries: [{ query: GET_CAR, variables: { carId } }]
   });
 
+  const [updateRentAfterComment] = useMutation(UPDATE_RENT_AFTER_COMMENT, {
+    onError: (error) => {
+      console.log(error.message);
+    },
+    refetchQueries: [{ query: GET_CURRENT_USER }]
+  });
+
+  useEffect(() => {
+    if (user.rents) {
+      const litsOfRents = checkIfUserIsAllowedToComment(user.rents);
+      setFilteredRentList(checkIfUserIsAllowedToComment(user.rents));
+      litsOfRents.length > 0 && setRentId(litsOfRents[0].id);
+    }
+  }, [user]);
+
+  if (filteredRentList.length === 0) {
+    return (
+      <div className={styles.left__space}>
+        <div className={styles.comment__replacement}>
+          <h1>You need to rent this car to comment</h1>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className={styles.comment__wrapper}>
       <div className={styles.comment__border}>
@@ -76,7 +122,8 @@ const NewComment = ({ carId }) => {
 
 NewComment.propTypes = {
   comments: PropTypes.arrayOf(PropTypes.object),
-  carId: PropTypes.string
+  car: PropTypes.object,
+  user: PropTypes.object
 };
 
 export default NewComment;

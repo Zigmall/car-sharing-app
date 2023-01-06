@@ -1,0 +1,60 @@
+.rents__wrapper {
+  margin-left: 12.9rem;
+}
+
+.error__message {
+  margin-left: 12.9rem;
+  font-size: 2rem;
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.rents__table {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem auto;
+  width: 100%;
+}
+
+.button__wrapper {
+  padding: 0.4rem 1rem;
+  border-radius: 0.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0.5rem auto;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid black;
+}
+
+.button__wrapper:hover {
+  cursor: pointer;
+  border: 1px solid;
+  color: black;
+}
+
+.button__return {
+  color: #17690e;
+}
+
+.button__return:hover {
+  background-color: #17690e;
+  color: white;
+}
+
+.button__update {
+  color: #0074ef;
+}
+
+.button__update:hover {
+  background-color: #0074ef;
+  color: white;
+}
+
+.button__returned {
+  color: #fe9a0f;
+}
+
+.button__completed {
+  color: #17690e;
+}
