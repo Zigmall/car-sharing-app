@@ -529,6 +529,15 @@ const UPDATE_CAR = gql`
   }
 `;
 
+const DELETE_CAR = gql`
+  mutation DeleteCar($carId: ID!) {
+    deleteCar(id: $carId) {
+      message
+      success
+    }
+  }
+`;
+
 export {
   DELETE_USER,
   UPDATE_USER,
@@ -546,5 +555,6 @@ export {
   UPDATE_RENT,
   UPDATE_CAR_FROM_HANDLING_OVER_CARD,
   UPDATE_RENT_AFTER_COMMENT,
-  UPDATE_CAR
+  UPDATE_CAR,
+  DELETE_CAR
 };
