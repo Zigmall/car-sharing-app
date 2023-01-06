@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import styles from './TypeNavigationBar.module.scss';
 
 const InfoIcon = ({ icon }) => {
-  // console.log(icon);
   let infoIcon = null;
   switch (icon) {
     case 'passengers':

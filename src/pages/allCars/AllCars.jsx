@@ -51,7 +51,7 @@ const AllCars = () => {
             brands.map(
               (brand) =>
                 brand.cars.length > 0 && (
-                  <div className={styles.left__space}>
+                  <div key={brand.id} className={styles.left__space}>
                     <div className={styles.rentals__wrapper}>
                       <div key={brand.id} className={styles.brand__item}>
                         <h1>{brand.name}</h1>

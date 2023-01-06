@@ -4,7 +4,7 @@ import styles from './TypeNavigationBar.module.scss';
 
 const TypeNavigationBar = () => {
   const groupArray = [
-    { model: 'Small', luggage: 2, passengers: 4, price: 30 },
+    { model: 'Small', luggage: 2, passengers: 4, price: 30 }, //TODO
     { model: 'Regular', luggage: 3, passengers: 4, price: 35 },
     { model: 'Suv', luggage: 4, passengers: 5, price: 45 },
     { model: 'Sport', luggage: 2, passengers: 4, price: 55 },

@@ -27,13 +27,7 @@ import UpdateBooking from './pages/updateBooking/UpdateBooking';
 import HandlingOverCard from './pages/handlingOverCard/HandlingOverCard';
 import MyBookings from './pages/myBookings/MyBookings';
 import EditCar from './pages/editCar/EditCar';
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  ApolloLink
-  // concat
-} from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider, ApolloLink } from '@apollo/client';
 
 const uploadLink = createUploadLink({
   uri: 'http://localhost:5000/'

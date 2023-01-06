@@ -12,7 +12,7 @@
   display: flex;
   flex-direction: column;
   margin-top: 1rem;
-  // justify-content: center;
+
   align-items: center;
   td {
     padding: 0rem 3rem;
@@ -40,11 +40,6 @@
   color: #0074ef;
 }
 
-// .button__rent:hover {
-//   background-color: #0074ef;
-//   color: white;
-// }
-
 .button__update {
   color: #0074ef;
 }
@@ -70,11 +65,9 @@
   display: flex;
   flex-direction: column;
   height: 3rem;
-  // align-items: center;
   margin: 1rem;
 }
 .spallPicture {
   width: 100%;
   height: 100%;
-  // object-fit: cover;
 }

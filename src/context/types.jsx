@@ -1,18 +1,5 @@
-// export const ADD_CAR = 'ADD_CAR';
-// export const DELETE_CAR = 'DELETE_CAR';
-// export const SET_CURRENT = 'SET_CURRENT';
-// export const CLEAR_CURRENT = 'CLEAR_CURRENT';
-// export const UPDATE_CURRENT = 'UPDATE_CURRENT';
-// export const FILTER_CAR = 'FILTER_CAR';
-// export const CLEAR_FILTER = 'CLEAR_FILTER';
-
 export const LOGIN_USER = 'LOGIN_USER';
 export const LOAD_USER = 'LOAD_USER';
-// export const LOGIN_FAIL = 'LOGIN_FAIL';
-// export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
-// export const REGISTER_FAIL = 'REGISTER_FAIL';
-// export const AUTH_ERROR = 'AUTH_ERROR';
-// export const CLEAN_ERRORS = 'CLEAN_ERRORS';
 export const LOGOUT = 'LOGOUT';
 export const CHANGE_PAGE = 'CHANGE_PAGE';
 export const CHANGE_TAB = 'CHANGE_TAB';

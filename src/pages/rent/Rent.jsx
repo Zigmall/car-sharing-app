@@ -142,7 +142,7 @@ const Rent = () => {
       rentPrice: calculateTotalPrice(insuranceRate),
       deposit,
       additionalCosts: 0,
-      depositCollected: true, // check if user has
+      depositCollected: true,
       allFinancialSorted: false,
       depositReturned: false,
       handlingOverCard: {

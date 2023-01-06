@@ -3,19 +3,7 @@ import CarContext from './carContext';
 import carReducer from './carReducer';
 import PropTypes from 'prop-types';
 
-import {
-  GET_CARS,
-  DIVIDE_CAR_LIST,
-  CHANGE_PAGE,
-  CHANGE_TAB
-  //   ADD_CAR,
-  //   DELETE_CAR,
-  //   SET_CURRENT,
-  //   CLEAR_CURRENT,
-  //   UPDATE_CURRENT,
-  //   FILTER_CAR,
-  //   CLEAR_FILTER
-} from '../types';
+import { GET_CARS, DIVIDE_CAR_LIST, CHANGE_PAGE, CHANGE_TAB } from '../types';
 
 const CarState = (props) => {
   const initialState = {
@@ -62,20 +50,6 @@ const CarState = (props) => {
       payload: index
     });
   };
-
-  //Add Car
-
-  //Delete Car
-
-  //Set current car
-
-  //Clear current car
-
-  //Update current car
-
-  //Filter cars
-
-  //Clear filter
 
   return (
     <CarContext.Provider

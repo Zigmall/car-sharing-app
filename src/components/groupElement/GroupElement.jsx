@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './TypeNavigationBar.module.scss';
-// import InfoIcon from './InfoIcon';
 import PropTypes from 'prop-types';
 import MiddleIcon from './MiddleIcon';
 

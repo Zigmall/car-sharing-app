@@ -8,7 +8,6 @@ import AuthContext from '../../context/auth/authContext';
 import { GET_ALL_BORROWED_CARS } from '../../queries/queries';
 
 const ReturnActionButton = ({ car }) => {
-  // console.log('car', car);
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
   const authContext = useContext(AuthContext);

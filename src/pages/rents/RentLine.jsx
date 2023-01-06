@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 const RentLine = ({
   rent: { id, renter, pickupDate, returnDate, car, booking, depositReturned }
 }) => {
-  //   const { handleCancelBooking } = props;
   const navigate = useNavigate();
 
   const handleCheckAndReturn = () => {

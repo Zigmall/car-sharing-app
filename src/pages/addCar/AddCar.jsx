@@ -361,7 +361,6 @@ const AddCar = ({ car, brands, classes, locations }) => {
                       <div className={styles.image__buttons}>
                         <input
                           type="file"
-                          // accept="image/*"
                           ref={inputRef}
                           onChange={onSelectMainImage}
                           style={{ display: 'none' }}
