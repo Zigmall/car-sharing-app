@@ -282,7 +282,33 @@ const GET_BRANDS = gql`
       cars {
         id
         model
+        carClass {
+          name
+        }
+        benefits
+        brand {
+          name
+        }
         year
+        milage
+        deposit
+        damaged
+        dmgDescription
+
+        location {
+          city
+          fullAddress
+          id
+          point
+        }
+        price
+        picturePath {
+          url
+        }
+        pictures {
+          url
+        }
+        description
       }
     }
   }
