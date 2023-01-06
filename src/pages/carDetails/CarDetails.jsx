@@ -1,14 +1,14 @@
 import React, { useContext } from 'react';
 import { useParams } from 'react-router';
 import styles from './CarDetails.module.scss';
-import MainPicture from '../car/MainPicture';
-import { GearBox, Luggage, OpenDoorCar, AirConditioner } from '../assets/SvgList';
-import Rating from '../rating/Rating';
+import MainPicture from '../../components/car/MainPicture';
+import { GearBox, Luggage, OpenDoorCar, AirConditioner } from '../../components/assets/SvgList';
+import Rating from '../../components/rating/Rating';
 import { useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
-import Comment from '../comment/Comment';
+import Comment from '../../components/comment/Comment';
 import { GET_CAR } from '../../queries/queries';
-import NewComment from '../comment/NewComment';
+import NewComment from '../../components/comment/NewComment';
 import AlertContext from '../../context/alert/alertContext';
 import AuthContext from '../../context/auth/authContext';
 

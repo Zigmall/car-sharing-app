@@ -30,8 +30,7 @@ const UserLine = (props) => {
     hour: 'numeric',
     minute: 'numeric'
   });
-  // console.log(car.model, new Date(startDate).getTime() - new Date().getTime() < 1000 * 60 * 60 * 3);
-  // console.log(car.model, new Date(startDate).getTime() - new Date().getTime());
+
   const isRentable = new Date(startDate).getTime() - new Date().getTime() < 1000 * 60 * 60 * 3;
   return (
     <>

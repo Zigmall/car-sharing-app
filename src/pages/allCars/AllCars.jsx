@@ -1,10 +1,10 @@
 import React from 'react';
-import styles from './Rentals.module.scss';
+import styles from './AllCars.module.scss';
 import { GET_BRANDS } from '../../queries/queries';
 import { useQuery } from '@apollo/client';
 import CarRow from './CarRow';
 
-const Rentals = () => {
+const AllCars = () => {
   const { loading, error, data } = useQuery(GET_BRANDS);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :</p>;
@@ -40,4 +40,4 @@ const Rentals = () => {
   );
 };
 
-export default Rentals;
+export default AllCars;

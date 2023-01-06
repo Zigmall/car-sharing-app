@@ -1,10 +1,10 @@
 import React from 'react';
 import Home from './pages/home/Home';
 import { Route, Routes } from 'react-router';
-import CarDetails from './components/carDetails/CarDetails';
+import CarDetails from './pages/carDetails/CarDetails';
 import Users from './components/users/Users';
 import User from './components/user/User';
-import Rentals from './components/rentals/Rentals';
+import AllCars from './pages/allCars/AllCars';
 import styles from './App.module.scss';
 import CarState from './context/car/CarState';
 import Bars from './components/bars/Bars';
@@ -76,7 +76,7 @@ const App = () => {
                 <Route path="/bookings/:userId" element={<Rent />} />
                 <Route path="/book-car/:carId" element={<Book />} />
                 <Route path="/update-booking/:userId" element={<UpdateBooking />} />
-                <Route path="/all-cars" element={<Rentals />} />
+                <Route path="/all-cars" element={<AllCars />} />
                 <Route path="/users/:userId" element={<User />} />
                 <Route path="/users" element={<Users />} />
                 <Route path="/rents/" element={<Rents />} />
