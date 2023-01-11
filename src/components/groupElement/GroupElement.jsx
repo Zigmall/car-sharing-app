@@ -3,14 +3,14 @@ import styles from './TypeNavigationBar.module.scss';
 import PropTypes from 'prop-types';
 import MiddleIcon from './MiddleIcon';
 
-const GroupElement = ({ model, active, price, onClickItem }) => {
+const GroupElement = ({ carClass, active, price, onClickItem }) => {
   return (
     <div onClick={onClickItem} className={styles.wrapper}>
       <div className={styles.header}>
-        <p>{model}</p>
+        <p>{carClass}</p>
       </div>
       <div className={styles.carIcon}>
-        <MiddleIcon model={model} />
+        <MiddleIcon carClass={carClass} />
       </div>
 
       <div className={styles.price}>
@@ -22,7 +22,7 @@ const GroupElement = ({ model, active, price, onClickItem }) => {
 };
 
 GroupElement.propTypes = {
-  model: PropTypes.string,
+  carClass: PropTypes.string,
   active: PropTypes.bool,
   luggage: PropTypes.number,
   passengers: PropTypes.number,
