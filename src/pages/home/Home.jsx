@@ -7,15 +7,12 @@ const Home = () => {
   const carContext = useContext(CarContext);
   const { currentView, currentIndex, changePage, numberOfPages } = carContext;
 
-  const viewElement = () => {};
-
   return (
     <>
       <TypeNavigationBar />
       {currentView && (
         <List
           data={currentView}
-          viewElement={viewElement}
           currentIndex={currentIndex}
           numberOfPages={numberOfPages}
           changePage={changePage}

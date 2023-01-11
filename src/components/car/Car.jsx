@@ -83,7 +83,6 @@ const Car = ({
 };
 
 Car.propTypes = {
-  viewElement: PropTypes.func,
   carClass: PropTypes.string,
   benefits: PropTypes.array,
   picturePath: PropTypes.object,
