@@ -7,3 +7,4 @@ export const DIVIDE_CAR_LIST = 'DIVIDE_CAR_LIST';
 export const GET_CARS = 'GET_CARS';
 export const SET_ALERT = 'SET_ALERT';
 export const REMOVE_ALERT = 'REMOVE_ALERT';
+export const FILTER_CARS = 'FILTER_CARS';

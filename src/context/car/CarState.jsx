@@ -26,6 +26,16 @@ const CarState = (props) => {
     });
   };
 
+  const filterCars = (filter) => {
+    const copyOfDb = [...state.cars];
+    if (filter === 'All cars' || filter === null || filter === undefined || filter === '') {
+      divideCarsIntoPages(copyOfDb);
+      return;
+    }
+    const filteredCars = copyOfDb.filter((car) => car.carClass.name === filter);
+    divideCarsIntoPages(filteredCars);
+  };
+
   const divideCarsIntoPages = (cars) => {
     const copyOfDb = [...cars];
     const result = new Array(Math.ceil(copyOfDb.length / 10))
@@ -64,6 +74,7 @@ const CarState = (props) => {
         navIndex: state.navIndex,
         getCars,
         divideCarsIntoPages,
+        filterCars,
         changePage,
         changeTab
       }}>
