@@ -7,11 +7,11 @@ const SvgIconBar = (props) => {
   return (
     <div className={styles.svgIconBar}>
       <HumanIcon {...props} />
-      <label>{`${props.seats} seats`}</label>
+      <label>{`${props.seats} Seats`}</label>
       <OpenDoorCar {...props} />
-      <label>{`${props.doors} doors`}</label>
+      <label>{`${props.doors} Doors`}</label>
       <Luggage {...props} />
-      <label>{`${props.bags} bags`}</label>
+      <label>{`${props.bags} L.`}</label>
       <AirConditioner {...props} />
       <label>{props.airConditioning ? '' : 'No'} Air Conditioning</label>
       <GearBox {...props} />
