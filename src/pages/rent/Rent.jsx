@@ -7,7 +7,7 @@ import AlertContext from '../../context/alert/alertContext';
 import EditUserForm from '../../components/editUserForm/EditUserForm';
 import { useEffect } from 'react';
 import { useMutation } from '@apollo/client';
-import { GET_BOOKING_BY_ID, GET_ALL_BOOKINGS, GET_ALL_RENTS } from '../../queries/queries';
+import { GET_BOOKING_BY_ID, GET_ALL_RENTS } from '../../queries/queries';
 import { RENT_CAR, UPDATE_BOOKING } from '../../mutations/mutations';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,7 +16,7 @@ const Rent = () => {
   const { user } = authContext;
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
-  const { userId: bookingId } = useParams();
+  const { bookingId } = useParams();
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const navigate = useNavigate();
@@ -72,7 +72,6 @@ const Rent = () => {
     },
     refetchQueries: [
       { query: GET_BOOKING_BY_ID, variables: { bookingId } },
-      { query: GET_ALL_BOOKINGS },
       { query: GET_ALL_RENTS }
     ]
   });
@@ -116,8 +115,6 @@ const Rent = () => {
     bookedCar: { car, totalPayment: previousTotalPayment, booker, insuranceType }
   } = data;
 
-  const checkIfUserHasAllData = () => {};
-
   const calculateInsurancePrice = (insuranceRate) => {
     return Math.round(Math.ceil((endDate - startDate) / 86400000) * car.price * insuranceRate, 2);
   };
@@ -128,6 +125,8 @@ const Rent = () => {
       calculateInsurancePrice(insuranceRate)
     );
   };
+
+  const checkIfUserHasAllData = () => {};
 
   const handleRentCar = () => {
     const firstBookingId =
@@ -172,7 +171,7 @@ const Rent = () => {
     <>
       {user && !(user.role === 'ADMIN' || user.role === 'SUPERVISOR') ? (
         <div className={styles.error__message}>
-          <h5>You need to be higher rank to perform this action</h5>
+          <h5>You need higher rank to browse this page</h5>
         </div>
       ) : (
         car && (

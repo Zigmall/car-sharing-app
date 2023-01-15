@@ -37,10 +37,10 @@ const CarState = (props) => {
   };
 
   const divideCarsIntoPages = (cars) => {
-    const copyOfDb = [...cars];
-    const result = new Array(Math.ceil(copyOfDb.length / 10))
+    const copyOfCars = [...cars];
+    const result = new Array(Math.ceil(copyOfCars.length / 10))
       .fill()
-      .map(() => copyOfDb.splice(0, 10));
+      .map(() => copyOfCars.splice(0, 10));
     dispatch({
       type: DIVIDE_CAR_LIST,
       payload: result
