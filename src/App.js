@@ -12,7 +12,6 @@ import Registration from './components/auth/Registration';
 import AlertState from './context/alert/AlertState';
 import Alerts from './components/alerts/Alerts';
 import Login from './components/auth/Login';
-import ReturnCars from './pages/returnCars/ReturnCars';
 import Rents from './pages/rents/Rents';
 import CheckAndReturn from './pages/checkAndReturn/CheckAndReturn';
 import { createUploadLink } from 'apollo-upload-client';
@@ -61,13 +60,13 @@ const App = () => {
               <Bars />
               <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="login" element={<Login />} />
+                <Route path="/registration" element={<Registration />} />
+                <Route path="/bookings" element={<Bookings />} />
                 <Route path="/add-car" element={<AddCarWrapper />} />
                 <Route path="/edit-car/:carId" element={<EditCar />} />
-                <Route path="/registration" element={<Registration />} />
-                <Route path="login" element={<Login />} />
                 <Route path="/cars/:carId" element={<CarDetails />} />
-                <Route path="/bookings" element={<Bookings />} />
-                <Route path="/bookings/:userId" element={<Rent />} />
+                <Route path="/bookings/:bookingId" element={<Rent />} />
                 <Route path="/book-car/:carId" element={<Book />} />
                 <Route path="/update-booking/:userId" element={<UpdateBooking />} />
                 <Route path="/all-cars" element={<AllCars />} />
@@ -78,8 +77,6 @@ const App = () => {
                 <Route path="/rents/handling-over-card/:rentId" element={<HandlingOverCard />} />
                 <Route path="/rent-summary/:rentId" element={<ReturnSummary />} />
                 <Route path="/my-bookings" element={<MyBookings />} />
-                <Route path="/return-car" element={<ReturnCars />} />
-                <Route path="/return-car/:userId" element={<ReturnCars />} />
               </Routes>
             </div>
           </AlertState>

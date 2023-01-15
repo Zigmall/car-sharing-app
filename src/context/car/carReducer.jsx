@@ -1,4 +1,4 @@
-import { GET_CARS, DIVIDE_CAR_LIST, CHANGE_PAGE, CHANGE_TAB, FILTER_CARS } from '../types';
+import { GET_CARS, DIVIDE_CAR_LIST, CHANGE_PAGE, CHANGE_TAB } from '../types';
 
 export default (state, action) => {
   switch (action.type) {
@@ -26,11 +26,6 @@ export default (state, action) => {
         tableOfPages: action.payload,
         numberOfPages: action.payload.length,
         currentView: action.payload[0]
-      };
-    case FILTER_CARS:
-      return {
-        ...state,
-        filtered: action.payload
       };
 
     default:

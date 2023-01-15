@@ -54,35 +54,8 @@ const Bars = () => {
     };
   }, [cars, data, setInterval]);
 
-  // error && console.log(error);
-
-  // const sortByRating = () => {};
-  // const sortByPopularity = () => {};
-
-  // const sortBy = (sortingType) => {
-  //   switch (sortingType) {
-  //     case 'Dashboard':
-  //       resetList();
-  //       break;
-  //     case 'Highest rated':
-  //       sortByRating();
-  //       break;
-  //     case 'Most popular':
-  //       sortByPopularity();
-  //       break;
-
-  //     default:
-  //       resetList();
-  //       break;
-  //   }
-  // };
-
-  // const resetList = () => {};
-
   const setColorOnSideBarIcon = (index) => {
     changeTab(index);
-    // console.log(label);
-    // sortBy(label);
   };
 
   return (
