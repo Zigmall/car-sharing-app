@@ -7,7 +7,7 @@ import AlertContext from '../../context/alert/alertContext';
 import EditUserForm from '../../components/editUserForm/EditUserForm';
 import { useEffect } from 'react';
 import { useMutation } from '@apollo/client';
-import { GET_BOOKING_BY_ID, GET_ALL_RENTS } from '../../queries/queries';
+import { GET_BOOKING_BY_ID, GET_ALL_RENTS, GET_ALL_BOOKINGS } from '../../queries/queries';
 import { RENT_CAR, UPDATE_BOOKING } from '../../mutations/mutations';
 import { useNavigate } from 'react-router-dom';
 
@@ -72,7 +72,8 @@ const Rent = () => {
     },
     refetchQueries: [
       { query: GET_BOOKING_BY_ID, variables: { bookingId } },
-      { query: GET_ALL_RENTS }
+      { query: GET_ALL_RENTS },
+      { query: GET_ALL_BOOKINGS }
     ]
   });
 
