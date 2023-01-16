@@ -33,6 +33,8 @@ const SideBar = ({ setColorOnSideBarIcon, sideBarIndex }) => {
                     ? element.destination === '/settings'
                       ? `/users/${user.id}`
                       : element.destination
+                    : element.destination === '/settings'
+                    ? '/login'
                     : element.destination
                 }
                 title={element.label}>

@@ -7,12 +7,12 @@ const TypeNavigationBar = () => {
   const carContext = useContext(CarContext);
   const { filterCars } = carContext;
   const groupArray = [
-    { carClass: 'All cars', price: 30 }, //TODO: price should be dynamic
-    { carClass: 'Small', price: 30 },
-    { carClass: 'Regular', price: 35 },
-    { carClass: 'SUV', price: 45 },
-    { carClass: 'Sport', price: 55 },
-    { carClass: 'Estate', price: 35 }
+    { carClass: 'All cars', price: 25 }, //TODO: price should be dynamic
+    { carClass: 'Small', price: 25 },
+    { carClass: 'Regular', price: 30 },
+    { carClass: 'SUV', price: 35 },
+    { carClass: 'Sport', price: 40 },
+    { carClass: 'Estate', price: 30 }
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
