@@ -19,7 +19,6 @@ const List = ({ data, ...props }) => {
           property={car.property}
           location={car.location}
           price={car.price}
-          returnCar={false}
         />
       ))}
       <BottomNavigation {...props} />

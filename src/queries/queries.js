@@ -1,47 +1,5 @@
 import { gql } from '@apollo/client';
 
-const GET_ALL_BORROWED_CARS = gql`
-  query getAllBorrowedCars($userId: ID!) {
-    user(id: $userId) {
-      id
-      borrowedCars {
-        id
-        startDate
-        endDate
-        car {
-          id
-          carClass {
-            name
-          }
-          benefits
-          model
-          brand {
-            name
-          }
-          picturePath {
-            url
-          }
-          year
-          property {
-            seats
-            doors
-            trunk
-            airConditioning
-            manualGearBox
-          }
-          location {
-            id
-            point
-            fullAddress
-            city
-          }
-          price
-        }
-      }
-    }
-  }
-`;
-
 const GET_ALL_USERS = gql`
   query AllUsers {
     allUsers {
@@ -61,40 +19,6 @@ const GET_ALL_USERS = gql`
       }
       avatar {
         color
-      }
-      borrowedCars {
-        id
-        startDate
-        endDate
-        car {
-          id
-          carClass {
-            name
-          }
-          benefits
-          model
-          brand {
-            name
-          }
-          picturePath {
-            url
-          }
-          year
-          property {
-            seats
-            doors
-            trunk
-            airConditioning
-            manualGearBox
-          }
-          location {
-            id
-            point
-            fullAddress
-            city
-          }
-          price
-        }
       }
     }
   }
@@ -129,40 +53,6 @@ const GET_USER = gql`
           model
         }
         rated
-      }
-      borrowedCars {
-        id
-        startDate
-        endDate
-        car {
-          id
-          carClass {
-            name
-          }
-          benefits
-          model
-          brand {
-            name
-          }
-          picturePath {
-            url
-          }
-          year
-          property {
-            seats
-            doors
-            trunk
-            airConditioning
-            manualGearBox
-          }
-          location {
-            id
-            point
-            fullAddress
-            city
-          }
-          price
-        }
       }
     }
   }
@@ -235,40 +125,6 @@ const GET_CURRENT_USER = gql`
       }
       avatar {
         color
-      }
-      borrowedCars {
-        id
-        startDate
-        endDate
-        car {
-          id
-          carClass {
-            name
-          }
-          benefits
-          model
-          brand {
-            name
-          }
-          picturePath {
-            url
-          }
-          year
-          property {
-            seats
-            doors
-            trunk
-            airConditioning
-            manualGearBox
-          }
-          location {
-            id
-            point
-            fullAddress
-            city
-          }
-          price
-        }
       }
     }
   }
@@ -514,7 +370,6 @@ const GET_ALL_RENTS = gql`
         endDate
         insuranceType
         newBooking
-
         bookingChanges {
           newBookingId {
             id
@@ -668,7 +523,6 @@ const GET_LOCATIONS = gql`
 `;
 
 export {
-  GET_ALL_BORROWED_CARS,
   GET_ALL_USERS,
   GET_USER,
   ALL_CARS,

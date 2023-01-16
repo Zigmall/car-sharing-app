@@ -90,100 +90,6 @@ const LOG_IN = gql`
         avatar {
           color
         }
-        borrowedCars {
-          id
-          startDate
-          endDate
-          car {
-            id
-            carClass {
-              name
-            }
-            benefits
-            model
-            brand {
-              name
-            }
-            year
-            property {
-              seats
-              doors
-              trunk
-              airConditioning
-              manualGearBox
-            }
-            location {
-              id
-              point
-              fullAddress
-              city
-            }
-            price
-          }
-        }
-      }
-    }
-  }
-`;
-
-const RETURN_CAR = gql`
-  mutation ReturnCar($returnCarId: ID!) {
-    returnCar(id: $returnCarId) {
-      success
-      message
-      borrowedCar {
-        id
-        startDate
-        car {
-          id
-          carClass {
-            name
-          }
-          benefits
-          model
-          brand {
-            name
-          }
-          year
-          property {
-            seats
-            doors
-            trunk
-            airConditioning
-            manualGearBox
-          }
-          location {
-            id
-            point
-            fullAddress
-            city
-          }
-          price
-        }
-      }
-    }
-  }
-`;
-
-const BORROW_CAR = gql`
-  mutation BorrowCar($borrowCarId: ID!) {
-    borrowCar(id: $borrowCarId) {
-      success
-      message
-      borrowedCar {
-        id
-        car {
-          id
-          brand {
-            name
-          }
-          model
-        }
-        borrower {
-          id
-          firstName
-          lastName
-        }
       }
     }
   }
@@ -244,37 +150,6 @@ const SIGN_UP = gql`
         firstName
         lastName
         email
-        borrowedCars {
-          id
-          startDate
-          endDate
-          car {
-            id
-            carClass {
-              name
-            }
-            benefits
-            model
-            brand {
-              name
-            }
-            year
-            property {
-              seats
-              doors
-              trunk
-              airConditioning
-              manualGearBox
-            }
-            location {
-              id
-              point
-              fullAddress
-              city
-            }
-            price
-          }
-        }
         avatar {
           color
         }
@@ -542,8 +417,6 @@ export {
   DELETE_USER,
   UPDATE_USER,
   LOG_IN,
-  RETURN_CAR,
-  BORROW_CAR,
   UPDATE_MY_PERSONAL_DATA,
   CREATE_CAR,
   SIGN_UP,
