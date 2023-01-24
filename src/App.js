@@ -27,6 +27,7 @@ import HandlingOverCard from './pages/handlingOverCard/HandlingOverCard';
 import MyBookings from './pages/myBookings/MyBookings';
 import EditCar from './pages/editCar/EditCar';
 import { ApolloClient, InMemoryCache, ApolloProvider, ApolloLink } from '@apollo/client';
+import MyRents from './pages/myRents/MyRents';
 
 const uploadLink = createUploadLink({
   uri: 'http://localhost:5000/'
@@ -77,6 +78,7 @@ const App = () => {
                 <Route path="/rents/handling-over-card/:rentId" element={<HandlingOverCard />} />
                 <Route path="/rent-summary/:rentId" element={<ReturnSummary />} />
                 <Route path="/my-bookings" element={<MyBookings />} />
+                <Route path="/my-rents" element={<MyRents />} />
               </Routes>
             </div>
           </AlertState>
