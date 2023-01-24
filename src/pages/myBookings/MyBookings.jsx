@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import styles from './MyBookings.module.scss';
 import MyBookingListElement from '../../components/listElement/MyBookingsListElement';
 import { useQuery } from '@apollo/client';
@@ -6,16 +6,9 @@ import { BOOKED_CARS_BY_USER_ID } from '../../queries/queries';
 import AuthContext from '../../context/auth/authContext';
 
 const MyBookings = () => {
-  const [bookings, setBookings] = useState([]);
   const authContext = useContext(AuthContext);
   const { user } = authContext;
   const { loading, error, data } = useQuery(BOOKED_CARS_BY_USER_ID);
-
-  useEffect(() => {
-    if (data) {
-      setBookings(data);
-    }
-  }, [data]);
 
   if (loading)
     return (
@@ -39,7 +32,6 @@ const MyBookings = () => {
       </div>
     );
   }
-  data && console.log('bookings', bookings);
   return (
     <>
       {data && (
