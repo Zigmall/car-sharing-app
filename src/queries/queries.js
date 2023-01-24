@@ -522,6 +522,56 @@ const GET_LOCATIONS = gql`
   }
 `;
 
+const GET_RENTS_BY_USER_ID = gql`
+  query RentsByUserId {
+    rentsByUserId {
+      id
+      car {
+        id
+        brand {
+          name
+        }
+        model
+      }
+      renter {
+        firstName
+        lastName
+      }
+      booking {
+        id
+        startDate
+        endDate
+        insuranceType
+        newBooking
+        bookingChanges {
+          newBookingId {
+            id
+          }
+          rentId {
+            id
+          }
+        }
+      }
+      pickupDate
+      returnDate
+      returnLocation {
+        id
+        point
+        fullAddress
+        city
+      }
+      rated
+      rentPrice
+      deposit
+      additionalCosts
+      depositCollected
+      totalCosts
+      allFinancialSorted
+      depositReturned
+    }
+  }
+`;
+
 export {
   GET_ALL_USERS,
   GET_USER,
@@ -535,5 +585,6 @@ export {
   GET_ALL_RENTS,
   GET_RENT_BY_ID,
   BOOKED_CARS_BY_USER_ID,
-  GET_LOCATIONS
+  GET_LOCATIONS,
+  GET_RENTS_BY_USER_ID
 };
