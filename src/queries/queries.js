@@ -436,6 +436,7 @@ const GET_RENT_BY_ID = gql`
       additionalCosts
       depositCollected
       totalCosts
+      overTimeCost
       allFinancialSorted
       depositReturned
       booking {
@@ -447,6 +448,16 @@ const GET_RENT_BY_ID = gql`
         firstBookingId
         endDate
         id
+        bookingChanges {
+          newBookingId {
+            id
+          }
+          rentId {
+            id
+          }
+          cancelled
+          moneyReturned
+        }
       }
       handlingOverCard {
         milageBefore
@@ -532,6 +543,7 @@ const GET_RENTS_BY_USER_ID = gql`
           name
         }
         model
+        price
       }
       renter {
         firstName
