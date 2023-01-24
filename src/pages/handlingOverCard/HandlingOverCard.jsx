@@ -109,7 +109,9 @@ const HandlingOverCard = () => {
   }
   return (
     <>
-      {data && user && !(user.role === 'ADMIN' || user.role === 'SUPERVISOR') ? (
+      {data &&
+      user &&
+      !(user.role === 'ADMIN' || user.role === 'SUPERVISOR' || user.role === 'USER') ? (
         <div className={styles.error__message}>
           <h5>You need to be higher rank to perform this action</h5>
         </div>
