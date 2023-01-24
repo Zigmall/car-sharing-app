@@ -51,6 +51,7 @@ const CheckAndReturn = () => {
   const [gpsAfter, setGpsAfter] = useState(false);
   const [userManualAfter, setUserManualAfter] = useState(false);
   const [location, setLocation] = useState('');
+  const [overTimeCost, setOverTimeCost] = useState(0);
 
   const { loading, error, data } = useQuery(GET_RENT_BY_ID, {
     variables: { rentId }
@@ -69,6 +70,7 @@ const CheckAndReturn = () => {
       setDmgBefore(handlingOverCard.dmgBefore);
       setDmgBeforeDesc(handlingOverCard.dmgBeforeDesc);
       setMilageAfter(handlingOverCard.milageBefore);
+      checkOverTimeCost();
     }
   }, [data]);
 
@@ -100,6 +102,50 @@ const CheckAndReturn = () => {
     },
     refetchQueries: [{ query: GET_RENT_BY_ID, variables: { rentId } }]
   });
+
+  const checkOverTimeCost = () => {
+    if (data) {
+      const {
+        rent: { booking, car, rentPrice }
+      } = data;
+      const currentBooking =
+        booking &&
+        booking.find(
+          (b) => b.bookingChanges.cancelled === false && b.bookingChanges.newBookingId === null
+        );
+      // console.log('currentBooking', currentBooking);
+      const { startDate, endDate, insuranceType } = currentBooking;
+
+      console.log('car', car);
+      const insuranceTable = {
+        Silver: 0.3,
+        Premium: 0.6,
+        EU: 1.1
+      };
+      const insuranceRate = insuranceTable[insuranceType];
+      const rentStartTimestamp = new Date(startDate).getTime();
+      const rentEndTimestamp = new Date(endDate).getTime();
+      const nowTimestamp = new Date().getTime();
+      const calculateInsurancePrice = (insuranceRate) => {
+        return Math.round(
+          Math.ceil((nowTimestamp - rentStartTimestamp) / 86400000) * car.price * insuranceRate,
+          2
+        );
+      };
+
+      const overTimeCost =
+        Math.ceil((nowTimestamp - rentStartTimestamp) / 86400000) * car.price +
+        calculateInsurancePrice(insuranceRate);
+      // console.log('overTimeCost', overTimeCost);
+      // console.log('rentPrice', rentPrice);
+      if (nowTimestamp > rentEndTimestamp) {
+        setOverTimeCost(overTimeCost - rentPrice);
+        return overTimeCost - rentPrice;
+      } else {
+        return 0;
+      }
+    }
+  };
 
   if (loading || carLocations.loading) {
     return (
@@ -143,6 +189,7 @@ const CheckAndReturn = () => {
     if (!gpsAfter) cost += 100;
     if (!userManualAfter) cost += 10;
     if (!fullTankAfter) cost += fuelCost;
+    if (overTimeCost > 0) cost += overTimeCost;
     return cost;
   };
 
@@ -173,6 +220,7 @@ const CheckAndReturn = () => {
       id: rentId,
       returnDate: new Date(),
       returnLocation: location,
+      overTimeCost: overTimeCost > 0 ? overTimeCost : 0,
       additionalCosts: calculateAdditionalCost(),
       handlingOverCard: {
         milageBefore,
@@ -477,6 +525,7 @@ const CheckAndReturn = () => {
                     {!gpsAfter && <p>Additional GPS:</p>}
                     {!userManualAfter && <p>User Manual:</p>}
                     {!fullTankAfter && <p>Cost of fuel:</p>}
+                    {overTimeCost > 0 && <p>Over Time Cost:</p>}
 
                     <p>
                       <strong>Total price</strong>
@@ -493,6 +542,7 @@ const CheckAndReturn = () => {
                     {!gpsAfter && <p>€100</p>}
                     {!userManualAfter && <p>€10</p>}
                     {!fullTankAfter && <p>€{fuelCost}</p>}
+                    {overTimeCost > 0 && <p>€{overTimeCost}</p>}
                     <p>
                       <strong>{`TOTAL: €${calculateAdditionalCost()}`}</strong>
                     </p>

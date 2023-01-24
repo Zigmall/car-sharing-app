@@ -12,7 +12,6 @@ import Registration from './components/auth/Registration';
 import AlertState from './context/alert/AlertState';
 import Alerts from './components/alerts/Alerts';
 import Login from './components/auth/Login';
-import ReturnCars from './pages/returnCars/ReturnCars';
 import Rents from './pages/rents/Rents';
 import CheckAndReturn from './pages/checkAndReturn/CheckAndReturn';
 import { createUploadLink } from 'apollo-upload-client';
@@ -27,13 +26,8 @@ import UpdateBooking from './pages/updateBooking/UpdateBooking';
 import HandlingOverCard from './pages/handlingOverCard/HandlingOverCard';
 import MyBookings from './pages/myBookings/MyBookings';
 import EditCar from './pages/editCar/EditCar';
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  ApolloLink
-  // concat
-} from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider, ApolloLink } from '@apollo/client';
+import MyRents from './pages/myRents/MyRents';
 
 const uploadLink = createUploadLink({
   uri: 'http://localhost:5000/'
@@ -67,13 +61,13 @@ const App = () => {
               <Bars />
               <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="login" element={<Login />} />
+                <Route path="/registration" element={<Registration />} />
+                <Route path="/bookings" element={<Bookings />} />
                 <Route path="/add-car" element={<AddCarWrapper />} />
                 <Route path="/edit-car/:carId" element={<EditCar />} />
-                <Route path="/registration" element={<Registration />} />
-                <Route path="login" element={<Login />} />
                 <Route path="/cars/:carId" element={<CarDetails />} />
-                <Route path="/bookings" element={<Bookings />} />
-                <Route path="/bookings/:userId" element={<Rent />} />
+                <Route path="/bookings/:bookingId" element={<Rent />} />
                 <Route path="/book-car/:carId" element={<Book />} />
                 <Route path="/update-booking/:userId" element={<UpdateBooking />} />
                 <Route path="/all-cars" element={<AllCars />} />
@@ -84,8 +78,7 @@ const App = () => {
                 <Route path="/rents/handling-over-card/:rentId" element={<HandlingOverCard />} />
                 <Route path="/rent-summary/:rentId" element={<ReturnSummary />} />
                 <Route path="/my-bookings" element={<MyBookings />} />
-                <Route path="/return-car" element={<ReturnCars />} />
-                <Route path="/return-car/:userId" element={<ReturnCars />} />
+                <Route path="/my-rents" element={<MyRents />} />
               </Routes>
             </div>
           </AlertState>

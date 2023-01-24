@@ -4,16 +4,7 @@ import authReducer from './authReducer';
 import PropTypes from 'prop-types';
 import jwt from 'jwt-decode';
 
-import {
-  LOGIN_USER,
-  LOAD_USER,
-  LOGOUT
-  //     LOGIN_FAIL,
-  //     REGISTER_FAIL,
-  //     REGISTER_SUCCESS,
-  //     AUTH_ERROR,
-  //     CLEAN_ERRORS
-} from '../types';
+import { LOGIN_USER, LOAD_USER, LOGOUT } from '../types';
 
 export const loadUser = () => {
   const token = localStorage.getItem('token');
@@ -53,8 +44,6 @@ const AuthState = (props) => {
     });
   };
 
-  //Register User
-
   //Login
   const loginUser = (data) => {
     localStorage.setItem('token', data.token);
@@ -71,7 +60,6 @@ const AuthState = (props) => {
       type: LOGOUT
     });
   };
-  //Clean errors
 
   return (
     <AuthContext.Provider

@@ -6,20 +6,8 @@ import PropTypes from 'prop-types';
 import MainPicture from './MainPicture';
 import SvgIconBar from '../svgIconBar/SvgIconBar';
 import { GasStation, GpsDirection } from '../assets/SvgList';
-import ActionButtons from '../actionButton/ActionButtons';
 
-const Car = ({
-  model,
-  benefits,
-  brand,
-  property,
-  picturePath,
-  location,
-  price,
-  id,
-  returnCar,
-  car
-}) => {
+const Car = ({ model, benefits, brand, property, picturePath, location, price, id }) => {
   const navigate = useNavigate();
   return (
     <div className={styles.wrapper}>
@@ -70,11 +58,7 @@ const Car = ({
         <div className={styles.columnThree}>
           <div className={styles.price}>
             <label>€ {price}/day</label>
-            {!returnCar ? (
-              <button onClick={() => navigate(`/cars/${id}`)}>View</button>
-            ) : (
-              <ActionButtons car={car} returnCar={returnCar} />
-            )}
+            <button onClick={() => navigate(`/cars/${id}`)}>View</button>
           </div>
         </div>
       </div>
@@ -83,7 +67,6 @@ const Car = ({
 };
 
 Car.propTypes = {
-  viewElement: PropTypes.func,
   carClass: PropTypes.string,
   benefits: PropTypes.array,
   picturePath: PropTypes.object,
@@ -93,7 +76,6 @@ Car.propTypes = {
   price: PropTypes.number,
   id: PropTypes.string,
   model: PropTypes.string,
-  returnCar: PropTypes.bool,
   car: PropTypes.object
 };
 

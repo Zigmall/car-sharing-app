@@ -1,47 +1,5 @@
 import { gql } from '@apollo/client';
 
-const GET_ALL_BORROWED_CARS = gql`
-  query getAllBorrowedCars($userId: ID!) {
-    user(id: $userId) {
-      id
-      borrowedCars {
-        id
-        startDate
-        endDate
-        car {
-          id
-          carClass {
-            name
-          }
-          benefits
-          model
-          brand {
-            name
-          }
-          picturePath {
-            url
-          }
-          year
-          property {
-            seats
-            doors
-            trunk
-            airConditioning
-            manualGearBox
-          }
-          location {
-            id
-            point
-            fullAddress
-            city
-          }
-          price
-        }
-      }
-    }
-  }
-`;
-
 const GET_ALL_USERS = gql`
   query AllUsers {
     allUsers {
@@ -61,40 +19,6 @@ const GET_ALL_USERS = gql`
       }
       avatar {
         color
-      }
-      borrowedCars {
-        id
-        startDate
-        endDate
-        car {
-          id
-          carClass {
-            name
-          }
-          benefits
-          model
-          brand {
-            name
-          }
-          picturePath {
-            url
-          }
-          year
-          property {
-            seats
-            doors
-            trunk
-            airConditioning
-            manualGearBox
-          }
-          location {
-            id
-            point
-            fullAddress
-            city
-          }
-          price
-        }
       }
     }
   }
@@ -129,40 +53,6 @@ const GET_USER = gql`
           model
         }
         rated
-      }
-      borrowedCars {
-        id
-        startDate
-        endDate
-        car {
-          id
-          carClass {
-            name
-          }
-          benefits
-          model
-          brand {
-            name
-          }
-          picturePath {
-            url
-          }
-          year
-          property {
-            seats
-            doors
-            trunk
-            airConditioning
-            manualGearBox
-          }
-          location {
-            id
-            point
-            fullAddress
-            city
-          }
-          price
-        }
       }
     }
   }
@@ -235,40 +125,6 @@ const GET_CURRENT_USER = gql`
       }
       avatar {
         color
-      }
-      borrowedCars {
-        id
-        startDate
-        endDate
-        car {
-          id
-          carClass {
-            name
-          }
-          benefits
-          model
-          brand {
-            name
-          }
-          picturePath {
-            url
-          }
-          year
-          property {
-            seats
-            doors
-            trunk
-            airConditioning
-            manualGearBox
-          }
-          location {
-            id
-            point
-            fullAddress
-            city
-          }
-          price
-        }
       }
     }
   }
@@ -514,7 +370,6 @@ const GET_ALL_RENTS = gql`
         endDate
         insuranceType
         newBooking
-
         bookingChanges {
           newBookingId {
             id
@@ -581,6 +436,7 @@ const GET_RENT_BY_ID = gql`
       additionalCosts
       depositCollected
       totalCosts
+      overTimeCost
       allFinancialSorted
       depositReturned
       booking {
@@ -592,6 +448,16 @@ const GET_RENT_BY_ID = gql`
         firstBookingId
         endDate
         id
+        bookingChanges {
+          newBookingId {
+            id
+          }
+          rentId {
+            id
+          }
+          cancelled
+          moneyReturned
+        }
       }
       handlingOverCard {
         milageBefore
@@ -667,8 +533,58 @@ const GET_LOCATIONS = gql`
   }
 `;
 
+const GET_RENTS_BY_USER_ID = gql`
+  query RentsByUserId {
+    rentsByUserId {
+      id
+      car {
+        id
+        brand {
+          name
+        }
+        model
+        price
+      }
+      renter {
+        firstName
+        lastName
+      }
+      booking {
+        id
+        startDate
+        endDate
+        insuranceType
+        newBooking
+        bookingChanges {
+          newBookingId {
+            id
+          }
+          rentId {
+            id
+          }
+        }
+      }
+      pickupDate
+      returnDate
+      returnLocation {
+        id
+        point
+        fullAddress
+        city
+      }
+      rated
+      rentPrice
+      deposit
+      additionalCosts
+      depositCollected
+      totalCosts
+      allFinancialSorted
+      depositReturned
+    }
+  }
+`;
+
 export {
-  GET_ALL_BORROWED_CARS,
   GET_ALL_USERS,
   GET_USER,
   ALL_CARS,
@@ -681,5 +597,6 @@ export {
   GET_ALL_RENTS,
   GET_RENT_BY_ID,
   BOOKED_CARS_BY_USER_ID,
-  GET_LOCATIONS
+  GET_LOCATIONS,
+  GET_RENTS_BY_USER_ID
 };

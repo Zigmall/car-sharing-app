@@ -92,7 +92,7 @@ const NewComment = ({ car, user }) => {
     return (
       <div className={styles.left__space}>
         <div className={styles.comment__replacement}>
-          <h1>You need to rent this car to comment</h1>
+          <h1>You need to rent this car to be able to comment it</h1>
         </div>
       </div>
     );

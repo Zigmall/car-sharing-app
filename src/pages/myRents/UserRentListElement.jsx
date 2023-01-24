@@ -1,17 +1,14 @@
-import styles from './Rents.module.scss';
+import styles from './MyRents.module.scss';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 
-const RentLine = ({
-  rent: { id, renter, pickupDate, returnDate, car, booking, depositReturned }
+const UserRentListElement = ({
+  rent: { id, pickupDate, returnDate, car, booking, depositReturned }
 }) => {
   const navigate = useNavigate();
 
-  const handleCheckAndReturn = () => {
-    navigate(`/rents/${id}`);
-  };
-  const handleEdit = () => {
-    navigate(`/rent-summary/${id}`);
+  const displayHandlingOverCard = (id) => {
+    navigate(`/rents/handling-over-card/${id}`);
   };
 
   const getCurrentBooking = () => {
@@ -41,7 +38,6 @@ const RentLine = ({
     <>
       {id && (
         <tr>
-          <td>{`${renter.firstName} ${renter.lastName}`}</td>
           <td>{transformDate(startDate)}</td>
           <td>{transformDate(pickupDate)}</td>
           <td>{transformDate(endDate)}</td>
@@ -49,18 +45,16 @@ const RentLine = ({
           <td>{`${car.brand.name} ${car.model}`}</td>
           <td>
             <button
-              onClick={() => handleEdit()}
+              onClick={() => displayHandlingOverCard(id)}
               className={[styles.button__wrapper, styles.button__update].join(' ')}>
-              Update Details
+              Handling Over Card
             </button>
           </td>
           <td>
             {!returnDate && (
-              <button
-                onClick={() => handleCheckAndReturn()}
-                className={[styles.button__wrapper, styles.button__return].join(' ')}>
-                Return Car
-              </button>
+              <p className={styles.button__returned}>
+                <strong>Not Returned Yet</strong>
+              </p>
             )}
             {returnDate &&
               (depositReturned ? (
@@ -79,8 +73,8 @@ const RentLine = ({
   );
 };
 
-RentLine.propTypes = {
+UserRentListElement.propTypes = {
   rent: PropTypes.object.isRequired
 };
 
-export default RentLine;
+export default UserRentListElement;

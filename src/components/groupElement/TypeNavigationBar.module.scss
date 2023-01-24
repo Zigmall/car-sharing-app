@@ -2,13 +2,10 @@ p {
   margin: 0;
 }
 .wrapper {
-  width: 10%;
   display: flex;
   flex-direction: column;
   border: transparent;
-  // justify-content: space-between;
   align-items: center;
-  // padding: 1rem;
   margin: 0 3rem;
  
 }
@@ -18,7 +15,6 @@ p {
   font-size: 18px;
 }
 .iconsGroup {
-  // font-size: 20px;
   flex-direction: row;
   display: flex;
   margin-right: 50px;
@@ -26,7 +22,6 @@ p {
 
 .price {
   color: #707070;
-  // margin: auto;
   font-size: 18px;
   display: block;
 }
@@ -54,5 +49,5 @@ p {
   display: flex;
   justify-content: center;
   margin-bottom: 1rem;
-  margin-left: 15rem;
+  margin-left: 12.9rem;
 }

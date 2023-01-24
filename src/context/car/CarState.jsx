@@ -3,19 +3,7 @@ import CarContext from './carContext';
 import carReducer from './carReducer';
 import PropTypes from 'prop-types';
 
-import {
-  GET_CARS,
-  DIVIDE_CAR_LIST,
-  CHANGE_PAGE,
-  CHANGE_TAB
-  //   ADD_CAR,
-  //   DELETE_CAR,
-  //   SET_CURRENT,
-  //   CLEAR_CURRENT,
-  //   UPDATE_CURRENT,
-  //   FILTER_CAR,
-  //   CLEAR_FILTER
-} from '../types';
+import { GET_CARS, DIVIDE_CAR_LIST, CHANGE_PAGE, CHANGE_TAB } from '../types';
 
 const CarState = (props) => {
   const initialState = {
@@ -38,11 +26,21 @@ const CarState = (props) => {
     });
   };
 
+  const filterCars = (filter) => {
+    const copyOfDb = [...state.cars];
+    if (filter === 'All cars' || filter === null || filter === undefined || filter === '') {
+      divideCarsIntoPages(copyOfDb);
+      return;
+    }
+    const filteredCars = copyOfDb.filter((car) => car.carClass.name === filter);
+    divideCarsIntoPages(filteredCars);
+  };
+
   const divideCarsIntoPages = (cars) => {
-    const copyOfDb = [...cars];
-    const result = new Array(Math.ceil(copyOfDb.length / 10))
+    const copyOfCars = [...cars];
+    const result = new Array(Math.ceil(copyOfCars.length / 10))
       .fill()
-      .map(() => copyOfDb.splice(0, 10));
+      .map(() => copyOfCars.splice(0, 10));
     dispatch({
       type: DIVIDE_CAR_LIST,
       payload: result
@@ -63,20 +61,6 @@ const CarState = (props) => {
     });
   };
 
-  //Add Car
-
-  //Delete Car
-
-  //Set current car
-
-  //Clear current car
-
-  //Update current car
-
-  //Filter cars
-
-  //Clear filter
-
   return (
     <CarContext.Provider
       value={{
@@ -90,6 +74,7 @@ const CarState = (props) => {
         navIndex: state.navIndex,
         getCars,
         divideCarsIntoPages,
+        filterCars,
         changePage,
         changeTab
       }}>

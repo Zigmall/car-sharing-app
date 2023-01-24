@@ -39,6 +39,7 @@ const HandlingOverCard = () => {
   const [gpsAfter, setGpsAfter] = useState(false);
   const [userManualAfter, setUserManualAfter] = useState(false);
   const [location, setLocation] = useState('');
+  const [overTimeCost, setOverTimeCost] = useState(0);
 
   const { loading, error, data } = useQuery(GET_RENT_BY_ID, {
     variables: { rentId }
@@ -47,7 +48,7 @@ const HandlingOverCard = () => {
   useEffect(() => {
     if (data) {
       const {
-        rent: { handlingOverCard, returnLocation }
+        rent: { handlingOverCard, returnLocation, overTimeCost }
       } = data;
       setMilageBefore(handlingOverCard.milageBefore);
       setMilageAfter(handlingOverCard.milageAfter);
@@ -67,6 +68,7 @@ const HandlingOverCard = () => {
       setGpsAfter(handlingOverCard.gpsAfter);
       setUserManualAfter(handlingOverCard.userManualAfter);
       setLocation(returnLocation);
+      setOverTimeCost(overTimeCost);
     }
   }, [data]);
 
@@ -82,6 +84,7 @@ const HandlingOverCard = () => {
     if (!gpsAfter) cost += 100;
     if (!userManualAfter) cost += 10;
     if (!fullTankAfter) cost += fuelCost;
+    if (overTimeCost > 0) cost += overTimeCost;
     return cost;
   };
 
@@ -109,7 +112,9 @@ const HandlingOverCard = () => {
   }
   return (
     <>
-      {data && user && !(user.role === 'ADMIN' || user.role === 'SUPERVISOR') ? (
+      {data &&
+      user &&
+      !(user.role === 'ADMIN' || user.role === 'SUPERVISOR' || user.role === 'USER') ? (
         <div className={styles.error__message}>
           <h5>You need to be higher rank to perform this action</h5>
         </div>
@@ -323,6 +328,7 @@ const HandlingOverCard = () => {
                     {!gpsAfter && <p>Additional GPS:</p>}
                     {!userManualAfter && <p>User Manual:</p>}
                     {!fullTankAfter && <p>Cost of fuel:</p>}
+                    {overTimeCost > 0 && <p>Over time cost:</p>}
 
                     <p>
                       <strong>Total price</strong>
@@ -339,6 +345,7 @@ const HandlingOverCard = () => {
                     {!gpsAfter && <p>€100</p>}
                     {!userManualAfter && <p>€10</p>}
                     {!fullTankAfter && <p>€{fuelCost}</p>}
+                    {overTimeCost > 0 && <p>€{overTimeCost}</p>}
                     <p>
                       <strong>{`TOTAL: €${calculateAdditionalCost()}`}</strong>
                     </p>
