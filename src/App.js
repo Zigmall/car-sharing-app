@@ -30,9 +30,9 @@ import { ApolloClient, InMemoryCache, ApolloProvider, ApolloLink } from '@apollo
 import MyRents from './pages/myRents/MyRents';
 
 const uploadLink = createUploadLink({
-  uri: 'http://localhost:5000/'
+  // uri: 'http://localhost:5001/'
+  uri: 'https://evening-gorge-00568.herokuapp.com/'
 });
-// const URL = 'https://desolate-spire-04068.herokuapp.com';
 
 const authenticationLink = new ApolloLink((operation, forward) => {
   const token = loadUser();
