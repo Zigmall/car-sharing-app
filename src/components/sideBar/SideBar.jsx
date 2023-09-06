@@ -29,13 +29,12 @@ const SideBar = ({ setColorOnSideBarIcon, sideBarIndex }) => {
               <Link
                 key={index}
                 to={
-                  (!user && element.destination === '/settings') ||
-                  (!user && element.destination === '/my-bookings') ||
-                  (!user && element.destination === '/my-rents') ||
-                  (!user && element.destination === '/my-cars')
+                  element.destination === '/'
+                    ? '/'
+                    : !user
                     ? '/login'
-                    : element.destination === '/settings'
-                    ? `/users/${user.id}`
+                    : element.destination === '/user-settings'
+                    ? `/user-settings/${user.id}`
                     : element.destination
                 }
                 title={element.label}>
