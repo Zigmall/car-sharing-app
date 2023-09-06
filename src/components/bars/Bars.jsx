@@ -49,6 +49,8 @@ const Bars = () => {
       }
     }, 15000);
 
+    setSideBarIndex();
+
     return () => {
       clearInterval(intervalId);
     };
@@ -56,6 +58,46 @@ const Bars = () => {
 
   const setColorOnSideBarIcon = (index) => {
     changeTab(index);
+  };
+
+  const setSideBarIndex = () => {
+    if (window.location.pathname === '/') {
+      if (navIndex !== 1) {
+        changeTab(1);
+      }
+    } else if (window.location.pathname.includes('/user-settings')) {
+      if (navIndex !== 2) {
+        changeTab(2);
+      }
+    } else if (window.location.pathname.includes('my-bookings')) {
+      if (navIndex !== 3) {
+        changeTab(3);
+      }
+    } else if (window.location.pathname.includes('bookings')) {
+      if (navIndex !== 3) {
+        changeTab(3);
+      }
+    } else if (window.location.pathname.includes('/my-rents')) {
+      if (navIndex !== 4) {
+        changeTab(4);
+      }
+    } else if (window.location.pathname.includes('/rents')) {
+      if (navIndex !== 4) {
+        changeTab(4);
+      }
+    } else if (window.location.pathname.includes('/add-car')) {
+      if (navIndex !== 5) {
+        changeTab(5);
+      }
+    } else if (window.location.pathname.includes('/users')) {
+      if (navIndex !== 2) {
+        changeTab(2);
+      }
+    } else if (window.location.pathname.includes('/all-cars')) {
+      if (navIndex !== 6) {
+        changeTab(6);
+      }
+    }
   };
 
   return (

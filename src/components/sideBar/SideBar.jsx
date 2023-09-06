@@ -20,6 +20,7 @@ const SideBar = ({ setColorOnSideBarIcon, sideBarIndex }) => {
     }
   };
   user && setMenu();
+
   return (
     <>
       {menu && (
