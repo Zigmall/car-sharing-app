@@ -29,10 +29,26 @@ const CarState = (props) => {
   const filterCars = (filter) => {
     const copyOfDb = [...state.cars];
     if (filter === 'All cars' || filter === null || filter === undefined || filter === '') {
-      divideCarsIntoPages(copyOfDb);
+      divideCarsIntoPages([...state.cars]);
       return;
     }
     const filteredCars = copyOfDb.filter((car) => car.carClass.name === filter);
+    divideCarsIntoPages(filteredCars);
+  };
+
+  const filterCarsBySearch = (search) => {
+    const copyOfDb = [...state.cars];
+    if (search === null || search === undefined || search === '') {
+      divideCarsIntoPages([...state.cars]);
+      return;
+    }
+    const filteredCars = copyOfDb.filter((car) => {
+      return (
+        car.model.toLowerCase().includes(search.toLowerCase()) ||
+        car.brand.name.toLowerCase().includes(search.toLowerCase())
+      );
+    });
+
     divideCarsIntoPages(filteredCars);
   };
 
@@ -76,7 +92,8 @@ const CarState = (props) => {
         divideCarsIntoPages,
         filterCars,
         changePage,
-        changeTab
+        changeTab,
+        filterCarsBySearch
       }}>
       {props.children}
     </CarContext.Provider>
