@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import AuthContext from '../../context/auth/authContext';
 import { useContext } from 'react';
-import { guestMenu, userMenu, supervisorMenu, adminMenu } from '../assets/SvgList';
+import { userMenu, supervisorMenu, adminMenu } from '../assets/SvgList';
 
 const SideBar = ({ setColorOnSideBarIcon, sideBarIndex }) => {
   const authContext = useContext(AuthContext);
   const { user } = authContext;
-  let menu = guestMenu;
+  let menu = userMenu;
   const setMenu = () => {
     if (user.role === 'ADMIN') {
       menu = adminMenu;
@@ -20,6 +20,7 @@ const SideBar = ({ setColorOnSideBarIcon, sideBarIndex }) => {
     }
   };
   user && setMenu();
+
   return (
     <>
       {menu && (
@@ -29,12 +30,12 @@ const SideBar = ({ setColorOnSideBarIcon, sideBarIndex }) => {
               <Link
                 key={index}
                 to={
-                  user
-                    ? element.destination === '/settings'
-                      ? `/users/${user.id}`
-                      : element.destination
-                    : element.destination === '/settings'
+                  element.destination === '/'
+                    ? '/'
+                    : !user
                     ? '/login'
+                    : element.destination === '/user-settings'
+                    ? `/user-settings/${user.id}`
                     : element.destination
                 }
                 title={element.label}>

@@ -57,8 +57,8 @@ const App = () => {
         <CarState>
           <AlertState>
             <div className={styles.app}>
-              <Alerts />
               <Bars />
+              <Alerts />
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="login" element={<Login />} />
@@ -71,7 +71,7 @@ const App = () => {
                 <Route path="/book-car/:carId" element={<Book />} />
                 <Route path="/update-booking/:userId" element={<UpdateBooking />} />
                 <Route path="/all-cars" element={<AllCars />} />
-                <Route path="/users/:userId" element={<User />} />
+                <Route path="/user-settings/:userId" element={<User />} />
                 <Route path="/users" element={<Users />} />
                 <Route path="/rents/" element={<Rents />} />
                 <Route path="/rents/:rentId" element={<CheckAndReturn />} />
