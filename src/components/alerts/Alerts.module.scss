@@ -1,19 +1,18 @@
 .alertWrapper {
   display: flex;
   justify-content: center;
-  margin-top: 0.5rem;
+  // margin-top: 1rem;
 }
 
 .wrapper {
   border-radius: 0.3rem;
   position: fixed;
-  min-width: 30%;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 70px;
-  margin: 0px;
-  
+  height: 4rem;
+  margin-top: 4rem;
+  border: 3px solid rgba(0, 0, 0, 0.2);
   
 
   .alerts {
@@ -31,7 +30,7 @@
 }
 
 .success {
-  background-color: rgb(84, 197, 110);
+  background-color: rgb(33, 185, 69);
 }
 
 .warning {
