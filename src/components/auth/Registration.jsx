@@ -61,8 +61,15 @@ const Registration = () => {
     }
   });
 
+  const handleRedirect = () => {
+    changeTab(1);
+  };
+
   return (
     <div className={styles.formWrapper}>
+      <Link to={'/'} onClick={handleRedirect} className={styles.homeBtn}>
+        Go back to Home Page
+      </Link>
       <h1>
         <span>Account Register</span>
       </h1>

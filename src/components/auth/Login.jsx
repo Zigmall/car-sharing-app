@@ -43,8 +43,15 @@ const Login = () => {
     login({ variables: { input } });
   };
 
+  const handleRedirect = () => {
+    changeTab(1);
+  };
+
   return (
     <div className={styles.formWrapper}>
+      <Link to={'/'} onClick={handleRedirect} className={styles.homeBtn}>
+        Go back to Home Page
+      </Link>
       <h1>
         <span>Account Login</span>
       </h1>
@@ -58,7 +65,7 @@ const Login = () => {
           <input type="password" name="password" value={password} onChange={onChange} />
         </div>
         <div className={styles.button__wrapper}>
-          <input type="submit" value="login" className={styles.btn} />
+          <input type="submit" value="Login" className={styles.btn} />
         </div>
       </form>
       <div className={styles.registerLink}>

@@ -1,6 +1,6 @@
 .formWrapper {
   max-width: 500px;
-  margin: 4rem auto;
+  margin: 0 auto;
   overflow: hidden;
 
   .btn:hover {
@@ -23,6 +23,11 @@
     outline: none;
   }
 
+  h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
   input[type='submit'],
   button {
     font: inherit;
@@ -30,7 +35,6 @@
 
   .registerLink {
     margin-top: 40px;
-
   }
 
   .registerLink a {
@@ -39,16 +43,38 @@
   }
 
   .btn {
-    border: 1px solid black;
-    margin-top: 45px;
     border: none;
+    margin-top: 45px;
     cursor: pointer;
     background-color: #0074ef;
     padding: 10px;
     color: black;
     display: block;
-    width: 30%;
+    width: 100%;
     border-radius: 0.3rem;
+  }
+
+  .homeBtn {
+    border: 1px solid black;
+    margin: 2rem 0 5rem 0;
+    cursor: pointer;
+    background-color: #ffffff;
+    padding: 0.45rem;
+    color: black;
+    display: flex;
+    border-radius: 0.3rem;
+    width: fit-content;
+    text-decoration: none;
+  }
+
+  .homeBtn:hover {
+    background-color: #0074ef;
+    color: white;
+  }
+
+  .button__wrapper {
+    display: flex;
+    justify-content: flex-end;
   }
 
   .formGroup {
@@ -60,4 +86,3 @@
     }
   }
 }
-
